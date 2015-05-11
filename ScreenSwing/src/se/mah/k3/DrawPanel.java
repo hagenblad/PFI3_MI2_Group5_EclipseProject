@@ -64,7 +64,7 @@ public class DrawPanel extends JPanel {
 						User user = new User(arg0.getKey(),x,y, 5);
 						if (!users.contains(user)){
 							users.add(user);
-							user.setColor(new Color(r.nextInt(255),r.nextInt(255),r.nextInt(255)));
+							user.setColor(Color.BLACK);
 				 		}
 				}
 			}
