@@ -1,7 +1,6 @@
 package se.mah.k3;
 
 public class Ball {
-<<<<<<< HEAD
 
 	public int x = 100;
 	public int y = 100;
@@ -10,26 +9,16 @@ public class Ball {
 	int screenWidth = 900;
 	int screenHeight = 900;
 	int size = 40;
-	//int screenHeight = ?;
+	
 	
 	public int getBallXSpeed(){
 		x +=xSpeed;
 		System.out.println("xspeed= "+ x);
 		bounceBall();
 		return x;
-=======
-	int speed = 1;
-	int x = 0;
-	int y = 0;
-	int screenWidth = ?;
-	int screenHeight = ?;
-	
-	
-	public void ballSpeed(){
-		x = x + speed;
->>>>>>> master
 	}
-	
+		
+
 	public int getBallYSpeed(){
 		y +=ySpeed;
 		System.out.println("yspeed= "+ y);
