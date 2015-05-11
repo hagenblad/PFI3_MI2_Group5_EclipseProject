@@ -4,8 +4,8 @@ public class Ball {
 	int speed = 1;
 	int x = 0;
 	int y = 0;
-	int screenWidth = ?;
-	int screenHeight = ?;
+	//int screenWidth = ?;
+	//int screenHeight = ?;
 	
 	
 	public void ballSpeed(){
@@ -17,7 +17,7 @@ public class Ball {
 	}
 	
 	public void bounceBall(){
-		if x > screenWidth
-		if x < sceenHeight
+		//if x > screenWidth
+		//if x < sceenHeight
 	}
 }
