@@ -88,7 +88,7 @@ public class DrawPanel extends JPanel {
 		g.drawString("ScreenNbr: "+Constants.screenNbr, 10,  20);
 		//Test
 		for (User user : users) {
-			int x = (int)(user.getxRel()*getSize().width);
+			int x = 50;
 			int y = (int)(user.getyRel()*getSize().height);
 			g2.setColor( user.getColor());
 			g2.fillRect(x,y, 10, 100);
