@@ -6,6 +6,8 @@ public class Ball {
 	int y = 0;
 	int screenWidth = ?;
 	int screenHeight = ?;
+	
+	
 	public void ballSpeed(){
 		x = x + speed;
 	}

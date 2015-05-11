@@ -9,13 +9,16 @@ public class User implements Comparable<User>{
 	private int yPos;
 	private double xRel=0;
 	private double yRel=0;
+	private int lives;
+	
 	private Color c = new Color(100,100,100);
 	
 	
-	public User(String id, int xPos, int yPos) {
+	public User(String id, int xPos, int yPos, int lives) {
 		this.id = id;
 		this.xPos = xPos;
 		this.yPos = yPos;
+		this.lives = lives;
 	}
 	public String getId() {
 		return id;
@@ -48,6 +51,15 @@ public class User implements Comparable<User>{
 	public void setxRel(double xRel) {
 		this.xRel = xRel;
 	}
+	
+	public int getLives() {
+		return lives;
+	}
+	public void setLives(int lives) {
+		this.lives = lives;
+	}
+	
+	
 	
 	@Override
 	public int compareTo(User o) {
