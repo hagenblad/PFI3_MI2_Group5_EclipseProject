@@ -44,7 +44,7 @@ public class DrawPanel extends JPanel {
 			public void onChildChanged(DataSnapshot arg0, String arg1) {
 				Iterable<DataSnapshot> dsList= arg0.getChildren();
 				Collections.sort(users);
-				int place = Collections.binarySearch(users, new User(arg0.getKey(),0,0)); //Find the user usernama has to be unique uses the method compareTo in User
+				int place = Collections.binarySearch(users, new User(arg0.getKey(),0,0, 5)); //Find the user usernama has to be unique uses the method compareTo in User
 				 for (DataSnapshot dataSnapshot : dsList) {					 
 					 if (dataSnapshot.getKey().equals("xRel")){
 						 users.get(place).setxRel((double)dataSnapshot.getValue());
