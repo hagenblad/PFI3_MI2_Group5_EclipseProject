@@ -91,7 +91,7 @@ public class DrawPanel extends JPanel {
 			int x = (int)(user.getxRel()*getSize().width);
 			int y = (int)(user.getyRel()*getSize().height);
 			g2.setColor( user.getColor());
-			g2.fillRect(x,y, 30, 10);
+			g2.fillRect(x,y, 10, 100);
 			g2.setColor(Color.BLACK);
 			g.drawString(user.getId(),x+15,y+15);
 		}
