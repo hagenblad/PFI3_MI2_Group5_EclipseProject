@@ -59,7 +59,7 @@ public class DrawPanel extends JPanel {
 				if (arg0.hasChildren()){
 					//System.out.println("ADD user with Key: "+arg1+ arg0.getKey());
 					Random r = new Random();
-					int x = r.nextInt(getSize().width);
+					int x = 50;
 					int y = r.nextInt(getSize().height);
 						User user = new User(arg0.getKey(),x,y, 5);
 						if (!users.contains(user)){
