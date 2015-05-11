@@ -18,12 +18,18 @@ import com.firebase.client.FirebaseError;
 public class DrawPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private Firebase myFirebaseRef;
+	
+	//creates a ball
+	private Ball ball = new Ball();
+	int ballXSpeed = 0;
+	int ballYSpeed = 0;
 	//A vector is like an ArrayList a little bit slower but Thread-safe. This means that it can handle concurrent changes. 
 	private Vector<User> users = new Vector<User>();
 	Font font = new Font("Verdana", Font.BOLD, 20);
 	
 	public DrawPanel() {
-		myFirebaseRef = new Firebase("https://blinding-heat-7399.firebaseio.com/");
+		
+		myFirebaseRef = new Firebase("https://pingispong.firebaseio.com/");
 		myFirebaseRef.removeValue(); //Cleans out everything
 		myFirebaseRef.child("ScreenNbr").setValue(Constants.screenNbr);  //Has to be same as on the app. So place specific can't you see the screen you don't know the number
 		 myFirebaseRef.addChildEventListener(new ChildEventListener() {
@@ -85,7 +91,15 @@ public class DrawPanel extends JPanel {
 		g2.setColor(Color.LIGHT_GRAY);
 		g2.fillRect(0, 0, getSize().width, getSize().height);
 		g2.setColor(Color.BLACK);
+		
+		g2.fillOval(ballXSpeed, ballYSpeed, ball.size, ball.size);
+		ballXSpeed = ball.getBallXSpeed();
+		ballYSpeed = ball.getBallYSpeed();
+		
 		g.drawString("ScreenNbr: "+Constants.screenNbr, 10,  20);
+		
+		g2.drawRect (10,10,900,900); //Spelplan
+		super.repaint();
 		//Test
 		for (User user : users) {
 			int x = (int)(user.getxRel()*getSize().width);
@@ -94,7 +108,9 @@ public class DrawPanel extends JPanel {
 			g2.fillOval(x,y, 10, 10);
 			g2.setColor(Color.BLACK);
 			g.drawString(user.getId(),x+15,y+15);
+			
 		}
+		
 		
 	}
 }
