@@ -85,15 +85,17 @@ public class DrawPanel extends JPanel {
 		g2.setColor(Color.LIGHT_GRAY);
 		g2.fillRect(0, 0, getSize().width, getSize().height);
 		g2.setColor(Color.BLACK);
-		g.drawString("ScreenNbr: "+Constants.screenNbr, 10,  20);
+//		g.drawString("ScreenNbr: "+Constants.screenNbr, 10,  20);
 		//Test
 		for (User user : users) {
 			int x = 50;
 			int y = (int)(user.getyRel()*getSize().height);
+			String livesLeft = String.valueOf(user.getLives());
 			g2.setColor( user.getColor());
 			g2.fillRect(x,y, 10, 100);
 			g2.setColor(Color.BLACK);
-			g.drawString(user.getId(),x+15,y+15);
+			g.drawString(user.getId(), 20, 20);
+			g.drawString(livesLeft, 20, 40);
 		}
 		
 	}
