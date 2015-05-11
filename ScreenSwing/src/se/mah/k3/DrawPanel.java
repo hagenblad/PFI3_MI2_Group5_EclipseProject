@@ -22,7 +22,7 @@ public class DrawPanel extends JPanel {
 	//creates a ball
 	private Ball ball = new Ball();
 	int ballXSpeed = 0;
-	int ballYSPeed = 0;
+	int ballYSpeed = 0;
 	//A vector is like an ArrayList a little bit slower but Thread-safe. This means that it can handle concurrent changes. 
 	private Vector<User> users = new Vector<User>();
 	Font font = new Font("Verdana", Font.BOLD, 20);
@@ -92,14 +92,16 @@ public class DrawPanel extends JPanel {
 		g2.fillRect(0, 0, getSize().width, getSize().height);
 		g2.setColor(Color.BLACK);
 		
-		g2.fillOval(ballXSpeed, ball.y, ball.size, ball.size);
-		ballXSpeed = ball.getBallSpeed();
+		g2.fillOval(ballXSpeed, ballYSpeed, ball.size, ball.size);
+		ballXSpeed = ball.getBallXSpeed();
+		ballYSpeed = ball.getBallYSpeed();
 		
 		g.drawString("ScreenNbr: "+Constants.screenNbr, 10,  20);
+		
 		g2.drawRect (10,10,900,900); //Spelplan
 		super.repaint();
 		//Test
-	/*	for (User user : users) {
+		for (User user : users) {
 			int x = (int)(user.getxRel()*getSize().width);
 			int y = (int)(user.getyRel()*getSize().height);
 			g2.setColor( user.getColor());
@@ -108,7 +110,7 @@ public class DrawPanel extends JPanel {
 			g.drawString(user.getId(),x+15,y+15);
 			
 		}
-	*/	
+		
 		
 	}
 }
