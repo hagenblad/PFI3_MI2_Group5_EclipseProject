@@ -108,8 +108,12 @@ public class DrawPanel extends JPanel {
 		g2.setFont(font);
 		g2.setColor(Color.LIGHT_GRAY);
 		g2.fillRect(0, 0, getSize().width, getSize().height);
-		//g2.setColor(Color.BLACK);
+		g2.setColor(Color.BLACK);
 		
+		//Bakgrund
+		Image img1 = Toolkit.getDefaultToolkit().getImage("src/images/bakis.jpg");
+	    g2.drawImage(img1, 0, 0, this);
+	    g2.finalize();
 		
 		g2.fillOval(ballXSpeed, ballYSpeed, ball.size, ball.size);
 		ballXSpeed = ball.getBallXSpeed();
@@ -117,10 +121,7 @@ public class DrawPanel extends JPanel {
 		g.drawString("ScreenNbr: "+Constants.screenNbr, 10,  20);
 		g2.drawRect (10,10,900,900); //Spelplan
 		
-		//Bakgrund
-		Image img1 = Toolkit.getDefaultToolkit().getImage("src/images/bakis.jpg");
-	    g2.drawImage(img1, 0, 0, this);
-	    g2.finalize();
+		
 		
 	    super.repaint();
 		//Test
