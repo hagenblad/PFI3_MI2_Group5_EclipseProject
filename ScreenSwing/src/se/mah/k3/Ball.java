@@ -1,6 +1,7 @@
 package se.mah.k3;
 import java.util.Random;
 public class Ball {
+<<<<<<< HEAD
 
 	//BallThread ballThread = new BallThread();
 	int x = 100;
@@ -14,15 +15,30 @@ public class Ball {
 		//constructor
 		
 	}
+=======
+	public int x = 100;
+	public int y = 100;
+	int ySpeed = 7;
+	int xSpeed = 10;
+	int screenWidth = 900;
+	int screenHeight = 900;
+	int size = 40;
+	
+>>>>>>> master
 	
 	public int getBallXSpeed(){
 		x +=xSpeed;
 		//System.out.println("xspeed= "+ x);
 		bounceBall();
+<<<<<<< HEAD
 		return x;	
 	
+=======
+		return x;
+>>>>>>> master
 	}
-	
+		
+
 	public int getBallYSpeed(){
 		y +=ySpeed;
 		//System.out.println("yspeed= "+ y);

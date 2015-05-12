@@ -10,6 +10,7 @@ public class User implements Comparable<User>{
 	private double xRel=0;
 	private double yRel=0;
 	private int lives;
+	private double delay;
 	
 	private Color c = new Color(100,100,100);
 	
@@ -57,6 +58,13 @@ public class User implements Comparable<User>{
 	}
 	public void setLives(int lives) {
 		this.lives = lives;
+	}
+	
+	public double getDelay() {
+		return delay;
+	}
+	public void setDelay(double d) {
+		this.delay = d;
 	}
 	
 	
