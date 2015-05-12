@@ -21,7 +21,8 @@ public class DrawPanel extends JPanel {
 	//A vector is like an ArrayList a little bit slower but Thread-safe. This means that it can handle concurrent changes. 
 	private Vector<User> users = new Vector<User>();
 	Font font = new Font("Verdana", Font.BOLD, 20);
-	
+//	  private int x1 = 50;
+//	  private int x2 = 250;
 	public DrawPanel() {
 		myFirebaseRef = new Firebase("https://pingispong.firebaseio.com/");
 		myFirebaseRef.removeValue(); //Cleans out everything
@@ -59,13 +60,27 @@ public class DrawPanel extends JPanel {
 				if (arg0.hasChildren()){
 					//System.out.println("ADD user with Key: "+arg1+ arg0.getKey());
 					Random r = new Random();
-					int x = 50;
+					//int x = 50;
 					int y = r.nextInt(getSize().height);
-						User user = new User(arg0.getKey(),x,y, 5);
+					int listCount = users.size();
+					System.out.println(listCount);//räknar antal spelar och skriver ut i konsollen. (börjar på 0)
+					
+					if (listCount ==0){
+						User user = new User(arg0.getKey(),50,y, 5);
 						if (!users.contains(user)){
 							users.add(user);
 							user.setColor(Color.BLACK);
+							System.out.println("player 1 in");
 				 		}
+					}
+					 if (listCount ==1){
+						User user = new User(arg0.getKey(),1500,y, 5);
+						if (!users.contains(user)){
+							users.add(user);
+							user.setColor(Color.RED);
+							System.out.println("player 2 in");
+					}
+					}	
 				}
 			}
 			
@@ -84,18 +99,18 @@ public class DrawPanel extends JPanel {
 		g2.setFont(font);
 		g2.setColor(Color.LIGHT_GRAY);
 		g2.fillRect(0, 0, getSize().width, getSize().height);
-		g2.setColor(Color.BLACK);
+		//g2.setColor(Color.BLACK);
 //		g.drawString("ScreenNbr: "+Constants.screenNbr, 10,  20);
 		//Test
 		for (User user : users) {
-			int x = 50;
+			//int x = 50;
 			int y = (int)(user.getyRel()*getSize().height);
 			String livesLeft = String.valueOf(user.getLives());
 			g2.setColor( user.getColor());
-			g2.fillRect(x,y, 10, 100);
-			g2.setColor(Color.BLACK);
-			g.drawString(user.getId(), 20, 20);
-			g.drawString(livesLeft, 20, 40);
+			g2.fillRect(user.getxPos(),y, 10, 100);
+			//g2.setColor(Color.BLACK);
+			g.drawString(user.getId(), user.getxPos(), 20);
+			g.drawString(livesLeft, user.getxPos(), 40);
 		}
 		
 	}
