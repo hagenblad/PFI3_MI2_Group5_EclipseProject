@@ -1,21 +1,14 @@
+
 package se.mah.k3;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.Collections;
 import java.util.Random;
 import java.util.Vector;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.firebase.client.ChildEventListener;
@@ -31,18 +24,17 @@ public class DrawPanel extends JPanel {
 	private Ball ball = new Ball();
 	int ballXSpeed = 0;
 	int ballYSpeed = 0;
-
 	//A vector is like an ArrayList a little bit slower but Thread-safe. This means that it can handle concurrent changes. 
 	private Vector<User> users = new Vector<User>();
 	Font font = new Font("Verdana", Font.BOLD, 20);
-	
+//	  private int x1 = 50;
+//	  private int x2 = 250;
 	public DrawPanel() {
-
+		
 		myFirebaseRef = new Firebase("https://pingispong.firebaseio.com/");
 		myFirebaseRef.removeValue(); //Cleans out everything
 		myFirebaseRef.child("ScreenNbr").setValue(Constants.screenNbr);  //Has to be same as on the app. So place specific can't you see the screen you don't know the number
-		myFirebaseRef.addChildEventListener(new ChildEventListener() {
-			
+		 myFirebaseRef.addChildEventListener(new ChildEventListener() {
 			@Override
 			public void onChildRemoved(DataSnapshot arg0) {}
 			
@@ -75,13 +67,27 @@ public class DrawPanel extends JPanel {
 				if (arg0.hasChildren()){
 					//System.out.println("ADD user with Key: "+arg1+ arg0.getKey());
 					Random r = new Random();
-					int x = r.nextInt(getSize().width);
+					//int x = 50;
 					int y = r.nextInt(getSize().height);
-						User user = new User(arg0.getKey(),x,y,5);
+					int listCount = users.size();
+					System.out.println(listCount);//räknar antal spelar och skriver ut i konsollen. (börjar på 0)
+					
+					if (listCount ==0){
+						User user = new User(arg0.getKey(),50,y, 5);
 						if (!users.contains(user)){
 							users.add(user);
-							user.setColor(new Color(r.nextInt(255),r.nextInt(255),r.nextInt(255)));
+							user.setColor(Color.BLACK);
+							System.out.println("player 1 in");
 				 		}
+					}
+					 if (listCount ==1){
+						User user = new User(arg0.getKey(),1500,y, 5);
+						if (!users.contains(user)){
+							users.add(user);
+							user.setColor(Color.RED);
+							System.out.println("player 2 in");
+					}
+					}	
 				}
 			}
 			
@@ -96,39 +102,32 @@ public class DrawPanel extends JPanel {
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-		
 		Graphics2D g2= (Graphics2D) g;
 		g2.setFont(font);
 		g2.setColor(Color.LIGHT_GRAY);
 		g2.fillRect(0, 0, getSize().width, getSize().height);
-		g2.setColor(Color.BLACK);
+		//g2.setColor(Color.BLACK);
 		
-		//Bollen
 		g2.fillOval(ballXSpeed, ballYSpeed, ball.size, ball.size);
 		ballXSpeed = ball.getBallXSpeed();
 		ballYSpeed = ball.getBallYSpeed();
 		
 		g.drawString("ScreenNbr: "+Constants.screenNbr, 10,  20);
-
-		Image img1 = Toolkit.getDefaultToolkit().getImage("src/images/bakgrund.jpg");
-	    g2.drawImage(img1, 0, 0, 1440, 900, this);
-	    g2.finalize();
-				
-		//Spelplan
-		g2.drawRect (10,10,900,900);
 		
+		g2.drawRect (10,10,900,900); //Spelplan
 		super.repaint();
-
 		//Test
 		for (User user : users) {
-			int x = (int)(user.getxRel()*getSize().width);
+			//int x = 50;
 			int y = (int)(user.getyRel()*getSize().height);
+			String livesLeft = String.valueOf(user.getLives());
 			g2.setColor( user.getColor());
-			g2.fillOval(x,y, 10, 10);
-			g2.setColor(Color.BLACK);
-			g.drawString(user.getId(),x+15,y+15);
-			
+			g2.fillRect(user.getxPos(),y, 10, 100);
+			//g2.setColor(Color.BLACK);
+			g.drawString(user.getId(), user.getxPos(), 20);
+			g.drawString(livesLeft, user.getxPos(), 40);
 		}
+		
 	}
 }
 
