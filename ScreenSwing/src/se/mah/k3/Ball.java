@@ -1,7 +1,6 @@
 package se.mah.k3;
 
 public class Ball {
-
 	public int x = 100;
 	public int y = 100;
 	int ySpeed = 7;
