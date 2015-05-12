@@ -10,9 +10,14 @@ public class Ball {
 	float ySpeed = 7;
 	float xSpeed = 10;
 	
+	//relative to screen variables, startposition for level
+	
+	int relX = 380;
+	int relY = 10;
+	
 	//Relative Screen size
-	int screenWidth = 1080;
-	int screenHeight = 900;
+	int screenWidth = relX +1120;
+	int screenHeight = relY + 1120;
 	
 	//Ball size
 	int size = 40;
@@ -55,7 +60,7 @@ public class Ball {
 	public void bounceBall(){
 		
 		//if the ball bounce on x-axis
-		if (x >= screenWidth - size/2|| x <= 0 + size/2){
+		if (x >= screenWidth - size/2|| x <= relX + size/2){
 			 Random rand = new Random();
 
 			 //SideSelect randomizes which direction the ball starts with
@@ -76,7 +81,7 @@ public class Ball {
 		}
 		
 		//if ball bounces on y-axis
-		if (y >= screenHeight - size/2|| y <= 0+  size/2){
+		if (y >= screenHeight - size/2|| y <= relY+  size/2){
 			ySpeed *= -1;
 			y += ySpeed;
 			
