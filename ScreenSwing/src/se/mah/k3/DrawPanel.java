@@ -33,6 +33,11 @@ public class DrawPanel extends JPanel {
 	private Ball ball = new Ball();
 	int ballXSpeed = 0;
 	int ballYSpeed = 0;
+<<<<<<< HEAD
+	
+	
+=======
+>>>>>>> master
 >>>>>>> master
 	//A vector is like an ArrayList a little bit slower but Thread-safe. This means that it can handle concurrent changes. 
 	private Vector<User> users = new Vector<User>();
@@ -83,7 +88,11 @@ public class DrawPanel extends JPanel {
 					Random r = new Random();
 					int x = r.nextInt(getSize().width);
 					int y = r.nextInt(getSize().height);
+<<<<<<< HEAD
+						User user = new User(arg0.getKey(),x,y,5);
+=======
 						User user = new User(arg0.getKey(),x,y, 5);
+>>>>>>> master
 						if (!users.contains(user)){
 							users.add(user);
 							user.setColor(new Color(r.nextInt(255),r.nextInt(255),r.nextInt(255)));
@@ -109,6 +118,7 @@ public class DrawPanel extends JPanel {
 		g2.fillRect(0, 0, getSize().width, getSize().height);
 		g2.setColor(Color.BLACK);
 		
+		//Bollen
 		g2.fillOval(ballXSpeed, ballYSpeed, ball.size, ball.size);
 		ballXSpeed = ball.getBallXSpeed();
 		ballYSpeed = ball.getBallYSpeed();
@@ -125,7 +135,9 @@ public class DrawPanel extends JPanel {
 		
 =======
 		
-		g2.drawRect (10,10,900,900); //Spelplan
+		//Spelplan
+		g2.drawRect (10,10,900,900);
+		
 		super.repaint();
 >>>>>>> master
 		//Test
