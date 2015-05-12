@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.util.Collections;
 import java.util.Random;
 import java.util.Vector;
@@ -108,14 +110,19 @@ public class DrawPanel extends JPanel {
 		g2.fillRect(0, 0, getSize().width, getSize().height);
 		//g2.setColor(Color.BLACK);
 		
+		
 		g2.fillOval(ballXSpeed, ballYSpeed, ball.size, ball.size);
 		ballXSpeed = ball.getBallXSpeed();
 		ballYSpeed = ball.getBallYSpeed();
-		
 		g.drawString("ScreenNbr: "+Constants.screenNbr, 10,  20);
-		
 		g2.drawRect (10,10,900,900); //Spelplan
-		super.repaint();
+		
+		//Bakgrund
+		Image img1 = Toolkit.getDefaultToolkit().getImage("src/images/bakis.jpg");
+	    g2.drawImage(img1, 0, 0, this);
+	    g2.finalize();
+		
+	    super.repaint();
 		//Test
 		for (User user : users) {
 			//int x = 50;
@@ -126,6 +133,8 @@ public class DrawPanel extends JPanel {
 			//g2.setColor(Color.BLACK);
 			g.drawString(user.getId(), user.getxPos(), 20);
 			g.drawString(livesLeft, user.getxPos(), 40);
+			
+
 		}
 		
 	}
