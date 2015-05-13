@@ -25,8 +25,8 @@ public class DrawPanel extends JPanel {
 	//creates a ball
 	private Ball ball = new Ball();
 	private int start = 0;
-	int ballXSpeed = ball.screenWidth;
-	int ballYSpeed = ball.screenHeight;
+	int ballXPos = ball.screenWidth;
+	int ballYPos = ball.screenHeight;
 	
 	//A vector is like an ArrayList a little bit slower but Thread-safe. This means that it can handle concurrent changes. 
 	private Vector<User> users = new Vector<User>();
@@ -117,10 +117,10 @@ public class DrawPanel extends JPanel {
 	    g2.drawImage(img1, -100, 20, 1000, 580, this); 
 	    g2.finalize();
 	    
-		g2.fillOval(ballXSpeed, ballYSpeed, ball.size, ball.size);
-		ballXSpeed = ball.getBallXSpeed();
-		ballYSpeed = ball.getBallYSpeed();
-		
+		g2.fillOval(ballXPos, ballYPos, ball.size, ball.size);
+		ballXPos = ball.getBallXSpeed();
+		ballYPos = ball.getBallYSpeed();
+		g.drawString("ScreenNbr: "+Constants.screenNbr, 10,  20);
 		
 		//g2.drawRect (ball.relX,ball.relY,ball.screenWidth,ball.screenHeight); //Spelplan
 	    g2.drawRect (130, 40,540,540);	
@@ -129,12 +129,30 @@ public class DrawPanel extends JPanel {
 	    
 		//Test
 		for (User user : users) {
-			//int x = 50;
 			int y = (int)(user.getyRel()*getSize().height);
 			
 			String livesLeft = String.valueOf(user.getLives());
-			g2.setColor( user.getColor());			
-			g2.fillRect(user.getxPos(),y, 10, 100);			
+			g2.setColor( user.getColor());
+			
+			int paddleXPos = user.userWidth;
+			int paddleYPos = user.userHeight;
+			
+			//draw out player
+			g2.fillRect(user.getxPos(), y , paddleXPos, paddleYPos);
+			
+			//paddle collision
+			if(ballXPos >= user.getxPos() && ballXPos <=user.getxPos()+paddleXPos ){
+				
+				System.out.println("Nice X pos");	
+				
+				if( ballYPos >= y && ballYPos <= y + user.userHeight){
+					System.out.println("Nice YYY Pos");
+					ball.paddleBounce();
+				
+				}
+				
+				
+			}
 			//g2.setColor(Color.BLACK);
 			g.drawString(user.getId(), user.getxPos(), 20);
 			g.drawString(livesLeft, user.getxPos(), 40);
