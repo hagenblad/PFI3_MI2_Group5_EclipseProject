@@ -123,7 +123,7 @@ public class DrawPanel extends JPanel {
 		g.drawString("ScreenNbr: "+Constants.screenNbr, 10,  20);
 		
 		//g2.drawRect (ball.relX,ball.relY,ball.screenWidth,ball.screenHeight); //Spelplan
-	    	g2.drawRect (100, 100,700,700);	
+	    	g2.drawRect (130, 40,540,540);	
 		
 	    super.repaint();
 	    
