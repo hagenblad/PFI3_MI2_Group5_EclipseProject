@@ -12,11 +12,11 @@ public class User implements Comparable<User>{
 	private int lives;
 	private double delay;
 	public int userHeight = 100;
-	public int userWidth = 20;
+	public int userWidth = 10;
 	
 	private Color c = new Color(100,100,100);
 	
-	
+
 	public User(String id, int xPos, int yPos, int lives) {
 		this.id = id;
 		this.xPos = xPos;

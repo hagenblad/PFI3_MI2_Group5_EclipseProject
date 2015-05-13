@@ -21,10 +21,12 @@ import com.firebase.client.FirebaseError;
 public class DrawPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private Firebase myFirebaseRef;
-	
+// Boolean = work on mac;
+	// work on mac = false;
+	//hdmi (== non existing);
 	//creates a ball
 	private Ball ball = new Ball();
-	private int start = 0;
+	private boolean start = false;
 	int ballXPos = ball.screenWidth;
 	int ballYPos = ball.screenHeight;
 	
@@ -116,19 +118,31 @@ public class DrawPanel extends JPanel {
 		Image img1 = Toolkit.getDefaultToolkit().getImage("src/images/bakis.jpg");
 	    g2.drawImage(img1, -100, 20, 1000, 580, this); 
 	    g2.finalize();
-	    
+	    if(start == false){
+	    	ballXPos = ball.screenWidth/2;
+	    	ballYPos = ball.screenHeight/2;
+	    	g.drawString("PING PONG", ball.screenWidth/2-20, ball.screenHeight/2-5);
+	    }
 		g2.fillOval(ballXPos, ballYPos, ball.size, ball.size);
 		ballXPos = ball.getBallXSpeed();
 		ballYPos = ball.getBallYSpeed();
-		g.drawString("ScreenNbr: "+Constants.screenNbr, 10,  20);
+		// g.drawString("ScreenNbr: "+Constants.screenNbr, 10,  20);
 		
 		//g2.drawRect (ball.relX,ball.relY,ball.screenWidth,ball.screenHeight); //Spelplan
 	    g2.drawRect (130, 40,540,540);	
-		
+	    try {
+	    	   // thread to sleep for 1000 milliseconds
+	    	   Thread.sleep(5);
+	    	   } catch (Exception e) {
+	    	   System.out.println(e);
+	    	   }
 	    super.repaint();
 	    
 		//Test
 		for (User user : users) {
+			if(users.size()==2){
+			start = true;
+			
 			int y = (int)(user.getyRel()*getSize().height);
 			
 			String livesLeft = String.valueOf(user.getLives());
@@ -141,11 +155,11 @@ public class DrawPanel extends JPanel {
 			g2.fillRect(user.getxPos(), y , paddleXPos, paddleYPos);
 			
 			//paddle collision
-			if(ballXPos >= user.getxPos() && ballXPos <=user.getxPos()+paddleXPos ){
+			if(ballXPos >= user.getxPos()-5 && ballXPos <=user.getxPos()+paddleXPos+5 ){
 				
 				System.out.println("Nice X pos");	
 				
-				if( ballYPos >= y && ballYPos <= y + user.userHeight){
+				if( ballYPos >= y-5 && ballYPos <= y + user.userHeight+5){
 					System.out.println("Nice YYY Pos");
 					ball.paddleBounce();
 				
@@ -154,10 +168,11 @@ public class DrawPanel extends JPanel {
 				
 			}
 			//g2.setColor(Color.BLACK);
-			g.drawString(user.getId(), user.getxPos(), 20);
-			g.drawString(livesLeft, user.getxPos(), 40);
+			g.drawString(user.getId(), user.getxPos(), 15);
+			//g.drawString(livesLeft, user.getxPos()-20, 15);
 			
 
+		}
 		}
 		
 	}
