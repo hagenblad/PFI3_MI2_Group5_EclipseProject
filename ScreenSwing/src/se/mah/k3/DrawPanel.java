@@ -77,7 +77,7 @@ public class DrawPanel extends JPanel {
 					System.out.println(listCount);//räknar antal spelar och skriver ut i konsollen. (börjar på 0)
 					
 					if (listCount ==0){
-						User user = new User(arg0.getKey(),200,y, 5);
+						User user = new User(arg0.getKey(),140,y, 5);
 						if (!users.contains(user)){
 							users.add(user);
 							user.setColor(Color.BLACK);
@@ -85,7 +85,7 @@ public class DrawPanel extends JPanel {
 				 		}
 					}
 					 if (listCount ==1){
-						User user = new User(arg0.getKey(),1500,y, 5);
+						User user = new User(arg0.getKey(),650,y, 5);
 						if (!users.contains(user)){
 							users.add(user);
 							user.setColor(Color.RED);
@@ -114,7 +114,7 @@ public class DrawPanel extends JPanel {
 		
 		//Bakgrund
 		Image img1 = Toolkit.getDefaultToolkit().getImage("src/images/bakis.jpg");
-	 //   g2.drawImage(img1, 0, 0, this);
+	    g2.drawImage(img1, -100, 20, 1000, 580, this); 
 	    g2.finalize();
 	    
 		g2.fillOval(ballXPos, ballYPos, ball.size, ball.size);
@@ -123,13 +123,14 @@ public class DrawPanel extends JPanel {
 		g.drawString("ScreenNbr: "+Constants.screenNbr, 10,  20);
 		
 		//g2.drawRect (ball.relX,ball.relY,ball.screenWidth,ball.screenHeight); //Spelplan
-	    	g2.drawRect (100, 100,700,700);	
+	    g2.drawRect (130, 40,540,540);	
 		
 	    super.repaint();
 	    
 		//Test
 		for (User user : users) {
 			int y = (int)(user.getyRel()*getSize().height);
+			
 			String livesLeft = String.valueOf(user.getLives());
 			g2.setColor( user.getColor());
 			

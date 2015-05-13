@@ -20,7 +20,8 @@ public class FullScreen extends JFrame implements KeyEventDispatcher{
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private boolean inFullScreenMode = false;
-	private int PrevX = 100 ,PrevY = 100 ,PrevWidth = 480,PrevHeight = 640; //Dummysize
+	
+	private int PrevX = 100 ,PrevY = 100 ,PrevWidth = 800,PrevHeight = 640; //Dummysize
 
 	/**
 	 * Launch the application.
@@ -53,7 +54,7 @@ public class FullScreen extends JFrame implements KeyEventDispatcher{
 		contentPane.add(panel, BorderLayout.CENTER);
 		KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager(); //Listen to keyboard
 	    manager.addKeyEventDispatcher(this);
-		setFullscreen(true);
+		setFullscreen(false);
 	}
 	
 	public void setFullscreen(boolean fullscreen) {

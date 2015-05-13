@@ -9,8 +9,8 @@ public class Ball {
 	int y = 100;
 	
 	//Current Speed for the ball
-	float ySpeed = 7;
-	float xSpeed = 10;
+	int ySpeed = 7;
+	int xSpeed = 10;
 	
 	//relative to screen variables, startposition for level
 	
@@ -84,11 +84,16 @@ public class Ball {
 		
 		//if ball bounces on y-axis
 		if (y >= screenHeight - size/2|| y <= relY+  size/2){
-			ySpeed *= -1;
+			ySpeed = bounce(ySpeed);
 			y += ySpeed;
 			
 		}
 		
+	}
+		
+	public int bounce(int bounce){
+		bounce *= -1; 
+		return bounce;
 	}
 	
 	public void paddleBounce(){
