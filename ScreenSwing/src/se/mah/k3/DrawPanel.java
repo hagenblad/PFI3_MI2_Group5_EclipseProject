@@ -114,7 +114,7 @@ public class DrawPanel extends JPanel {
 		
 		//Bakgrund
 		Image img1 = Toolkit.getDefaultToolkit().getImage("src/images/bakis.jpg");
-	 //   g2.drawImage(img1, 0, 0, this);
+	    g2.drawImage(img1, -100, 20, 1000, 580, this); 
 	    g2.finalize();
 	    
 		g2.fillOval(ballXSpeed, ballYSpeed, ball.size, ball.size);
