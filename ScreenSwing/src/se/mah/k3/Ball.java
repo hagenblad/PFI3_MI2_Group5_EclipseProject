@@ -1,5 +1,7 @@
 package se.mah.k3;
 import java.util.Random;
+
+
 public class Ball {
 
 	//Current position for the ball
@@ -86,6 +88,13 @@ public class Ball {
 			y += ySpeed;
 			
 		}
+		
+	}
+	
+	public void paddleBounce(){
+		
+		xSpeed *= -1;
+		x +=xSpeed;
 		
 	}
 	
