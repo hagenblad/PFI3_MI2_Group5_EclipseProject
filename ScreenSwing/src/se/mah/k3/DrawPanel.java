@@ -77,7 +77,7 @@ public class DrawPanel extends JPanel {
 					System.out.println(listCount);//räknar antal spelar och skriver ut i konsollen. (börjar på 0)
 					
 					if (listCount ==0){
-						User user = new User(arg0.getKey(),50,y, 5);
+						User user = new User(arg0.getKey(),140,y, 5);
 						if (!users.contains(user)){
 							users.add(user);
 							user.setColor(Color.BLACK);
@@ -85,7 +85,7 @@ public class DrawPanel extends JPanel {
 				 		}
 					}
 					 if (listCount ==1){
-						User user = new User(arg0.getKey(),1500,y, 5);
+						User user = new User(arg0.getKey(),650,y, 5);
 						if (!users.contains(user)){
 							users.add(user);
 							user.setColor(Color.RED);
@@ -123,7 +123,7 @@ public class DrawPanel extends JPanel {
 		g.drawString("ScreenNbr: "+Constants.screenNbr, 10,  20);
 		
 		//g2.drawRect (ball.relX,ball.relY,ball.screenWidth,ball.screenHeight); //Spelplan
-	    	g2.drawRect (130, 40,540,540);	
+	    g2.drawRect (130, 40,540,540);	
 		
 	    super.repaint();
 	    
@@ -131,11 +131,10 @@ public class DrawPanel extends JPanel {
 		for (User user : users) {
 			//int x = 50;
 			int y = (int)(user.getyRel()*getSize().height);
+			
 			String livesLeft = String.valueOf(user.getLives());
-			g2.setColor( user.getColor());
-			
-			g2.fillRect(user.getxPos(),y, 10, 100);
-			
+			g2.setColor( user.getColor());			
+			g2.fillRect(user.getxPos(),y, 10, 100);			
 			//g2.setColor(Color.BLACK);
 			g.drawString(user.getId(), user.getxPos(), 20);
 			g.drawString(livesLeft, user.getxPos(), 40);
