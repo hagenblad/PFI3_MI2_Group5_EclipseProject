@@ -12,23 +12,23 @@ public class Ball {
 	
 	//relative to screen variables, startposition for level
 	
-	int relX = 380;
-	int relY = 10;
+	int relX = 100;
+	int relY = 100;
 	
 	//Relative Screen size
-	int screenWidth = relX +1120;
-	int screenHeight = relY + 1120;
+	int screenWidth = relX +600;
+	int screenHeight = relY +600;
 	
 	//Ball size
-	int size = 40;
+	int size = 10;
 	
 	//Fluxuating values in X-axis
-	int minXSpeed = 4;
-	int maxXSpeed = 10;
+	int minXSpeed = 1;
+	int maxXSpeed = 4;
 	
 	// Fluxuating values in Y-axis 
-	int minYSpeed = -10;
-	int maxYSpeed = 10;
+	int minYSpeed = -1;
+	int maxYSpeed = 4;
 	public Ball(){
 		
 		

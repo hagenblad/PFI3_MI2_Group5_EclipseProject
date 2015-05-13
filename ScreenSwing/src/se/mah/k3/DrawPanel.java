@@ -24,8 +24,10 @@ public class DrawPanel extends JPanel {
 	
 	//creates a ball
 	private Ball ball = new Ball();
-	int ballXSpeed = 0;
-	int ballYSpeed = 0;
+	private int start = 0;
+	int ballXSpeed = ball.screenWidth;
+	int ballYSpeed = ball.screenHeight;
+	
 	//A vector is like an ArrayList a little bit slower but Thread-safe. This means that it can handle concurrent changes. 
 	private Vector<User> users = new Vector<User>();
 	Font font = new Font("Verdana", Font.BOLD, 20);
@@ -103,35 +105,37 @@ public class DrawPanel extends JPanel {
 	//Called when the screen needs a repaint.
 	@Override
 	public void paint(Graphics g) {
-		super.paint(g);
+		//super.paint(g);
 		Graphics2D g2= (Graphics2D) g;
 		g2.setFont(font);
 		g2.setColor(Color.LIGHT_GRAY);
 		g2.fillRect(0, 0, getSize().width, getSize().height);
-		g2.setColor(Color.white);
+		g2.setColor(Color.black);
 		
 		//Bakgrund
 		Image img1 = Toolkit.getDefaultToolkit().getImage("src/images/bakis.jpg");
-	    g2.drawImage(img1, 0, 0, this);
+	 //   g2.drawImage(img1, 0, 0, this);
 	    g2.finalize();
-		
+	    
 		g2.fillOval(ballXSpeed, ballYSpeed, ball.size, ball.size);
 		ballXSpeed = ball.getBallXSpeed();
 		ballYSpeed = ball.getBallYSpeed();
 		g.drawString("ScreenNbr: "+Constants.screenNbr, 10,  20);
 		
-		g2.drawRect (ball.relX,ball.relY,ball.screenWidth,ball.screenHeight); //Spelplan
-		
-		
+		//g2.drawRect (ball.relX,ball.relY,ball.screenWidth,ball.screenHeight); //Spelplan
+	    	g2.drawRect (100, 100,700,700);	
 		
 	    super.repaint();
+	    
 		//Test
 		for (User user : users) {
 			//int x = 50;
 			int y = (int)(user.getyRel()*getSize().height);
 			String livesLeft = String.valueOf(user.getLives());
 			g2.setColor( user.getColor());
+			
 			g2.fillRect(user.getxPos(),y, 10, 100);
+			
 			//g2.setColor(Color.BLACK);
 			g.drawString(user.getId(), user.getxPos(), 20);
 			g.drawString(livesLeft, user.getxPos(), 40);
