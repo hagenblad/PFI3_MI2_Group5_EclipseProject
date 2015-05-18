@@ -21,16 +21,19 @@ import com.firebase.client.FirebaseError;
 public class DrawPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private Firebase myFirebaseRef;
+	private Ball ball = new Ball();
+	private BallLogic ballLogic = new BallLogic(ball);
+	
 // Boolean = work on mac;
 	// work on mac = false;
 	//hdmi (== non existing);
 	//creates a ball
-	private Ball ball = new Ball();
-	private boolean start = false;
-	int ballXPos = ball.screenWidth;
-	int ballYPos = ball.screenHeight;
 	
-	BallLogic ballLogic = new BallLogic(ball);
+	private boolean start = false;
+	private int ballXPos = ballLogic.screenWidth;
+	private int ballYPos = ballLogic.screenHeight;
+	
+
 	
 	//A vector is like an ArrayList a little bit slower but Thread-safe. This means that it can handle concurrent changes. 
 	private Vector<User> users = new Vector<User>();
@@ -120,9 +123,9 @@ public class DrawPanel extends JPanel {
 	    g2.drawImage(img1, -100, 20, 1000, 580, this); 
 	    g2.finalize();
 	    if(start == false){
-	    	ballXPos = ball.screenWidth/2;
-	    	ballYPos = ball.screenHeight/2;
-	    	g.drawString("PING PONG", ball.screenWidth/2-20, ball.screenHeight/2-5);
+	    	ballXPos = ballLogic.screenWidth/2;
+	    	ballYPos = ballLogic.screenHeight/2;
+	    	g.drawString("PING PONG", ballLogic.screenWidth/2-20, ballLogic.screenHeight/2-5);
 	    }else{
 	    	ballXPos = ball.getXPos();
 			ballYPos = ball.getYPos();
