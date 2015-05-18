@@ -23,6 +23,11 @@ public class User implements Comparable<User>{
 		this.yPos = yPos;
 		this.lives = lives;
 	}
+	
+	public User(){
+		// empty construcotr
+		
+	}
 	public String getId() {
 		return id;
 	}

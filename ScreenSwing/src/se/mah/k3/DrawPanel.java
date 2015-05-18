@@ -30,11 +30,12 @@ public class DrawPanel extends JPanel {
 	int ballXPos = ball.screenWidth;
 	int ballYPos = ball.screenHeight;
 	
+	BallLogic ballLogic = new BallLogic(ball);
+	
 	//A vector is like an ArrayList a little bit slower but Thread-safe. This means that it can handle concurrent changes. 
 	private Vector<User> users = new Vector<User>();
 	Font font = new Font("Verdana", Font.BOLD, 20);
-//	  private int x1 = 50;
-//	  private int x2 = 250;
+
 	public DrawPanel() {
 		
 		myFirebaseRef = new Firebase("https://pingispong.firebaseio.com/");
@@ -122,17 +123,18 @@ public class DrawPanel extends JPanel {
 	    	ballXPos = ball.screenWidth/2;
 	    	ballYPos = ball.screenHeight/2;
 	    	g.drawString("PING PONG", ball.screenWidth/2-20, ball.screenHeight/2-5);
+	    }else{
+	    	ballXPos = ball.getXPos();
+			ballYPos = ball.getYPos();
+			
 	    }
-		g2.fillOval(ballXPos, ballYPos, ball.size, ball.size);
-		ballXPos = ball.getBallXSpeed();
-		ballYPos = ball.getBallYSpeed();
-		// g.drawString("ScreenNbr: "+Constants.screenNbr, 10,  20);
-		
-		//g2.drawRect (ball.relX,ball.relY,ball.screenWidth,ball.screenHeight); //Spelplan
+	    
+		g2.fillOval(ballXPos, ballYPos, ball.getSize(), ball.getSize());
+
 	    g2.drawRect (130, 40,540,540);	
 	    try {
 	    	   // thread to sleep for 1000 milliseconds
-	    	   Thread.sleep(5);
+	    	   Thread.sleep(3);
 	    	   } catch (Exception e) {
 	    	   System.out.println(e);
 	    	   }
@@ -140,39 +142,26 @@ public class DrawPanel extends JPanel {
 	    
 		//Test
 		for (User user : users) {
-			if(users.size()==2){
+			if(users.size()==1){
 			start = true;
 			
 			int y = (int)(user.getyRel()*getSize().height);
-			
 			String livesLeft = String.valueOf(user.getLives());
 			g2.setColor( user.getColor());
-			
-			int paddleXPos = user.userWidth;
-			int paddleYPos = user.userHeight;
+
 			
 			//draw out player
-			g2.fillRect(user.getxPos(), y , paddleXPos, paddleYPos);
+			g2.fillRect(user.getxPos(), y , user.userWidth, user.userHeight);
 			
-			//paddle collision
-			if(ballXPos >= user.getxPos()-5 && ballXPos <=user.getxPos()+paddleXPos+5 ){
 				
-				System.out.println("Nice X pos");	
-				
-				if( ballYPos >= y-5 && ballYPos <= y + user.userHeight+5){
-					System.out.println("Nice YYY Pos");
-					ball.paddleBounce();
-				
-				}
-				
-				
+			ballLogic.comparePosition(user.getxPos(),y,user.userWidth,user.userHeight);
+
 			}
-			//g2.setColor(Color.BLACK);
+
 			g.drawString(user.getId(), user.getxPos(), 15);
 			//g.drawString(livesLeft, user.getxPos()-20, 15);
-			
 
-		}
+
 		}
 		
 	}
