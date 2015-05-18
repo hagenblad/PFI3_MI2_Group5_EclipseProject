@@ -89,7 +89,7 @@ public class BallLogic {
 	public void checkBounceWall(){
 
 		if (bally.getYPos() >= screenHeight - bally.getSize()/2|| bally.getYPos() <= relY+  bally.getSize()/2){
-			System.out.println("BAAAALLYYY");
+
 			int ySpeed = bally.getBallYSpeed();
 			bally.setBallYSpeed(ySpeed *= -1);
 			

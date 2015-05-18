@@ -30,8 +30,8 @@ public class DrawPanel extends JPanel {
 	//creates a ball
 	
 	private boolean start = false;
-	private int ballXPos = ballLogic.screenWidth;
-	private int ballYPos = ballLogic.screenHeight;
+	int ballXPos = ballLogic.screenWidth;
+	int ballYPos = ballLogic.screenHeight;
 	
 
 	
@@ -145,7 +145,7 @@ public class DrawPanel extends JPanel {
 	    
 		//Test
 		for (User user : users) {
-			if(users.size()==1){
+			if(users.size()==2){
 			start = true;
 			
 			int y = (int)(user.getyRel()*getSize().height);
