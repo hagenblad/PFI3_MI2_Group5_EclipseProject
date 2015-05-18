@@ -6,6 +6,9 @@ public class BallLogic {
 
 	private Ball bally = new Ball();
 	private User user = new User();
+	
+	public int player1lives = 5;
+	public int player2lives = 5;
 
 	//relative to screen variables, startposition for level	
 	int relX = 120;
@@ -52,7 +55,9 @@ public class BallLogic {
 		if (bally.getXPos()>= screenWidth - bally.getSize()/2){
 			 //Random rand = new Random();
 			 bally.setBallXSpeed(-1);
-			 
+			 player2lives--;
+			 System.out.println("player 2 lost a life");
+			 System.out.println(String.valueOf(player2lives));
 			 reMatch();
 		}
 
@@ -60,6 +65,9 @@ public class BallLogic {
 			if(bally.getXPos() <= relX + bally.getSize()/2){
 				//Random rand2 = new Random();
 				bally.setBallXSpeed(1);
+				player1lives--;
+				System.out.println("player 1 lost a life");
+				System.out.println(String.valueOf(player1lives));
 				reMatch();
 			}
 			
@@ -143,8 +151,10 @@ public class BallLogic {
 	}
 	
 	
+	
 	//restarts on goal score
 	public void reMatch(){
+		
 		bally.setBallYSpeed(bally.getBallYSpeed());
 		bally.setXPos(screenWidth/2);
 		bally.setYPos(screenHeight/2);
