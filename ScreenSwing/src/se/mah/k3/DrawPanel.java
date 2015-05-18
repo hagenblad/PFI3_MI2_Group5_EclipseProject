@@ -33,8 +33,10 @@ public class DrawPanel extends JPanel {
 	int ballXPos = ballLogic.screenWidth;
 	int ballYPos = ballLogic.screenHeight;
 	
-
+	//private int player1lives = 5;
+	//private int player2lives = 5;
 	
+
 	//A vector is like an ArrayList a little bit slower but Thread-safe. This means that it can handle concurrent changes. 
 	private Vector<User> users = new Vector<User>();
 	Font font = new Font("Verdana", Font.BOLD, 20);
@@ -83,7 +85,7 @@ public class DrawPanel extends JPanel {
 					System.out.println(listCount);//räknar antal spelar och skriver ut i konsollen. (börjar på 0)
 					
 					if (listCount ==0){
-						User user = new User(arg0.getKey(),140,y, 5);
+						User user = new User(arg0.getKey(),140,y, ballLogic.player1lives);
 						if (!users.contains(user)){
 							users.add(user);
 							user.setColor(Color.BLACK);
@@ -91,7 +93,7 @@ public class DrawPanel extends JPanel {
 				 		}
 					}
 					 if (listCount ==1){
-						User user = new User(arg0.getKey(),650,y, 5);
+						User user = new User(arg0.getKey(),650,y, ballLogic.player2lives);
 						if (!users.contains(user)){
 							users.add(user);
 							user.setColor(Color.RED);
@@ -106,7 +108,11 @@ public class DrawPanel extends JPanel {
 				
 			}
 		});
+		 
+
 	}
+
+	
 	
 	//Called when the screen needs a repaint.
 	@Override
@@ -149,7 +155,6 @@ public class DrawPanel extends JPanel {
 			start = true;
 			
 			int y = (int)(user.getyRel()*getSize().height);
-			String livesLeft = String.valueOf(user.getLives());
 			g2.setColor( user.getColor());
 
 			
@@ -160,9 +165,13 @@ public class DrawPanel extends JPanel {
 			ballLogic.comparePosition(user.getxPos(),y,user.userWidth,user.userHeight);
 
 			}
+			String livesLeftPlayerOne = String.valueOf(ballLogic.player1lives);
+			String livesLeftPlayerTwo = String.valueOf(ballLogic.player2lives);
 
 			g.drawString(user.getId(), user.getxPos(), 15);
-			//g.drawString(livesLeft, user.getxPos()-20, 15);
+			//String playerOneLives = t(player1lives);
+			g.drawString(livesLeftPlayerOne, 15, 15);
+			g.drawString(livesLeftPlayerTwo, 750, 15);
 
 
 		}
