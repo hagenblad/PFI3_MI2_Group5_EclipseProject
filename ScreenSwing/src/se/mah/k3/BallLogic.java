@@ -71,10 +71,7 @@ public class BallLogic {
 				reMatch();
 			}
 			
-			//Reset the ball
-			Random rand = new Random();
-			
-			bally.setBallYSpeed(rand.nextInt((maxYSpeed - minYSpeed) + 1) -maxYSpeed);
+
 			
 			if(bally.getBallYSpeed()== 0){
 				Random r = new Random();
@@ -158,7 +155,11 @@ public class BallLogic {
 		bally.setBallYSpeed(bally.getBallYSpeed());
 		bally.setXPos(screenWidth/2);
 		bally.setYPos(screenHeight/2);
-		//Insert kill a life
+		
+		//Reset the ball
+		Random rand = new Random();
+		
+		bally.setBallYSpeed(rand.nextInt((maxYSpeed - minYSpeed) + 1) -maxYSpeed);
 		
 	}
 
