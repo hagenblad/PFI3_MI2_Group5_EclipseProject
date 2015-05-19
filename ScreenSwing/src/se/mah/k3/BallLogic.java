@@ -153,10 +153,10 @@ public class BallLogic {
 	public void cornerBounce(){
 		//upper left corner
 		if(bally.getXPos()<= relX+100 && bally.getXPos() >= relX){
-			System.out.println("X CORNER");
+		//	System.out.println("X CORNER");
 			
 			if(bally.getYPos()<=relY+100 && bally.getYPos()>=relY){
-				System.out.println("Y N X CORNER");
+			//	System.out.println("Y N X CORNER");
 				
 			}
 			

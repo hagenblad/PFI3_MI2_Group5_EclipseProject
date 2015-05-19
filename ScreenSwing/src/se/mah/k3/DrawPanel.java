@@ -11,6 +11,9 @@ import java.util.Collections;
 import java.util.Random;
 import java.util.Vector;
 
+import java.awt.Polygon;
+import java.awt.geom.Area;
+
 import javax.swing.JPanel;
 
 import com.firebase.client.ChildEventListener;
@@ -33,7 +36,11 @@ public class DrawPanel extends JPanel {
 	int ballXPos = ballLogic.screenWidth;
 	int ballYPos = ballLogic.screenHeight;
 	
-
+	public Polygon polyTRC;
+	public Polygon polyTLC;
+	public Polygon polyBRC;
+	public Polygon polyBLC;
+	public Polygon polyBally;
 	
 	//A vector is like an ArrayList a little bit slower but Thread-safe. This means that it can handle concurrent changes. 
 	private Vector<User> users = new Vector<User>();
@@ -119,19 +126,35 @@ public class DrawPanel extends JPanel {
 	    int TLCypoints[] = {40, 40, 100};
 	    int npoints = 3;
 	    
+	    polyTLC = new Polygon(TLCxpoints, TLCypoints, npoints);
+	    
 	   //TOP RIGHT CORNER
 	    int TRCxpoints[] = {670, 610, 670};
 	    int TRCypoints[] = {40, 40, 100};
+	    
+	    polyTRC = new Polygon(TRCxpoints, TRCypoints, npoints);
 	    
 	   //BOT LEFT CORNER
 	    
 	    int BLCxpoints[] = {130,190,130};
 	    int BLCypoints[] = {580,580,520};
 	    
+	    polyBLC = new Polygon(BLCxpoints, BLCypoints, npoints);
+	    
 	    //BOT RIGHT CORNER
 	    int BRCxpoints[] = {670, 610, 670};
 	    int BRCypoints[] = {580, 580, 520};
+	    
+	    polyBRC = new Polygon(BRCxpoints, BRCypoints, npoints);
 		
+	    //Ball polygon
+	    int ballNpoints = 4;
+	    int ballPolysizeX[] = {0 + ballXPos, 0 + ballXPos,10 + ballXPos, 10 + ballXPos};
+	    int ballPolysizeY[] = {0 + ballYPos, 10 + ballYPos,10 + ballYPos,0 + ballYPos};
+	   
+	   polyBally = new Polygon(ballPolysizeX,ballPolysizeY,ballNpoints);
+	    
+	    
 		//super.paint(g);
 		Graphics2D g2= (Graphics2D) g;
 		g2.setFont(font);
@@ -154,19 +177,74 @@ public class DrawPanel extends JPanel {
 	    }
 
 		g2.fillOval(ballXPos, ballYPos, ball.getSize(), ball.getSize());
+		
+		
+		
 	    g2.drawRect (130, 40,540,540);	
-	    
+	    //CORNERS
 	    //TOP LEFT CORNER
-	    g.drawPolygon(TLCxpoints, TLCypoints,npoints);
-	    
+	    g.drawPolygon(polyTLC);
+	    g.fillPolygon (polyTLC);
 	    //BOT LEFT CORNER 
-	    g.drawPolygon(BLCxpoints,BLCypoints,npoints);
-	    
+	    g.drawPolygon(polyBLC);
+	    g.fillPolygon (polyBLC);
 	    //TOP RIGHT CORNER
-	    g.drawPolygon(TRCxpoints,TRCypoints,npoints);
-	    
+	    g.drawPolygon(polyTRC);
+	    g.fillPolygon (polyTRC);
 	    //BOT RIGHT CORNER
-	    g.drawPolygon(BRCxpoints,BRCypoints,npoints);
+	    g.drawPolygon(polyBRC);
+	    g.fillPolygon (polyBRC);
+	    
+	    
+	    g.drawPolygon(polyBally);
+	    g.fillPolygon (polyBally);
+	    
+	    
+	    
+	    //Collision between corners and ball polygon
+	    
+	    
+	    Area areaBall = new Area (polyBally);
+	    Area areaTLC = new Area (polyTLC);
+	    Area areaBLC = new Area (polyBLC);
+	    Area areaTRC = new Area (polyTRC);
+	    Area areaBRC = new Area (polyBRC);
+	    
+	    
+	    
+	    
+//	    areaBall.intersect(new Area (polyTLC));
+//	    areaBall.intersect(new Area (polyBLC));
+//	    areaBall.intersect(new Area (polyTRC));
+//	    areaBall.intersect(new Area (polyBRC));
+	    
+	    
+	    
+	    areaTLC.intersect(areaBall);
+	    if (!areaTLC.isEmpty()){
+	    	// insert bounce method
+	    	System.out.println("intercects TLC");
+	    }
+	    
+	    
+	    areaBLC.intersect(areaBall);
+	    if (!areaBLC.isEmpty()){
+	    	
+	    	System.out.println("intercects BLC");
+	    }
+	   
+	    areaTRC.intersect(areaBall);
+	    if (!areaTRC.isEmpty()){
+	    	
+	    	System.out.println("intercects TRC");
+	    }
+	    
+	    areaBRC.intersect(areaBall);
+	    if (!areaBRC.isEmpty()){
+	    	
+	    	System.out.println("intercects BRC");
+	    }
+	    
 	    
 	    
 	    try {
