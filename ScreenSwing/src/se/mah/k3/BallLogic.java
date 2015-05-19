@@ -112,11 +112,11 @@ public class BallLogic {
 		//paddle collision
 		if(bally.getXPos() >= xPos -5 && bally.getXPos() <= xPos + width+5 ){
 			
-		//	System.out.println("Nice X pos");	
+			System.out.println("Nice X pos");	
 			
 			if( bally.getYPos() >= yPos -5 && bally.getYPos() <= yPos + height+5){
 				
-		//		System.out.println("Nice YYY Pos");
+				System.out.println("Nice YYY Pos");
 				
 				int xSpeed = bally.getBallXSpeed(); 
 					

@@ -92,20 +92,22 @@ public class DrawPanel extends JPanel {
 					System.out.println("number of players: " + listCount); //räknar antal spelar och skriver ut i konsollen. (börjar på 0)
 					
 					if (listCount ==0){
-						User user = new User(arg0.getKey(),140,y, ballLogic.player1lives);
+						User user = new User(arg0.getKey(),140,y, ballLogic.player1lives); // create player 1
 						if (!users.contains(user)){
 							users.add(user);
 							user.setColor(Color.BLACK);
 							System.out.println("player 1 in");
+//							System.out.println(user.getId() + user.getDelay());
 				 		}
 					}
 					 if (listCount ==1){
-						User user = new User(arg0.getKey(),650,y, ballLogic.player2lives);
+						User user = new User(arg0.getKey(),650,y, ballLogic.player2lives); // create player 2
 						if (!users.contains(user)){
 							users.add(user);
 							user.setColor(Color.RED);
 							System.out.println("player 2 in");
-					}
+//							System.out.println(user.getId() + user.getDelay());
+						}
 					}	
 				}
 			}
@@ -129,7 +131,7 @@ public class DrawPanel extends JPanel {
 		g2.fillRect(0, 0, getSize().width, getSize().height);
 		g2.setColor(Color.black);
 		
-		//Bakgrund
+		//Background
 		Image img1 = Toolkit.getDefaultToolkit().getImage("src/images/bakis.jpg");
 	    g2.drawImage(img1, -100, 20, 1000, 580, this); 
 	    g2.finalize();
