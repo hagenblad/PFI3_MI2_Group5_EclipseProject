@@ -151,7 +151,7 @@ public class DrawPanel extends JPanel {
 	    
 		//Test
 		for (User user : users) {
-			if(users.size()==1){
+			if(users.size()==2){
 			start = true;
 			
 			int y = (int)(user.getyRel()*getSize().height);
