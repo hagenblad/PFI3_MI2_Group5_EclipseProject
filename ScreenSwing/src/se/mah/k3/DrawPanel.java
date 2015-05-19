@@ -115,15 +115,22 @@ public class DrawPanel extends JPanel {
 //		int TLCxpoints[] = {ballLogic.relX+10, ballLogic.relX+ 100, ballLogic.relX +10};
 		 //   int TLCypoints[] = {ballLogic.relY, ballLogic.relY, ballLogic.relY + 100};
 		 
-		int TLCxpoints[] = {25, 145, 25};
-	    int TLCypoints[] = {25, 25, 145};
+		int TLCxpoints[] = {130, 190, 130};
+	    int TLCypoints[] = {40, 40, 100};
 	    int npoints = 3;
 	    
-	    //TOP RIGHT CORNER
+	   //TOP RIGHT CORNER
+	    int TRCxpoints[] = {670, 610, 670};
+	    int TRCypoints[] = {40, 40, 100};
 	    
+	   //BOT LEFT CORNER
 	    
-	   
-		
+	    int BLCxpoints[] = {130,190,130};
+	    int BLCypoints[] = {580,580,520};
+	    
+	    //BOT RIGHT CORNER
+	    int BRCxpoints[] = {670, 610, 670};
+	    int BRCypoints[] = {580, 580, 520};
 		
 		//super.paint(g);
 		Graphics2D g2= (Graphics2D) g;
@@ -151,6 +158,16 @@ public class DrawPanel extends JPanel {
 	    
 	    //TOP LEFT CORNER
 	    g.drawPolygon(TLCxpoints, TLCypoints,npoints);
+	    
+	    //BOT LEFT CORNER 
+	    g.drawPolygon(BLCxpoints,BLCypoints,npoints);
+	    
+	    //TOP RIGHT CORNER
+	    g.drawPolygon(TRCxpoints,TRCypoints,npoints);
+	    
+	    //BOT RIGHT CORNER
+	    g.drawPolygon(BRCxpoints,BRCypoints,npoints);
+	    
 	    
 	    try {
 	    	   // thread to sleep for 1000 milliseconds
