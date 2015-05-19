@@ -2,6 +2,7 @@ package se.mah.k3;
 
 import java.util.Random;
 
+
 public class BallLogic {
 
 	private Ball bally = new Ball();
@@ -39,8 +40,13 @@ public class BallLogic {
 	checkBounceGoal();
 	//Check if bounce wall
 	checkBounceWall();
+	
+	//Corner bounce-check
+	cornerBounce();
+	
 	//Check if player hit
 	paddleBounce(x,y, width, height);
+	
 	
 
 	}
@@ -52,7 +58,7 @@ public class BallLogic {
 		if (bally.getXPos()>= screenWidth - bally.getSize()/2){
 			 //Random rand = new Random();
 			 bally.setBallXSpeed(-1);
-			 
+				//Reset the ball
 			 reMatch();
 		}
 
@@ -60,13 +66,11 @@ public class BallLogic {
 			if(bally.getXPos() <= relX + bally.getSize()/2){
 				//Random rand2 = new Random();
 				bally.setBallXSpeed(1);
+				//Reset the ball
 				reMatch();
 			}
 			
-			//Reset the ball
-			Random rand = new Random();
-			
-			bally.setBallYSpeed(rand.nextInt((maxYSpeed - minYSpeed) + 1) -maxYSpeed);
+
 			
 			if(bally.getBallYSpeed()== 0){
 				Random r = new Random();
@@ -87,7 +91,11 @@ public class BallLogic {
 	}
 	//if ball bounces on y-axis
 	public void checkBounceWall(){
-
+		int radie = bally.getSize() /2;
+		int area =	radie * radie * 3;
+		
+		
+		
 		if (bally.getYPos() >= screenHeight - bally.getSize()/2|| bally.getYPos() <= relY+  bally.getSize()/2){
 
 			int ySpeed = bally.getBallYSpeed();
@@ -105,11 +113,11 @@ public class BallLogic {
 		//paddle collision
 		if(bally.getXPos() >= xPos -5 && bally.getXPos() <= xPos + width+5 ){
 			
-			System.out.println("Nice X pos");	
+		//	System.out.println("Nice X pos");	
 			
 			if( bally.getYPos() >= yPos -5 && bally.getYPos() <= yPos + height+5){
 				
-				System.out.println("Nice YYY Pos");
+			//	System.out.println("Nice YYY Pos");
 				
 				int xSpeed = bally.getBallXSpeed(); 
 					
@@ -142,12 +150,28 @@ public class BallLogic {
 		
 	}
 	
+	public void cornerBounce(){
+		//upper left corner
+		if(bally.getXPos()<= relX+100 && bally.getXPos() >= relX){
+			System.out.println("X CORNER");
+			
+			if(bally.getYPos()<=relY+100 && bally.getYPos()>=relY){
+				System.out.println("Y N X CORNER");
+				
+			}
+			
+		}
+		
+	}
+	
 	
 	//restarts on goal score
 	public void reMatch(){
 		bally.setBallYSpeed(bally.getBallYSpeed());
 		bally.setXPos(screenWidth/2);
 		bally.setYPos(screenHeight/2);
+		Random rand = new Random();
+		bally.setBallYSpeed(rand.nextInt((maxYSpeed - minYSpeed) + 1) -maxYSpeed);
 		//Insert kill a life
 		
 	}

@@ -111,6 +111,20 @@ public class DrawPanel extends JPanel {
 	//Called when the screen needs a repaint.
 	@Override
 	public void paint(Graphics g) {
+		//TOP LEFT CORNER
+//		int TLCxpoints[] = {ballLogic.relX+10, ballLogic.relX+ 100, ballLogic.relX +10};
+		 //   int TLCypoints[] = {ballLogic.relY, ballLogic.relY, ballLogic.relY + 100};
+		 
+		int TLCxpoints[] = {25, 145, 25};
+	    int TLCypoints[] = {25, 25, 145};
+	    int npoints = 3;
+	    
+	    //TOP RIGHT CORNER
+	    
+	    
+	   
+		
+		
 		//super.paint(g);
 		Graphics2D g2= (Graphics2D) g;
 		g2.setFont(font);
@@ -131,10 +145,13 @@ public class DrawPanel extends JPanel {
 			ballYPos = ball.getYPos();
 			
 	    }
-	    
-		g2.fillOval(ballXPos, ballYPos, ball.getSize(), ball.getSize());
 
+		g2.fillOval(ballXPos, ballYPos, ball.getSize(), ball.getSize());
 	    g2.drawRect (130, 40,540,540);	
+	    
+	    //TOP LEFT CORNER
+	    g.drawPolygon(TLCxpoints, TLCypoints,npoints);
+	    
 	    try {
 	    	   // thread to sleep for 1000 milliseconds
 	    	   Thread.sleep(3);
@@ -145,7 +162,7 @@ public class DrawPanel extends JPanel {
 	    
 		//Test
 		for (User user : users) {
-			if(users.size()==2){
+			if(users.size()==1){
 			start = true;
 			
 			int y = (int)(user.getyRel()*getSize().height);
