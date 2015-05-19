@@ -58,7 +58,7 @@ public class DrawPanel extends JPanel {
 			public void onChildChanged(DataSnapshot arg0, String arg1) {
 				Iterable<DataSnapshot> dsList= arg0.getChildren();
 				Collections.sort(users);
-				int place = Collections.binarySearch(users, new User(arg0.getKey(),0,0, 5)); //Find the user usernama has to be unique uses the method compareTo in User
+				int place = Collections.binarySearch(users, new User(arg0.getKey(),0,0, 5)); //Find the user username has to be unique uses the method compareTo in User
 				 for (DataSnapshot dataSnapshot : dsList) {					 
 					 if (dataSnapshot.getKey().equals("xRel")){
 						 users.get(place).setxRel((double)dataSnapshot.getValue());
@@ -69,8 +69,15 @@ public class DrawPanel extends JPanel {
 					 if (dataSnapshot.getKey().equals("RoundTripTo")){
 						 myFirebaseRef.child(arg0.getKey()).child("RoundTripBack").setValue((long)dataSnapshot.getValue()+1);
 					 }
+					 
+					 // tried here to reach the ping variable in firebase
+//					 if (dataSnapshot.getKey().equals("ping")){
+//						 users.get(place).setDelay((double)dataSnapshot.getValue());
+//					 }
 				 }
+					
 				 repaint();
+
 			}
 			
 			//We got a new user
@@ -82,7 +89,7 @@ public class DrawPanel extends JPanel {
 					//int x = 50;
 					int y = r.nextInt(getSize().height);
 					int listCount = users.size();
-					System.out.println(listCount);//räknar antal spelar och skriver ut i konsollen. (börjar på 0)
+					System.out.println("number of players: " + listCount); //räknar antal spelar och skriver ut i konsollen. (börjar på 0)
 					
 					if (listCount ==0){
 						User user = new User(arg0.getKey(),140,y, ballLogic.player1lives);
@@ -108,11 +115,9 @@ public class DrawPanel extends JPanel {
 				
 			}
 		});
-		 
 
 	}
 
-	
 	
 	//Called when the screen needs a repaint.
 	@Override
@@ -147,11 +152,12 @@ public class DrawPanel extends JPanel {
 	    	   } catch (Exception e) {
 	    	   System.out.println(e);
 	    	   }
+
 	    super.repaint();
 	    
 		//Test
 		for (User user : users) {
-			if(users.size()==2){
+			if(users.size()>=1){
 			start = true;
 			
 			int y = (int)(user.getyRel()*getSize().height);
@@ -173,7 +179,11 @@ public class DrawPanel extends JPanel {
 			g.drawString(livesLeftPlayerOne, 15, 15);
 			g.drawString(livesLeftPlayerTwo, 750, 15);
 
-
+				 
+//			if(users.size()>4){
+//				start = false;
+//			}
+			
 		}
 		
 	}

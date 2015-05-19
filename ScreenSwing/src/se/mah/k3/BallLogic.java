@@ -9,7 +9,7 @@ public class BallLogic {
 	
 	public int player1lives = 5;
 	public int player2lives = 5;
-
+		
 	//relative to screen variables, startposition for level	
 	int relX = 120;
 	int relY = 40;
@@ -112,11 +112,11 @@ public class BallLogic {
 		//paddle collision
 		if(bally.getXPos() >= xPos -5 && bally.getXPos() <= xPos + width+5 ){
 			
-			System.out.println("Nice X pos");	
+		//	System.out.println("Nice X pos");	
 			
 			if( bally.getYPos() >= yPos -5 && bally.getYPos() <= yPos + height+5){
 				
-				System.out.println("Nice YYY Pos");
+		//		System.out.println("Nice YYY Pos");
 				
 				int xSpeed = bally.getBallXSpeed(); 
 					
@@ -177,7 +177,7 @@ public class BallLogic {
 //			bally.setBallYSpeed(0);
 //			bally.setBallXSpeed(0);
 		}
-		
+	
 		if(player2lives == 0){
 			System.out.println("Player 1 Wins");
 			reMatch();
