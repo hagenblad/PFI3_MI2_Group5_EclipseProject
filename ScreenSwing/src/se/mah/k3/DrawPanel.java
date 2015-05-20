@@ -36,7 +36,10 @@ public class DrawPanel extends JPanel {
 	int ballXPos = ballLogic.screenWidth;
 	int ballYPos = ballLogic.screenHeight;
 	
-
+	//player ping
+	long playerDelay;
+	int playerPing;
+	
 	public Polygon polyTRC;
 	public Polygon polyTLC;
 	public Polygon polyBRC;
@@ -144,6 +147,42 @@ public class DrawPanel extends JPanel {
 		});
 
 	}
+	
+	public void setPlayerHeight(User user){
+		playerDelay = user.getDelay();
+
+
+		if(playerDelay > 0 && playerDelay < 600){
+
+		playerPing = 0;
+
+		}
+
+
+		if(playerDelay > 600 && playerDelay < 900){
+
+		playerPing = 300;
+
+		}
+
+
+		if(playerDelay > 900 && playerDelay < 1200){
+
+		playerPing = 600;
+
+		}
+
+
+		if (playerDelay > 1200){
+
+		playerPing = 900;
+
+		} else{ 
+
+		playerPing = (int) playerDelay;
+
+		}
+	}
 
 	
 	//Called when the screen needs a repaint.
@@ -215,6 +254,7 @@ public class DrawPanel extends JPanel {
 	    Area areaBLC = new Area (polyBLC);
 	    Area areaTRC = new Area (polyTRC);
 	    Area areaBRC = new Area (polyBRC);
+
 		
 	    g2.drawRect (130, 40,540,540);	
 	    //CORNERS
@@ -291,12 +331,14 @@ public class DrawPanel extends JPanel {
 			int y = (int)(user.getyRel()*getSize().height);
 			g2.setColor( user.getColor());
 
+			// sets appropriate height to players based on ping
+			setPlayerHeight(user);
 			
 			//draw out player
-			g2.fillRect(user.getxPos(), y , user.userWidth, user.userHeight);
+			g2.fillRect(user.getxPos(), y , user.userWidth, user.userHeight + playerPing/4);
 			
 				
-			ballLogic.comparePosition(user.getxPos(),y,user.userWidth,user.userHeight);
+			ballLogic.comparePosition(user.getxPos(),y,user.userWidth,user.userHeight + playerPing/4);
 
 			}
 			String livesLeftPlayerOne = String.valueOf(ballLogic.player1lives);
