@@ -43,11 +43,6 @@ public class DrawPanel extends JPanel {
 	public Polygon polyBLC;
 	public Polygon polyBally;
 	
-    Area areaBall = new Area (polyBally);
-    Area areaTLC = new Area (polyTLC);
-    Area areaBLC = new Area (polyBLC);
-    Area areaTRC = new Area (polyTRC);
-    Area areaBRC = new Area (polyBRC);
 
 	//private int player1lives = 5;
 	//private int player2lives = 5;
@@ -214,7 +209,12 @@ public class DrawPanel extends JPanel {
 
 		g2.fillOval(ballXPos, ballYPos, ball.getSize(), ball.getSize());
 		
-		
+	    Area areaBall = new Area (polyBally);
+	    Area areaTLC = new Area (polyTLC);
+	    Area areaBLC = new Area (polyBLC);
+	    Area areaTRC = new Area (polyTRC);
+	    Area areaBRC = new Area (polyBRC);
+
 		
 	    g2.drawRect (130, 40,540,540);	
 	    //CORNERS
