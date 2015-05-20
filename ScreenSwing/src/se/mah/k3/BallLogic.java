@@ -8,13 +8,7 @@ public class BallLogic {
 	private Ball bally = new Ball();
 	private User user = new User();
 
-	//relative to screen variables, startposition for level	
-	int relX = 120;
-	int relY = 40;
-	
-	//Relative Screen size
-	int screenWidth = relX +545;
-	int screenHeight = relY +540;
+	Level level = new Level();
 	
 	//Fluxuating values in X-axis
 	int minXSpeed = 1;
@@ -55,7 +49,7 @@ public class BallLogic {
 	public void checkBounceGoal(){
 		
 		//if the ball bounce on x-axis on right side
-		if (bally.getXPos()>= screenWidth - bally.getSize()/2){
+		if (bally.getXPos()>= level.screenWidth - bally.getSize()/2){
 			 //Random rand = new Random();
 			 bally.setBallXSpeed(-1);
 				//Reset the ball
@@ -63,7 +57,7 @@ public class BallLogic {
 		}
 
 		
-			if(bally.getXPos() <= relX + bally.getSize()/2){
+			if(bally.getXPos() <= level.relX + bally.getSize()/2){
 				//Random rand2 = new Random();
 				bally.setBallXSpeed(1);
 				//Reset the ball
@@ -96,7 +90,7 @@ public class BallLogic {
 		
 		
 		
-		if (bally.getYPos() >= screenHeight - bally.getSize()/2|| bally.getYPos() <= relY+  bally.getSize()/2){
+		if (bally.getYPos() >= level.screenHeight - bally.getSize()/2|| bally.getYPos() <= level.relY+  bally.getSize()/2){
 
 			int ySpeed = bally.getBallYSpeed();
 			bally.setBallYSpeed(ySpeed *= -1);
@@ -152,10 +146,10 @@ public class BallLogic {
 	
 	public void cornerBounce(){
 		//upper left corner
-		if(bally.getXPos()<= relX+100 && bally.getXPos() >= relX){
+		if(bally.getXPos()<= level.relX+100 && bally.getXPos() >= level.relX){
 		//	System.out.println("X CORNER");
 			
-			if(bally.getYPos()<=relY+100 && bally.getYPos()>=relY){
+			if(bally.getYPos()<=level.relY+100 && bally.getYPos()>=level.relY){
 			//	System.out.println("Y N X CORNER");
 				
 			}
@@ -168,8 +162,8 @@ public class BallLogic {
 	//restarts on goal score
 	public void reMatch(){
 		bally.setBallYSpeed(bally.getBallYSpeed());
-		bally.setXPos(screenWidth/2);
-		bally.setYPos(screenHeight/2);
+		bally.setXPos(level.screenWidth/2);
+		bally.setYPos(level.screenHeight/2);
 		Random rand = new Random();
 		bally.setBallYSpeed(rand.nextInt((maxYSpeed - minYSpeed) + 1) -maxYSpeed);
 		//Insert kill a life

@@ -32,9 +32,11 @@ public class DrawPanel extends JPanel {
 	//hdmi (== non existing);
 	//creates a ball
 	
+	Level level = new Level();
+	
 	private boolean start = false;
-	int ballXPos = ballLogic.screenWidth;
-	int ballYPos = ballLogic.screenHeight;
+	int ballXPos = level.screenWidth;
+	int ballYPos = level.screenHeight;
 	
 	public Polygon polyTRC;
 	public Polygon polyTLC;
@@ -167,9 +169,9 @@ public class DrawPanel extends JPanel {
 	    g2.drawImage(img1, -100, 20, 1000, 580, this); 
 	    g2.finalize();
 	    if(start == false){
-	    	ballXPos = ballLogic.screenWidth/2;
-	    	ballYPos = ballLogic.screenHeight/2;
-	    	g.drawString("PING PONG", ballLogic.screenWidth/2-20, ballLogic.screenHeight/2-5);
+	    	ballXPos = level.screenWidth/2;
+	    	ballYPos = level.screenHeight/2;
+	    	g.drawString("PING PONG", level.screenWidth/2-20, level.screenHeight/2-5);
 	    }else{
 	    	ballXPos = ball.getXPos();
 			ballYPos = ball.getYPos();
