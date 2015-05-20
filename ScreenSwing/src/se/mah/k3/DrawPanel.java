@@ -188,10 +188,10 @@ public class DrawPanel extends JPanel {
 	//Called when the screen needs a repaint.
 	@Override
 	public void paint(Graphics g) {
+		
+		
+		
 		//TOP LEFT CORNER
-//		int TLCxpoints[] = {ballLogic.relX+10, ballLogic.relX+ 100, ballLogic.relX +10};
-		 //   int TLCypoints[] = {ballLogic.relY, ballLogic.relY, ballLogic.relY + 100};
-		 
 		int TLCxpoints[] = {130, 190, 130};
 	    int TLCypoints[] = {40, 40, 100};
 	    int npoints = 3;
@@ -248,6 +248,7 @@ public class DrawPanel extends JPanel {
 
 		g2.fillOval(ballXPos, ballYPos, ball.getSize(), ball.getSize());
 		
+
 	    Area areaBall = new Area (polyBally);
 	    Area areaTLC = new Area (polyTLC);
 	    Area areaBLC = new Area (polyBLC);
@@ -281,7 +282,7 @@ public class DrawPanel extends JPanel {
 	    
 
 	    
-	    areaTLC.intersect(areaBall);
+	   /* areaTLC.intersect(areaBall);	    
 	    if (!areaTLC.isEmpty()){
 	    	// insert bounce method
 	    	
@@ -290,28 +291,26 @@ public class DrawPanel extends JPanel {
 	    	ballLogic.cornerBounce();
 	    
 	    }
+	    */
 	    
+	    //corner collision
+	    if(areaTLC.intersects(ballXPos, ballYPos, ball.getSize(), ball.getSize())){
+
+	    	ballLogic.cornerBounce();
 	    
-	    areaBLC.intersect(areaBall);
-	    if (!areaBLC.isEmpty()){
-	    	
-	    //	System.out.println("intercects BLC");
+	    }else if(areaBLC.intersects(ballXPos, ballYPos, ball.getSize(), ball.getSize())){
+	    	ballLogic.cornerBounce();
+	    
+	    }else if(areaTRC.intersects(ballXPos, ballYPos, ball.getSize(), ball.getSize())){
+
+	    	ballLogic.cornerBounce();
+	    
+	    }else if(areaBRC.intersects(ballXPos, ballYPos, ball.getSize(), ball.getSize())){
+
 	    	ballLogic.cornerBounce();
 	    }
+	    
 	   
-	    areaTRC.intersect(areaBall);
-	    if (!areaTRC.isEmpty()){
-	    	
-	    //	System.out.println("intercects TRC");
-	    	ballLogic.cornerBounce();
-	    }
-	    
-	    areaBRC.intersect(areaBall);
-	    if (!areaBRC.isEmpty()){
-	    	
-	    //	System.out.println("intercects BRC");
-	    	ballLogic.cornerBounce();
-	    }
 	    
 	    
 	    
