@@ -85,7 +85,7 @@ public class DrawPanel extends JPanel {
 				if (arg0.hasChildren()){
 					//System.out.println("ADD user with Key: "+arg1+ arg0.getKey());
 					Random r = new Random();
-					//int x = 50;
+					int x = r.nextInt(getSize().width);
 					int y = r.nextInt(getSize().height);
 					int listCount = users.size();
 					System.out.println("number of players: " + listCount); //räknar antal spelar och skriver ut i konsollen. (börjar på 0)
