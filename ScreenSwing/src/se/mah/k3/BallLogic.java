@@ -70,8 +70,8 @@ public class BallLogic {
 			 bally.setBallXSpeed(-1);
 				//Reset the ball
 			 player2lives--;
-			 System.out.println("player 2 lost a life");
-			 System.out.println(String.valueOf(player2lives));
+			// System.out.println("player 2 lost a life");
+			// System.out.println(String.valueOf(player2lives));
 			 reMatch();
 			 gameOver();
 		}
@@ -82,8 +82,8 @@ public class BallLogic {
 			bally.setBallXSpeed(1);
 			//Reset the ball
 			player1lives--;
-			System.out.println("player 1 lost a life");
-			System.out.println(String.valueOf(player1lives));
+//			System.out.println("player 1 lost a life");
+//			System.out.println(String.valueOf(player1lives));
 			reMatch();
 			gameOver();
 		}
@@ -171,27 +171,28 @@ public class BallLogic {
 	public void cornerBounce(){
 		//temporary variables
 
-		int xSpeed = bally.getBallXSpeed(); 
-		int ySpeed = bally.getBallYSpeed();
+	//	int xSpeed = bally.getBallXSpeed(); 
+	//	int ySpeed = bally.getBallYSpeed();
 		
-		System.out.println("1 = " + xSpeed);
+		System.out.println("1x = " + bally.getBallXSpeed());
+		System.out.println("1y = " + bally.getBallYSpeed() + "");
+		bally.setBallXSpeed(bounceX(bally.getBallXSpeed()));
+	//	xSpeed = bally.getBallXSpeed();
 		
-		bally.setBallXSpeed(bounceX(xSpeed));
-		xSpeed = bally.getBallXSpeed();
+		bally.setBallYSpeed(bounceX(bally.getBallYSpeed()));
+	//	ySpeed = bally.getBallYSpeed();
 		
-		bally.setBallYSpeed(ySpeed);
-		ySpeed = bally.getBallYSpeed();
 		
-		System.out.println("3 = " + xSpeed);
-		
+		System.out.println("2x = " + bally.getBallXSpeed() + "");
+		System.out.println("2y = " + bally.getBallYSpeed() + "\n");
 		//Variables for position
 		
 		int y = bally.getYPos();
 		int x = bally.getXPos();
 		
 		//Jump one step
-		bally.setYPos(y	+= ySpeed+100);
-		bally.setXPos(x	+= xSpeed+100);
+		bally.setYPos(y	+= bally.getBallYSpeed());
+		bally.setXPos(x	+= bally.getBallXSpeed());
 	}
 	
 	
