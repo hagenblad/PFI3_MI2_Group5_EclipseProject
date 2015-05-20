@@ -69,11 +69,10 @@ public class DrawPanel extends JPanel {
 					 if (dataSnapshot.getKey().equals("RoundTripTo")){
 						 myFirebaseRef.child(arg0.getKey()).child("RoundTripBack").setValue((long)dataSnapshot.getValue()+1);
 					 }
-					 
-					 // tried here to reach the ping variable in firebase
-//					 if (dataSnapshot.getKey().equals("ping")){
-//						 users.get(place).setDelay((double)dataSnapshot.getValue());
-//					 }
+					 // reach the ping variable in firebase
+					 if (dataSnapshot.getKey().equals("ping")){
+						 users.get(place).setDelay((long)dataSnapshot.getValue());
+					 }
 				 }
 					
 				 repaint();
@@ -97,7 +96,6 @@ public class DrawPanel extends JPanel {
 							users.add(user);
 							user.setColor(Color.BLACK);
 							System.out.println("player 1 in");
-//							System.out.println(user.getId() + user.getDelay());
 				 		}
 					}
 					 if (listCount ==1){
@@ -106,7 +104,6 @@ public class DrawPanel extends JPanel {
 							users.add(user);
 							user.setColor(Color.RED);
 							System.out.println("player 2 in");
-//							System.out.println(user.getId() + user.getDelay());
 						}
 					}	
 				}
@@ -159,7 +156,7 @@ public class DrawPanel extends JPanel {
 	    
 		//Test
 		for (User user : users) {
-			if(users.size()>=1){
+			if(users.size()>=1){  // defines how many players that needs to be in the game for it to start
 			start = true;
 			
 			int y = (int)(user.getyRel()*getSize().height);
@@ -176,10 +173,15 @@ public class DrawPanel extends JPanel {
 			String livesLeftPlayerOne = String.valueOf(ballLogic.player1lives);
 			String livesLeftPlayerTwo = String.valueOf(ballLogic.player2lives);
 
-			g.drawString(user.getId(), user.getxPos(), 15);
+			g.drawString(user.getId(), user.getxPos(), 15); // This prints out the player names
 			//String playerOneLives = t(player1lives);
-			g.drawString(livesLeftPlayerOne, 15, 15);
-			g.drawString(livesLeftPlayerTwo, 750, 15);
+			g.drawString(livesLeftPlayerOne, 15, 15); // this prints out how many lives player one has left
+			g.drawString(livesLeftPlayerTwo, 750, 15); // this prints out how many lives player two has left
+			
+			//System.out.println(user.getId() + user.getDelay());
+			//This prints out the ping to drawpanel
+			String userDelay = String.valueOf(user.getDelay());
+			g.drawString(userDelay, user.getxPos(), 30);
 
 				 
 //			if(users.size()>4){

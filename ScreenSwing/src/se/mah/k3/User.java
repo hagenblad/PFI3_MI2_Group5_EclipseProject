@@ -10,7 +10,7 @@ public class User implements Comparable<User>{
 	private double xRel=0;
 	private double yRel=0;
 	private int lives;
-	private double delay;
+	private long delay; // int here makes more sense than a double/long?
 	public int userHeight = 100;
 	public int userWidth = 10;
 	
@@ -67,10 +67,10 @@ public class User implements Comparable<User>{
 		this.lives = lives;
 	}
 	
-	public double getDelay() {
+	public long getDelay() {
 		return delay;
 	}
-	public void setDelay(double d) {
+	public void setDelay(long d) {
 		this.delay = d;
 	}
 	
