@@ -2,6 +2,7 @@ package se.mah.k3;
 
 import java.util.Random;
 
+
 public class BallLogic {
 
 	private Ball bally = new Ball();
@@ -42,11 +43,22 @@ public class BallLogic {
 	//Check if goal
 	checkBounceGoal();
 	//Check if bounce wall
-	checkBounceWall();
+	checkBounceWall();		
 	//Check if player hit
 	paddleBounce(x,y, width, height);
 	
+	
 
+	}
+	
+	public int bounceX(int i){
+		return (i *=-1);
+		
+	}
+	
+	public int bounceY(int i){
+		return (i *=-1);
+		
 	}
 	//bounceball måste bli
 	
@@ -56,6 +68,7 @@ public class BallLogic {
 		if (bally.getXPos()>= screenWidth - bally.getSize()/2){
 			 //Random rand = new Random();
 			 bally.setBallXSpeed(-1);
+				//Reset the ball
 			 player2lives--;
 			 System.out.println("player 2 lost a life");
 			 System.out.println(String.valueOf(player2lives));
@@ -64,31 +77,33 @@ public class BallLogic {
 		}
 
 		
-			if(bally.getXPos() <= relX + bally.getSize()/2){
-				//Random rand2 = new Random();
-				bally.setBallXSpeed(1);
-				player1lives--;
-				System.out.println("player 1 lost a life");
-				System.out.println(String.valueOf(player1lives));
-				reMatch();
-				gameOver();
-			}
+		if(bally.getXPos() <= relX + bally.getSize()/2){
+			//Random rand2 = new Random();
+			bally.setBallXSpeed(1);
+			//Reset the ball
+			player1lives--;
+			System.out.println("player 1 lost a life");
+			System.out.println(String.valueOf(player1lives));
+			reMatch();
+			gameOver();
+		}
 			
 
+
 			
-			if(bally.getBallYSpeed()== 0){
-				Random r = new Random();
-				int i = r.nextInt(1);
-				
-				if(i == 0){
-					bally.setBallYSpeed(-2);
-				}
-				if(i == 1){
-					bally.setBallYSpeed(2);
-				}
-				
-				
+		if(bally.getBallYSpeed()== 0){
+			Random r = new Random();
+			int i = r.nextInt(1);
+			
+			if(i == 0){
+				bally.setBallYSpeed(-2);
 			}
+			if(i == 1){
+				bally.setBallYSpeed(2);
+			}
+			
+			
+		}
 
 		
 		
@@ -96,11 +111,12 @@ public class BallLogic {
 	//if ball bounces on y-axis
 	public void checkBounceWall(){
 
+		
 		if (bally.getYPos() >= screenHeight - bally.getSize()/2|| bally.getYPos() <= relY+  bally.getSize()/2){
 
 			int ySpeed = bally.getBallYSpeed();
-			bally.setBallYSpeed(ySpeed *= -1);
-			
+			bally.setBallYSpeed(bounceY(ySpeed));
+			ySpeed = bally.getBallYSpeed();
 			//jump one step before exiting the loop
 			int y = bally.getYPos(); 
 			bally.setYPos(y	+= ySpeed);
@@ -113,16 +129,16 @@ public class BallLogic {
 		//paddle collision
 		if(bally.getXPos() >= xPos -5 && bally.getXPos() <= xPos + width+5 ){
 			
-	//		System.out.println("Nice X pos");	
+			//	System.out.println("Nice X pos");	
 			
 			if( bally.getYPos() >= yPos -5 && bally.getYPos() <= yPos + height+5){
 				
-		
-				// System.out.println("Nice YYY Pos");
+			//	System.out.println("Nice YYY Pos");
 				
 				int xSpeed = bally.getBallXSpeed(); 
 					
-				bally.setBallXSpeed(xSpeed*= -1);
+				bally.setBallXSpeed(bounceX(xSpeed));
+				xSpeed = bally.getBallXSpeed();
 				int tempx = bally.getXPos();
 				bally.setXPos(tempx += xSpeed);
 			
@@ -131,6 +147,7 @@ public class BallLogic {
 		
 		}
 	}
+	
 	
 	//Moves every frame
 	public void moveBall(){
@@ -151,6 +168,32 @@ public class BallLogic {
 		
 	}
 	
+	public void cornerBounce(){
+		//temporary variables
+
+		int xSpeed = bally.getBallXSpeed(); 
+		int ySpeed = bally.getBallYSpeed();
+		
+		System.out.println("1 = " + xSpeed);
+		
+		bally.setBallXSpeed(bounceX(xSpeed));
+		xSpeed = bally.getBallXSpeed();
+		
+		bally.setBallYSpeed(ySpeed);
+		ySpeed = bally.getBallYSpeed();
+		
+		System.out.println("3 = " + xSpeed);
+		
+		//Variables for position
+		
+		int y = bally.getYPos();
+		int x = bally.getXPos();
+		
+		//Jump one step
+		bally.setYPos(y	+= ySpeed+100);
+		bally.setXPos(x	+= xSpeed+100);
+	}
+	
 	
 	
 	//handles ball respawn on goal score
@@ -160,10 +203,33 @@ public class BallLogic {
 		bally.setXPos(screenWidth/2);
 		bally.setYPos(screenHeight/2);
 		
-		//Reset the ball
 		Random rand = new Random();
 		
+		
 		bally.setBallYSpeed(rand.nextInt((maxYSpeed - minYSpeed) + 1) -maxYSpeed);
+		
+		if(bally.getBallYSpeed()== 0){
+			Random r = new Random();
+			int i = r.nextInt(1);
+			
+			if(i == 0){
+				bally.setBallYSpeed(-2);
+			}
+			if(i == 1){
+				bally.setBallYSpeed(2);
+			}
+			
+			
+		}
+
+	
+		//Insert kill a life
+
+		
+		//Reset the ball
+		Random rand2 = new Random();
+		
+		bally.setBallYSpeed(rand2.nextInt((maxYSpeed - minYSpeed) + 1) -maxYSpeed);
 		
 	}
 	

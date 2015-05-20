@@ -2,6 +2,8 @@ package se.mah.k3;
 
 import java.awt.Color;
 
+import com.firebase.client.DataSnapshot;
+
 public class User implements Comparable<User>{
 	
 	private String id;
@@ -14,6 +16,7 @@ public class User implements Comparable<User>{
 	public int userHeight = 100;
 	public int userWidth = 10;
 	
+
 	private Color c = new Color(100,100,100);
 	
 
@@ -28,6 +31,7 @@ public class User implements Comparable<User>{
 		// empty construcotr
 		
 	}
+	
 	public String getId() {
 		return id;
 	}
