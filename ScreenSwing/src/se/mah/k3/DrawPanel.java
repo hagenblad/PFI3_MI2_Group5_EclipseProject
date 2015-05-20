@@ -42,6 +42,12 @@ public class DrawPanel extends JPanel {
 	public Polygon polyBLC;
 	public Polygon polyBally;
 	
+    Area areaBall = new Area (polyBally);
+    Area areaTLC = new Area (polyTLC);
+    Area areaBLC = new Area (polyBLC);
+    Area areaTRC = new Area (polyTRC);
+    Area areaBRC = new Area (polyBRC);
+	
 	//A vector is like an ArrayList a little bit slower but Thread-safe. This means that it can handle concurrent changes. 
 	private Vector<User> users = new Vector<User>();
 	Font font = new Font("Verdana", Font.BOLD, 20);
@@ -196,53 +202,46 @@ public class DrawPanel extends JPanel {
 	    g.fillPolygon (polyBRC);
 	    
 	    
-	    g.drawPolygon(polyBally);
-	    g.fillPolygon (polyBally);
+	    //g.drawPolygon(polyBally);
+	   // g.fillPolygon (polyBally);
 	    
 	    
 	    
 	    //Collision between corners and ball polygon
 	    
 	    
-	    Area areaBall = new Area (polyBally);
-	    Area areaTLC = new Area (polyTLC);
-	    Area areaBLC = new Area (polyBLC);
-	    Area areaTRC = new Area (polyTRC);
-	    Area areaBRC = new Area (polyBRC);
-	    
-	    
-	    
-	    
-//	    areaBall.intersect(new Area (polyTLC));
-//	    areaBall.intersect(new Area (polyBLC));
-//	    areaBall.intersect(new Area (polyTRC));
-//	    areaBall.intersect(new Area (polyBRC));
-	    
-	    
+
 	    
 	    areaTLC.intersect(areaBall);
 	    if (!areaTLC.isEmpty()){
 	    	// insert bounce method
-	    	System.out.println("intercects TLC");
+	    	
+	    	//System.out.println("intercects TLC");
+	    	//Corner bounce-check
+	    	ballLogic.cornerBounce();
+	    
 	    }
 	    
 	    
 	    areaBLC.intersect(areaBall);
 	    if (!areaBLC.isEmpty()){
 	    	
-	    	System.out.println("intercects BLC");
+	    //	System.out.println("intercects BLC");
+	    	ballLogic.cornerBounce();
 	    }
 	   
 	    areaTRC.intersect(areaBall);
 	    if (!areaTRC.isEmpty()){
 	    	
-	    	System.out.println("intercects TRC");
+	    //	System.out.println("intercects TRC");
+	    	ballLogic.cornerBounce();
 	    }
 	    
 	    areaBRC.intersect(areaBall);
 	    if (!areaBRC.isEmpty()){
 	    	
-	    	System.out.println("intercects BRC");
+	    //	System.out.println("intercects BRC");
+	    	ballLogic.cornerBounce();
 	    }
 	    
 	    
