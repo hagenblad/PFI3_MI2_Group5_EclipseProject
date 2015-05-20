@@ -9,6 +9,8 @@ public class BallLogic {
 	
 	public int player1lives = 5;
 	public int player2lives = 5;
+	public int player3lives = 5;
+	public int player4lives = 5;
 		
 	//relative to screen variables, startposition for level	
 	int relX = 120;

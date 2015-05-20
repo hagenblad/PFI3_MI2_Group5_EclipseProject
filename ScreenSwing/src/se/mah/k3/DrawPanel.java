@@ -106,6 +106,22 @@ public class DrawPanel extends JPanel {
 							System.out.println("player 2 in");
 						}
 					}	
+					 if (listCount == 2){
+						 User user = new User(arg0.getKey(), x, 50, ballLogic.player3lives); // create player 3
+						 if(!users.contains(user)){
+							 users.add(user);
+							 user.setColor(Color.BLUE);
+							 System.out.println("player 3 in");
+						 }
+					 }
+					 if (listCount == 3){
+						 User user = new User(arg0.getKey(), x, 650, ballLogic.player4lives); // create player 4
+						 if (!users.contains(user)){
+							 users.add(user);
+							 user.setColor(Color.GREEN);
+							 System.out.println("player 4 in");
+						 }
+					 }
 				}
 			}
 			
