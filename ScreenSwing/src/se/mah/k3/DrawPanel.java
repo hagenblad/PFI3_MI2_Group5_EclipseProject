@@ -36,6 +36,7 @@ public class DrawPanel extends JPanel {
 	int ballXPos = ballLogic.screenWidth;
 	int ballYPos = ballLogic.screenHeight;
 	
+
 	public Polygon polyTRC;
 	public Polygon polyTLC;
 	public Polygon polyBRC;
@@ -47,7 +48,12 @@ public class DrawPanel extends JPanel {
     Area areaBLC = new Area (polyBLC);
     Area areaTRC = new Area (polyTRC);
     Area areaBRC = new Area (polyBRC);
+
+	//private int player1lives = 5;
+	//private int player2lives = 5;
+
 	
+
 	//A vector is like an ArrayList a little bit slower but Thread-safe. This means that it can handle concurrent changes. 
 	private Vector<User> users = new Vector<User>();
 	Font font = new Font("Verdana", Font.BOLD, 20);
@@ -69,7 +75,7 @@ public class DrawPanel extends JPanel {
 			public void onChildChanged(DataSnapshot arg0, String arg1) {
 				Iterable<DataSnapshot> dsList= arg0.getChildren();
 				Collections.sort(users);
-				int place = Collections.binarySearch(users, new User(arg0.getKey(),0,0, 5)); //Find the user usernama has to be unique uses the method compareTo in User
+				int place = Collections.binarySearch(users, new User(arg0.getKey(),0,0, 5)); //Find the user username has to be unique uses the method compareTo in User
 				 for (DataSnapshot dataSnapshot : dsList) {					 
 					 if (dataSnapshot.getKey().equals("xRel")){
 						 users.get(place).setxRel((double)dataSnapshot.getValue());
@@ -80,8 +86,14 @@ public class DrawPanel extends JPanel {
 					 if (dataSnapshot.getKey().equals("RoundTripTo")){
 						 myFirebaseRef.child(arg0.getKey()).child("RoundTripBack").setValue((long)dataSnapshot.getValue()+1);
 					 }
+					 // reach the ping variable in firebase
+					 if (dataSnapshot.getKey().equals("ping")){
+						 users.get(place).setDelay((long)dataSnapshot.getValue());
+					 }
 				 }
+					
 				 repaint();
+
 			}
 			
 			//We got a new user
@@ -90,13 +102,13 @@ public class DrawPanel extends JPanel {
 				if (arg0.hasChildren()){
 					//System.out.println("ADD user with Key: "+arg1+ arg0.getKey());
 					Random r = new Random();
-					//int x = 50;
+					int x = r.nextInt(getSize().width);
 					int y = r.nextInt(getSize().height);
 					int listCount = users.size();
-					System.out.println(listCount);//räknar antal spelar och skriver ut i konsollen. (börjar på 0)
+					System.out.println("number of players: " + listCount); //räknar antal spelar och skriver ut i konsollen. (börjar på 0)
 					
 					if (listCount ==0){
-						User user = new User(arg0.getKey(),140,y, 5);
+						User user = new User(arg0.getKey(),140,y, ballLogic.player1lives); // create player 1
 						if (!users.contains(user)){
 							users.add(user);
 							user.setColor(Color.BLACK);
@@ -104,13 +116,29 @@ public class DrawPanel extends JPanel {
 				 		}
 					}
 					 if (listCount ==1){
-						User user = new User(arg0.getKey(),650,y, 5);
+						User user = new User(arg0.getKey(),650,y, ballLogic.player2lives); // create player 2
 						if (!users.contains(user)){
 							users.add(user);
 							user.setColor(Color.RED);
 							System.out.println("player 2 in");
-					}
+						}
 					}	
+					 if (listCount == 2){
+						 User user = new User(arg0.getKey(), x, 50, ballLogic.player3lives); // create player 3
+						 if(!users.contains(user)){
+							 users.add(user);
+							 user.setColor(Color.BLUE);
+							 System.out.println("player 3 in");
+						 }
+					 }
+					 if (listCount == 3){
+						 User user = new User(arg0.getKey(), x, 650, ballLogic.player4lives); // create player 4
+						 if (!users.contains(user)){
+							 users.add(user);
+							 user.setColor(Color.GREEN);
+							 System.out.println("player 4 in");
+						 }
+					 }
 				}
 			}
 			
@@ -119,7 +147,9 @@ public class DrawPanel extends JPanel {
 				
 			}
 		});
+
 	}
+
 	
 	//Called when the screen needs a repaint.
 	@Override
@@ -168,7 +198,7 @@ public class DrawPanel extends JPanel {
 		g2.fillRect(0, 0, getSize().width, getSize().height);
 		g2.setColor(Color.black);
 		
-		//Bakgrund
+		//Background
 		Image img1 = Toolkit.getDefaultToolkit().getImage("src/images/bakis.jpg");
 	    g2.drawImage(img1, -100, 20, 1000, 580, this); 
 	    g2.finalize();
@@ -252,15 +282,15 @@ public class DrawPanel extends JPanel {
 	    	   } catch (Exception e) {
 	    	   System.out.println(e);
 	    	   }
+
 	    super.repaint();
 	    
 		//Test
 		for (User user : users) {
-			if(users.size()==1){
+			if(users.size()>=1){  // defines how many players that needs to be in the game for it to start
 			start = true;
 			
 			int y = (int)(user.getyRel()*getSize().height);
-			String livesLeft = String.valueOf(user.getLives());
 			g2.setColor( user.getColor());
 
 			
@@ -271,11 +301,24 @@ public class DrawPanel extends JPanel {
 			ballLogic.comparePosition(user.getxPos(),y,user.userWidth,user.userHeight);
 
 			}
+			String livesLeftPlayerOne = String.valueOf(ballLogic.player1lives);
+			String livesLeftPlayerTwo = String.valueOf(ballLogic.player2lives);
 
-			g.drawString(user.getId(), user.getxPos(), 15);
-			//g.drawString(livesLeft, user.getxPos()-20, 15);
+			g.drawString(user.getId(), user.getxPos(), 15); // This prints out the player names
+			//String playerOneLives = t(player1lives);
+			g.drawString(livesLeftPlayerOne, 15, 15); // this prints out how many lives player one has left
+			g.drawString(livesLeftPlayerTwo, 750, 15); // this prints out how many lives player two has left
+			
+			//System.out.println(user.getId() + user.getDelay());
+			//This prints out the ping to drawpanel
+			String userDelay = String.valueOf(user.getDelay());
+			g.drawString(userDelay, user.getxPos(), 30);
 
-
+				 
+//			if(users.size()>4){
+//				start = false;
+//			}
+			
 		}
 		
 	}
