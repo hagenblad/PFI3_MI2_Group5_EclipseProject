@@ -7,14 +7,15 @@ import com.firebase.client.DataSnapshot;
 public class User implements Comparable<User>{
 	
 	private String id;
-	private int xPos;
-	private int yPos;
+	private int xPos = 100;
+	private int yPos = 100;
 	private double xRel=0;
 	private double yRel=0;
 	private int lives;
-	private long delay;
-	public int userHeight = 100;
-	public int userWidth = 10;
+	private long delay; // int here makes more sense than a double/long?
+	public int userHeight = 0;
+	public int userWidth = 0;
+
 	
 
 	private Color c = new Color(100,100,100);
@@ -71,7 +72,7 @@ public class User implements Comparable<User>{
 		this.lives = lives;
 	}
 	
-	public double getDelay() {
+	public long getDelay() {
 		return delay;
 	}
 	public void setDelay(long d) {

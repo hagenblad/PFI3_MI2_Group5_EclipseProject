@@ -7,6 +7,10 @@ public class BallLogic {
 
 	private Ball bally = new Ball();
 	private User user = new User();
+		
+	//relative to screen variables, startposition for level	
+	int relX = 120;
+	int relY = 40;
 	
 	public int player1lives = 5;
 	public int player2lives = 5;
@@ -23,7 +27,6 @@ public class BallLogic {
 	int minYSpeed = -1;
 	int maxYSpeed = 1;
 	
-	//public int player2Lifes = 5;
 	public BallLogic(Ball ball){
 		this.bally = ball;
 		//this.user = player;
@@ -75,6 +78,7 @@ public class BallLogic {
 				gameOver();
 			}
 			
+
 			//Goal on Y axis
             //Wall 1
             if (bally.getYPos()<= level.relY + bally.getSize()/2){
@@ -131,11 +135,13 @@ public class BallLogic {
 		//paddle collision
 		if(bally.getXPos() >= xPos -5 && bally.getXPos() <= xPos + width+5 ){
 			
-		//	System.out.println("Nice X pos");	
+	//		System.out.println("Nice X pos");	
 			
 			if( bally.getYPos() >= yPos -5 && bally.getYPos() <= yPos + height+5){
 				
-			//	System.out.println("Nice YYY Pos");
+		
+				// System.out.println("Nice YYY Pos");
+
 				
 				int xSpeed = bally.getBallXSpeed(); 
 					
@@ -183,14 +189,18 @@ public class BallLogic {
 	}
 	
 	
-	//restarts on goal score
+	
+	//handles ball respawn on goal score
 	public void reMatch(){
+		
 		bally.setBallYSpeed(bally.getBallYSpeed());
 		bally.setXPos(level.screenWidth/2);
 		bally.setYPos(level.screenHeight/2);
 		Random rand = new Random();
 		bally.setBallYSpeed(rand.nextInt((maxYSpeed - minYSpeed) + 1) -maxYSpeed);
 		//Insert kill a life
+		
+		bally.setBallYSpeed(rand.nextInt((maxYSpeed - minYSpeed) + 1) -maxYSpeed);
 		
 	}
 	
