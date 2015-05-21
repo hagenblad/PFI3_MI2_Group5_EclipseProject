@@ -184,35 +184,31 @@ public class DrawPanel extends JPanel {
 	    
 		g2.fillOval(ballXPos, ballYPos, ball.getSize(), ball.getSize());
 
-	    g2.drawRect (130, 40,540,540);	
-	    //CORNERS
-	    //TOP LEFT CORNER
-	    g.drawPolygon(polyTLC);
-	    g.fillPolygon (polyTLC);
-	    //BOT LEFT CORNER 
-	    g.drawPolygon(polyBLC);
-	    g.fillPolygon (polyBLC);
-	    //TOP RIGHT CORNER
-	    g.drawPolygon(polyTRC);
-	    g.fillPolygon (polyTRC);
-	    //BOT RIGHT CORNER
-	    g.drawPolygon(polyBRC);
-	    g.fillPolygon (polyBRC);
-	    
-	    
-	    g.drawPolygon(polyBally);
-	    g.fillPolygon (polyBally);
-	    
-	    
-	    
-	    //Collision between corners and ball polygon
-	    
-	    
-	    Area areaBall = new Area (polyBally);
-	    Area areaTLC = new Area (polyTLC);
-	    Area areaBLC = new Area (polyBLC);
-	    Area areaTRC = new Area (polyTRC);
-	    Area areaBRC = new Area (polyBRC);
+//		//Collision between corners and ball polygon 
+//	    Area areaBall = new Area (polyBally);
+//	    Area areaTLC = new Area (polyTLC);
+//	    Area areaBLC = new Area (polyBLC);
+//	    Area areaTRC = new Area (polyTRC);
+//	    Area areaBRC = new Area (polyBRC);
+//		
+//	    g2.drawRect (130, 40,540,540);	
+//	    //CORNERS
+//	    //TOP LEFT CORNER
+//	    g.drawPolygon(polyTLC);
+//	    g.fillPolygon (polyTLC);
+//	    //BOT LEFT CORNER 
+//	    g.drawPolygon(polyBLC);
+//	    g.fillPolygon (polyBLC);
+//	    //TOP RIGHT CORNER
+//	    g.drawPolygon(polyTRC);
+//	    g.fillPolygon (polyTRC);
+//	    //BOT RIGHT CORNER
+//	    g.drawPolygon(polyBRC);
+//	    g.fillPolygon (polyBRC);
+//	    
+//	    
+//	    g.drawPolygon(polyBally);
+//	    g.fillPolygon (polyBally);
 	    
 	    
 	    
@@ -224,30 +220,30 @@ public class DrawPanel extends JPanel {
 	    
 	    
 	    
-	    areaTLC.intersect(areaBall);
-	    if (!areaTLC.isEmpty()){
-	    	// insert bounce method
-	    	System.out.println("intercects TLC");
-	    }
-	    
-	    
-	    areaBLC.intersect(areaBall);
-	    if (!areaBLC.isEmpty()){
-	    	
-	    	System.out.println("intercects BLC");
-	    }
-	   
-	    areaTRC.intersect(areaBall);
-	    if (!areaTRC.isEmpty()){
-	    	
-	    	System.out.println("intercects TRC");
-	    }
-	    
-	    areaBRC.intersect(areaBall);
-	    if (!areaBRC.isEmpty()){
-	    	
-	    	System.out.println("intercects BRC");
-	    }
+//	    areaTLC.intersect(areaBall);
+//	    if (!areaTLC.isEmpty()){
+//	    	// insert bounce method
+//	    	System.out.println("intercects TLC");
+//	    }
+//	    
+//	    
+//	    areaBLC.intersect(areaBall);
+//	    if (!areaBLC.isEmpty()){
+//	    	
+//	    	System.out.println("intercects BLC");
+//	    }
+//	   
+//	    areaTRC.intersect(areaBall);
+//	    if (!areaTRC.isEmpty()){
+//	    	
+//	    	System.out.println("intercects TRC");
+//	    }
+//	    
+//	    areaBRC.intersect(areaBall);
+//	    if (!areaBRC.isEmpty()){
+//	    	
+//	    	System.out.println("intercects BRC");
+//	    }
 	    
 	    
 	    
