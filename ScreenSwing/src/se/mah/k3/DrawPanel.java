@@ -38,13 +38,26 @@ public class DrawPanel extends JPanel {
 	int ballXPos = level.screenWidth;
 	int ballYPos = level.screenHeight;
 	
-	//private int player1lives = 5;
-	//private int player2lives = 5;
+
+	int paddlePosY;
+	int paddleBottom;
+	int paddleTop;
+	int y;
+	
+	//player ping
+	long playerDelay;
+	int playerPing;
+	int playerPingSize;
+	
 	public Polygon polyTRC;
 	public Polygon polyTLC;
 	public Polygon polyBRC;
 	public Polygon polyBLC;
 	public Polygon polyBally;
+	
+
+	//private int player1lives = 5;
+	//private int player2lives = 5;
 	
 
 	//A vector is like an ArrayList a little bit slower but Thread-safe. This means that it can handle concurrent changes. 
@@ -156,11 +169,95 @@ public class DrawPanel extends JPanel {
 		});
 
 	}
+	
+	public void setPlayerBounds(User user){
+		
+		if(paddlePosY < 100){
+			paddlePosY = 100;
+		} else {
+			paddlePosY = y - playerPingSize;
+		}
+		
+		if(y > level.screenHeight){
+			y = level.screenHeight;
+		} else{
+			y = (int)(user.getyRel()*getSize().height);
+		}
+		}
+	
+	
+	public void setPlayerHeight(User user){
+		playerDelay = user.getDelay();
+		
+		if(playerDelay > 0 && playerDelay < 600){
+
+		playerPing = 0;
+
+		}
+
+		if(playerDelay > 600 && playerDelay < 900){
+
+		playerPing = 300;
+
+		}
+
+
+		if(playerDelay > 900 && playerDelay < 1200){
+
+		playerPing = 600;
+
+		}
+
+
+		if (playerDelay > 1200){
+
+		playerPing = 900;
+
+		} else{ 
+
+		playerPing = (int) playerDelay;
+
+		}
+	}
 
 	
 	//Called when the screen needs a repaint.
 	@Override
 	public void paint(Graphics g) {
+	
+		//TOP LEFT CORNER
+		int TLCxpoints[] = {130, 190, 130};
+	    int TLCypoints[] = {40, 40, 100};
+	    int npoints = 3;
+	    
+	    polyTLC = new Polygon(TLCxpoints, TLCypoints, npoints);
+	    
+	   //TOP RIGHT CORNER
+	    int TRCxpoints[] = {670, 610, 670};
+	    int TRCypoints[] = {40, 40, 100};
+	    
+	    polyTRC = new Polygon(TRCxpoints, TRCypoints, npoints);
+	    
+	   //BOT LEFT CORNER
+	    
+	    int BLCxpoints[] = {130,190,130};
+	    int BLCypoints[] = {580,580,520};
+	    
+	    polyBLC = new Polygon(BLCxpoints, BLCypoints, npoints);
+	    
+	    //BOT RIGHT CORNER
+	    int BRCxpoints[] = {670, 610, 670};
+	    int BRCypoints[] = {580, 580, 520};
+	    
+	    polyBRC = new Polygon(BRCxpoints, BRCypoints, npoints);
+		
+	    //Ball polygon
+	    int ballNpoints = 4;
+	    int ballPolysizeX[] = {0 + ballXPos, 0 + ballXPos,10 + ballXPos, 10 + ballXPos};
+	    int ballPolysizeY[] = {0 + ballYPos, 10 + ballYPos,10 + ballYPos,0 + ballYPos};
+	   
+	   polyBally = new Polygon(ballPolysizeX,ballPolysizeY,ballNpoints);
+	    
 		//super.paint(g);
 		Graphics2D g2= (Graphics2D) g;
 		g2.setFont(font);
@@ -181,73 +278,73 @@ public class DrawPanel extends JPanel {
 			ballYPos = ball.getYPos();
 			
 	    }
-	    
-		g2.fillOval(ballXPos, ballYPos, ball.getSize(), ball.getSize());
 
-//		//Collision between corners and ball polygon 
-//	    Area areaBall = new Area (polyBally);
-//	    Area areaTLC = new Area (polyTLC);
-//	    Area areaBLC = new Area (polyBLC);
-//	    Area areaTRC = new Area (polyTRC);
-//	    Area areaBRC = new Area (polyBRC);
-//		
-//	    g2.drawRect (130, 40,540,540);	
-//	    //CORNERS
-//	    //TOP LEFT CORNER
-//	    g.drawPolygon(polyTLC);
-//	    g.fillPolygon (polyTLC);
-//	    //BOT LEFT CORNER 
-//	    g.drawPolygon(polyBLC);
-//	    g.fillPolygon (polyBLC);
-//	    //TOP RIGHT CORNER
-//	    g.drawPolygon(polyTRC);
-//	    g.fillPolygon (polyTRC);
-//	    //BOT RIGHT CORNER
-//	    g.drawPolygon(polyBRC);
-//	    g.fillPolygon (polyBRC);
-//	    
-//	    
-//	    g.drawPolygon(polyBally);
-//	    g.fillPolygon (polyBally);
+		g2.fillOval(ballXPos, ballYPos, ball.getSize(), ball.getSize());
+		
+
+	    Area areaBall = new Area (polyBally);
+	    Area areaTLC = new Area (polyTLC);
+	    Area areaBLC = new Area (polyBLC);
+	    Area areaTRC = new Area (polyTRC);
+	    Area areaBRC = new Area (polyBRC);
+
+		
+	    g2.drawRect (130, 40,540,540);	
+	    //CORNERS
+	    //TOP LEFT CORNER
+	    g.drawPolygon(polyTLC);
+	    g.fillPolygon (polyTLC);
+	    //BOT LEFT CORNER 
+	    g.drawPolygon(polyBLC);
+	    g.fillPolygon (polyBLC);
+	    //TOP RIGHT CORNER
+	    g.drawPolygon(polyTRC);
+	    g.fillPolygon (polyTRC);
+	    //BOT RIGHT CORNER
+	    g.drawPolygon(polyBRC);
+	    g.fillPolygon (polyBRC);
+	    
+	    
+	    //g.drawPolygon(polyBally);
+	   // g.fillPolygon (polyBally);
 	    
 	    
 	    
-	    
-//	    areaBall.intersect(new Area (polyTLC));
-//	    areaBall.intersect(new Area (polyBLC));
-//	    areaBall.intersect(new Area (polyTRC));
-//	    areaBall.intersect(new Area (polyBRC));
+	    //Collision between corners and ball polygon
 	    
 	    
+
 	    
-//	    areaTLC.intersect(areaBall);
-//	    if (!areaTLC.isEmpty()){
-//	    	// insert bounce method
-//	    	System.out.println("intercects TLC");
-//	    }
-//	    
-//	    
-//	    areaBLC.intersect(areaBall);
-//	    if (!areaBLC.isEmpty()){
-//	    	
-//	    	System.out.println("intercects BLC");
-//	    }
-//	   
-//	    areaTRC.intersect(areaBall);
-//	    if (!areaTRC.isEmpty()){
-//	    	
-//	    	System.out.println("intercects TRC");
-//	    }
-//	    
-//	    areaBRC.intersect(areaBall);
-//	    if (!areaBRC.isEmpty()){
-//	    	
-//	    	System.out.println("intercects BRC");
-//	    }
+	   /* areaTLC.intersect(areaBall);	    
+	    if (!areaTLC.isEmpty()){
+	    	// insert bounce method
+	    	
+	    	//System.out.println("intercects TLC");
+	    	//Corner bounce-check
+	    	ballLogic.cornerBounce();
 	    
+	    }
+	    */
 	    
+	    //corner collision
+	    if(areaTLC.intersects(ballXPos, ballYPos, ball.getSize(), ball.getSize())){
+
+	    	ballLogic.cornerBounce();
 	    
-	    try {
+	    }else if(areaBLC.intersects(ballXPos, ballYPos, ball.getSize(), ball.getSize())){
+	    	ballLogic.cornerBounce();
+	    
+	    }else if(areaTRC.intersects(ballXPos, ballYPos, ball.getSize(), ball.getSize())){
+
+	    	ballLogic.cornerBounce();
+	    
+	    }else if(areaBRC.intersects(ballXPos, ballYPos, ball.getSize(), ball.getSize())){
+
+	    	ballLogic.cornerBounce();
+	    }
+	    
+	   	    
+	     try {
 	    	   // thread to sleep for 1000 milliseconds
 	    	   Thread.sleep(3);
 	    	   } catch (Exception e) {
@@ -258,6 +355,36 @@ public class DrawPanel extends JPanel {
 	    
 		//Test
 		for (User user : users) {
+			if(users.size()>=1){  // defines how many players that needs to be in the game for it to start
+			start = true;
+			
+			paddleTop = y - playerPingSize;
+			paddleBottom = y;
+			
+			paddlePosY = y - playerPingSize;
+			
+			System.out.println(paddleTop + "paddletop");
+			System.out.println(paddleBottom + "paddleBottom");
+			
+			y = (int)(user.getyRel()*getSize().height);
+			g2.setColor( user.getColor());
+			
+			// sets appropriate height to players based on ping
+			setPlayerHeight(user);
+			setPlayerBounds(user);
+			
+			//Draws paddle from center of finger placement on android
+			playerPingSize = user.userHeight + playerPing/4;
+			 
+			
+			//draw out player
+			g2.fillRect(user.getxPos(), paddlePosY/2, user.userWidth, playerPingSize);
+			//collision
+			ballLogic.comparePosition(user.getxPos(), paddlePosY ,user.userWidth, playerPingSize);
+			
+			
+
+
 		 // defines how many players that needs to be in the game for it to start
 			if(users.size()>=1){ 
 			start = true;
@@ -278,6 +405,7 @@ public class DrawPanel extends JPanel {
 			}
 			//System.out.println("User number "+ user +" has the position " + users.indexOf(user));	
 			
+
 			}
 			g.drawString(user.getId(), user.getxPos(), 15); // This prints out the player names
 			
@@ -329,6 +457,7 @@ public class DrawPanel extends JPanel {
 //		}
 		
 	}
+}
 }
 
 	
