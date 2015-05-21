@@ -36,9 +36,15 @@ public class DrawPanel extends JPanel {
 	int ballXPos = ballLogic.screenWidth;
 	int ballYPos = ballLogic.screenHeight;
 	
+	int paddlePosY;
+	int paddleBottom;
+	int paddleTop;
+	int y;
+	
 	//player ping
 	long playerDelay;
 	int playerPing;
+	int playerPingSize;
 	
 	public Polygon polyTRC;
 	public Polygon polyTLC;
@@ -148,16 +154,30 @@ public class DrawPanel extends JPanel {
 
 	}
 	
+	public void setPlayerBounds(User user){
+		
+		if(paddlePosY < 100){
+			paddlePosY = 100;
+		} else {
+			paddlePosY = y - playerPingSize;
+		}
+		
+		if(y > ballLogic.screenHeight){
+			y = ballLogic.screenHeight;
+		} else{
+			y = (int)(user.getyRel()*getSize().height);
+		}
+		}
+	
+	
 	public void setPlayerHeight(User user){
 		playerDelay = user.getDelay();
-
-
+		
 		if(playerDelay > 0 && playerDelay < 600){
 
 		playerPing = 0;
 
 		}
-
 
 		if(playerDelay > 600 && playerDelay < 900){
 
@@ -310,11 +330,8 @@ public class DrawPanel extends JPanel {
 	    	ballLogic.cornerBounce();
 	    }
 	    
-	   
-	    
-	    
-	    
-	    try {
+	   	    
+	     try {
 	    	   // thread to sleep for 1000 milliseconds
 	    	   Thread.sleep(3);
 	    	   } catch (Exception e) {
@@ -328,17 +345,31 @@ public class DrawPanel extends JPanel {
 			if(users.size()>=1){  // defines how many players that needs to be in the game for it to start
 			start = true;
 			
-			int y = (int)(user.getyRel()*getSize().height);
+			paddleTop = y - playerPingSize;
+			paddleBottom = y;
+			
+			paddlePosY = y - playerPingSize;
+			
+			System.out.println(paddleTop + "paddletop");
+			System.out.println(paddleBottom + "paddleBottom");
+			
+			y = (int)(user.getyRel()*getSize().height);
 			g2.setColor( user.getColor());
-
+			
 			// sets appropriate height to players based on ping
 			setPlayerHeight(user);
+			setPlayerBounds(user);
+			
+			//Draws paddle from center of finger placement on android
+			playerPingSize = user.userHeight + playerPing/4;
+			 
 			
 			//draw out player
-			g2.fillRect(user.getxPos(), y , user.userWidth, user.userHeight + playerPing/4);
+			g2.fillRect(user.getxPos(), paddlePosY/2, user.userWidth, playerPingSize);
+			//collision
+			ballLogic.comparePosition(user.getxPos(), paddlePosY ,user.userWidth, playerPingSize);
 			
-				
-			ballLogic.comparePosition(user.getxPos(),y,user.userWidth,user.userHeight + playerPing/4);
+			
 
 			}
 			String livesLeftPlayerOne = String.valueOf(ballLogic.player1lives);
