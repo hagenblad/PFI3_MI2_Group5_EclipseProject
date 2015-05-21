@@ -7,19 +7,17 @@ public class BallLogic {
 
 	private Ball bally = new Ball();
 	private User user = new User();
-	
-	public int player1lives = 5;
-	public int player2lives = 5;
-	public int player3lives = 5;
-	public int player4lives = 5;
 		
 	//relative to screen variables, startposition for level	
 	int relX = 120;
 	int relY = 40;
 	
-	//Relative Screen size
-	int screenWidth = relX +545;
-	int screenHeight = relY +540;
+	public int player1lives = 5;
+	public int player2lives = 5;
+	public int player3lives = 5;
+	public int player4lives = 5;
+
+	Level level = new Level();
 	
 	//Fluxuating values in X-axis
 	int minXSpeed = 1;
@@ -65,7 +63,7 @@ public class BallLogic {
 	public void checkBounceGoal(){
 		
 		//if the ball bounce on x-axis on right side
-		if (bally.getXPos()>= screenWidth - bally.getSize()/2){
+		if (bally.getXPos()>= level.screenWidth - bally.getSize()/2){
 			 //Random rand = new Random();
 			 bally.setBallXSpeed(-1);
 				//Reset the ball
@@ -88,8 +86,22 @@ public class BallLogic {
 			gameOver();
 		}
 			
+			
 
-
+			//Goal on Y axis
+            //Wall 1
+            if (bally.getYPos()<= level.relY + bally.getSize()/2){
+                    bally.setBallYSpeed(1);
+                    reMatch();
+            }
+           
+           
+            //WAll 3
+           
+            if (bally.getYPos()>= level.screenHeight - bally.getSize()/2){
+                    bally.setBallYSpeed(-1);
+                    reMatch();
+            }
 			
 		if(bally.getBallYSpeed()== 0){
 			Random r = new Random();
@@ -112,7 +124,7 @@ public class BallLogic {
 	public void checkBounceWall(){
 
 		
-		if (bally.getYPos() >= screenHeight - bally.getSize()/2|| bally.getYPos() <= relY+  bally.getSize()/2){
+		if (bally.getYPos() >= level.screenHeight - bally.getSize()/2|| bally.getYPos() <= level.relY+  bally.getSize()/2){
 
 			int ySpeed = bally.getBallYSpeed();
 			bally.setBallYSpeed(bounceY(ySpeed));
@@ -189,6 +201,18 @@ public class BallLogic {
 		
 		int y = bally.getYPos();
 		int x = bally.getXPos();
+
+		//upper left corner
+		if(bally.getXPos()<= level.relX+100 && bally.getXPos() >= level.relX){
+		//	System.out.println("X CORNER");
+			
+			if(bally.getYPos()<=level.relY+100 && bally.getYPos()>=level.relY){
+			//	System.out.println("Y N X CORNER");
+				
+			}
+			
+		}
+
 		
 		//Jump one step
 		bally.setYPos(y	+= bally.getBallYSpeed());
@@ -201,9 +225,9 @@ public class BallLogic {
 	public void reMatch(){
 		
 		bally.setBallYSpeed(bally.getBallYSpeed());
-		bally.setXPos(screenWidth/2);
-		bally.setYPos(screenHeight/2);
-		
+		bally.setXPos(level.screenWidth/2);
+		bally.setYPos(level.screenHeight/2);
+
 		Random rand = new Random();
 		
 		
@@ -225,7 +249,6 @@ public class BallLogic {
 
 	
 		//Insert kill a life
-
 		
 		//Reset the ball
 		Random rand2 = new Random();
@@ -235,28 +258,28 @@ public class BallLogic {
 	}
 	
 	// restarts the match when a player's life count is 0
-	public void gameOver(){
-		if (player1lives == 0){
-			System.out.println("Player 2 wins");
-			reMatch();
-			player1lives = 5;
-			player2lives = 5;
-//			bally.setXPos(screenWidth/2);
-//			bally.setYPos(screenHeight/2);
-//			bally.setBallYSpeed(0);
-//			bally.setBallXSpeed(0);
+		public void gameOver(){
+			if (player1lives == 0){
+				System.out.println("Player 2 wins");
+				reMatch();
+				player1lives = 5;
+				player2lives = 5;
+//				bally.setXPos(screenWidth/2);
+//				bally.setYPos(screenHeight/2);
+//				bally.setBallYSpeed(0);
+//				bally.setBallXSpeed(0);
+			}
+		
+			if(player2lives == 0){
+				System.out.println("Player 1 Wins");
+				reMatch();
+				player1lives = 5;
+				player2lives = 5;
+//				bally.setXPos(screenWidth/2);
+//				bally.setYPos(screenHeight/2);
+//				bally.setBallYSpeed(0);
+//				bally.setBallXSpeed(0);
+			}
 		}
-	
-		if(player2lives == 0){
-			System.out.println("Player 1 Wins");
-			reMatch();
-			player1lives = 5;
-			player2lives = 5;
-//			bally.setXPos(screenWidth/2);
-//			bally.setYPos(screenHeight/2);
-//			bally.setBallYSpeed(0);
-//			bally.setBallXSpeed(0);
-		}
-	}
 
 }
