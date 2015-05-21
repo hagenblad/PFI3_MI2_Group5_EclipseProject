@@ -158,6 +158,13 @@ public class DrawPanel extends JPanel {
 							 user.setColor(Color.GREEN);
 							 System.out.println("player 4 in");
 						 }
+					if(listCount <3){
+						try {
+							
+						} catch (Exception e) {
+							// TODO: handle exception
+						}
+					}
 					 }
 				}
 			}
@@ -265,33 +272,39 @@ public class DrawPanel extends JPanel {
 		g2.fillRect(0, 0, getSize().width, getSize().height);
 		g2.setColor(Color.black);
 		
-		//Background
-		Image img1 = Toolkit.getDefaultToolkit().getImage("src/images/bakis.jpg");
-	    g2.drawImage(img1, -100, 20, 1000, 580, this); 
+ 
 	    g2.finalize();
 	    if(start == false){
 	    	ballXPos = level.screenWidth/2;
 	    	ballYPos = level.screenHeight/2;
-	    	g.drawString("PING PONG", level.screenWidth/2-20, level.screenHeight/2-5);
+	    	
+			Color c = new Color(19,156,234);
+			g2.setColor(c);
+			g2.fillRect(0,0,800,640);
+			c = new Color(255,255,255);
+			g2.setColor(c);
+			g.drawString("TEMP SCREEN",level.screenWidth/2-10,level.screenHeight/2-40);
+			g.drawString("The game will start when two players connects", level.screenWidth/2-200, level.screenHeight/2);
 	    }else{
 	    	ballXPos = ball.getXPos();
 			ballYPos = ball.getYPos();
+			g2.fillOval(ballXPos, ballYPos, ball.getSize(), ball.getSize());
 			
-	    }
+	    
+		//Background
 
-		g2.fillOval(ballXPos, ballYPos, ball.getSize(), ball.getSize());
 		
-
+	    g2.drawRect (130, 40,540,540);	
+	    //CORNERS
+	    //TOP LEFT CORNER
+	    }
+	    
 	    Area areaBall = new Area (polyBally);
 	    Area areaTLC = new Area (polyTLC);
 	    Area areaBLC = new Area (polyBLC);
 	    Area areaTRC = new Area (polyTRC);
 	    Area areaBRC = new Area (polyBRC);
 
-		
-	    g2.drawRect (130, 40,540,540);	
-	    //CORNERS
-	    //TOP LEFT CORNER
 	    g.drawPolygon(polyTLC);
 	    g.fillPolygon (polyTLC);
 	    //BOT LEFT CORNER 
@@ -304,27 +317,6 @@ public class DrawPanel extends JPanel {
 	    g.drawPolygon(polyBRC);
 	    g.fillPolygon (polyBRC);
 	    
-	    
-	    //g.drawPolygon(polyBally);
-	   // g.fillPolygon (polyBally);
-	    
-	    
-	    
-	    //Collision between corners and ball polygon
-	    
-	    
-
-	    
-	   /* areaTLC.intersect(areaBall);	    
-	    if (!areaTLC.isEmpty()){
-	    	// insert bounce method
-	    	
-	    	//System.out.println("intercects TLC");
-	    	//Corner bounce-check
-	    	ballLogic.cornerBounce();
-	    
-	    }
-	    */
 	    
 	    //corner collision
 	    if(areaTLC.intersects(ballXPos, ballYPos, ball.getSize(), ball.getSize())){
@@ -394,12 +386,19 @@ public class DrawPanel extends JPanel {
 			g2.setColor(user.getColor());
 
 			//draw out players
-			if(users.indexOf(user)<2){
+			if(users.indexOf(user) == 0){
 				g2.fillRect(user.getxPos(), y, user.userWidth, user.userHeight);
 				ballLogic.comparePosition(user.getxPos(), y, user.userWidth, user.userHeight);
-			}
+		
+			}   else if (users.indexOf(user) == 1){
+				g2.fillRect(x, user.getyPos(), user.userHeight, user.userWidth);
+				ballLogic.comparePosition(x, user.getyPos(), user.userHeight, user.userWidth);
 			
-			else if (users.indexOf(user)>1){
+			}	else if (users.indexOf(user) == 3){
+				g2.fillRect(x, user.getyPos(), user.userHeight, user.userWidth);
+				ballLogic.comparePosition(x, user.getyPos(), user.userHeight, user.userWidth);
+			
+			}	else if (users.indexOf(user) == 4){
 				g2.fillRect(x, user.getyPos(), user.userHeight, user.userWidth);
 				ballLogic.comparePosition(x, user.getyPos(), user.userHeight, user.userWidth);
 			}
@@ -431,30 +430,8 @@ public class DrawPanel extends JPanel {
 //		}
 			
 		}
+
 		
-//		for (User user : horizontalUsers){
-//			if (horizontalUsers.size()>=1){
-//				start = true;
-//				
-//				int x = (int)(user.getxRel()*getSize().height);
-//				int y = (int)(user.getyRel()*getSize().height);
-//				g2.setColor(user.getColor());
-//				
-//				g2.fillRect(x, user.getyPos(), user.userWidth, user.userHeight);
-//				
-//				ballLogic.comparePosition(x, user.getyPos(), user.userWidth, user.userHeight);
-//			}
-//			g.drawString(user.getId(), 15, user.getyPos());
-//			
-//			String livesLeftPlayerThree = String.valueOf(ballLogic.player3lives);
-//			String livesLeftPlayerFour = String.valueOf(ballLogic.player4lives);
-//			
-//			g.drawString(livesLeftPlayerThree, 15, 750); // this prints out how many lives player three has left
-//			g.drawString(livesLeftPlayerFour,  750,  15); // this prints out how many lives player four has left
-//			
-//			String userDelay = String.valueOf(user.getDelay());
-//			g.drawString(userDelay, 30, user.getyPos());
-//		}
 		
 	}
 }
