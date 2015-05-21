@@ -2,23 +2,22 @@ package se.mah.k3;
 
 import java.util.Random;
 
+
 public class BallLogic {
 
 	private Ball bally = new Ball();
 	private User user = new User();
-	
-	public int player1lives = 5;
-	public int player2lives = 5;
-	public int player3lives = 5;
-	public int player4lives = 5;
 		
 	//relative to screen variables, startposition for level	
 	int relX = 120;
 	int relY = 40;
 	
-	//Relative Screen size
-	int screenWidth = relX +545;
-	int screenHeight = relY +540;
+	public int player1lives = 5;
+	public int player2lives = 5;
+	public int player3lives = 5;
+	public int player4lives = 5;
+
+	Level level = new Level();
 	
 	//Fluxuating values in X-axis
 	int minXSpeed = 1;
@@ -43,8 +42,13 @@ public class BallLogic {
 	checkBounceGoal();
 	//Check if bounce wall
 	checkBounceWall();
+	
+	//Corner bounce-check
+	cornerBounce();
+	
 	//Check if player hit
 	paddleBounce(x,y, width, height);
+	
 	
 
 	}
@@ -53,7 +57,7 @@ public class BallLogic {
 	public void checkBounceGoal(){
 		
 		//if the ball bounce on x-axis on right side
-		if (bally.getXPos()>= screenWidth - bally.getSize()/2){
+		if (bally.getXPos()>= level.screenWidth - bally.getSize()/2){
 			 //Random rand = new Random();
 			 bally.setBallXSpeed(-1);
 			 player2lives--;
@@ -64,7 +68,7 @@ public class BallLogic {
 		}
 
 		
-			if(bally.getXPos() <= relX + bally.getSize()/2){
+			if(bally.getXPos() <= level.relX + bally.getSize()/2){
 				//Random rand2 = new Random();
 				bally.setBallXSpeed(1);
 				player1lives--;
@@ -75,6 +79,20 @@ public class BallLogic {
 			}
 			
 
+			//Goal on Y axis
+            //Wall 1
+            if (bally.getYPos()<= level.relY + bally.getSize()/2){
+                    bally.setBallYSpeed(1);
+                    reMatch();
+            }
+           
+           
+            //WAll 3
+           
+            if (bally.getYPos()>= level.screenHeight - bally.getSize()/2){
+                    bally.setBallYSpeed(-1);
+                    reMatch();
+            }
 			
 			if(bally.getBallYSpeed()== 0){
 				Random r = new Random();
@@ -95,8 +113,12 @@ public class BallLogic {
 	}
 	//if ball bounces on y-axis
 	public void checkBounceWall(){
-
-		if (bally.getYPos() >= screenHeight - bally.getSize()/2|| bally.getYPos() <= relY+  bally.getSize()/2){
+		int radie = bally.getSize() /2;
+		int area =	radie * radie * 3;
+		
+		
+		
+		if (bally.getYPos() >= level.screenHeight - bally.getSize()/2|| bally.getYPos() <= level.relY+  bally.getSize()/2){
 
 			int ySpeed = bally.getBallYSpeed();
 			bally.setBallYSpeed(ySpeed *= -1);
@@ -119,6 +141,7 @@ public class BallLogic {
 				
 		
 				// System.out.println("Nice YYY Pos");
+
 				
 				int xSpeed = bally.getBallXSpeed(); 
 					
@@ -151,45 +174,59 @@ public class BallLogic {
 		
 	}
 	
+	public void cornerBounce(){
+		//upper left corner
+		if(bally.getXPos()<= level.relX+100 && bally.getXPos() >= level.relX){
+		//	System.out.println("X CORNER");
+			
+			if(bally.getYPos()<=level.relY+100 && bally.getYPos()>=level.relY){
+			//	System.out.println("Y N X CORNER");
+				
+			}
+			
+		}
+		
+	}
+	
 	
 	
 	//handles ball respawn on goal score
 	public void reMatch(){
 		
 		bally.setBallYSpeed(bally.getBallYSpeed());
-		bally.setXPos(screenWidth/2);
-		bally.setYPos(screenHeight/2);
-		
-		//Reset the ball
+		bally.setXPos(level.screenWidth/2);
+		bally.setYPos(level.screenHeight/2);
 		Random rand = new Random();
+		bally.setBallYSpeed(rand.nextInt((maxYSpeed - minYSpeed) + 1) -maxYSpeed);
+		//Insert kill a life
 		
 		bally.setBallYSpeed(rand.nextInt((maxYSpeed - minYSpeed) + 1) -maxYSpeed);
 		
 	}
 	
 	// restarts the match when a player's life count is 0
-	public void gameOver(){
-		if (player1lives == 0){
-			System.out.println("Player 2 wins");
-			reMatch();
-			player1lives = 5;
-			player2lives = 5;
-//			bally.setXPos(screenWidth/2);
-//			bally.setYPos(screenHeight/2);
-//			bally.setBallYSpeed(0);
-//			bally.setBallXSpeed(0);
+		public void gameOver(){
+			if (player1lives == 0){
+				System.out.println("Player 2 wins");
+				reMatch();
+				player1lives = 5;
+				player2lives = 5;
+//				bally.setXPos(screenWidth/2);
+//				bally.setYPos(screenHeight/2);
+//				bally.setBallYSpeed(0);
+//				bally.setBallXSpeed(0);
+			}
+		
+			if(player2lives == 0){
+				System.out.println("Player 1 Wins");
+				reMatch();
+				player1lives = 5;
+				player2lives = 5;
+//				bally.setXPos(screenWidth/2);
+//				bally.setYPos(screenHeight/2);
+//				bally.setBallYSpeed(0);
+//				bally.setBallXSpeed(0);
+			}
 		}
-	
-		if(player2lives == 0){
-			System.out.println("Player 1 Wins");
-			reMatch();
-			player1lives = 5;
-			player2lives = 5;
-//			bally.setXPos(screenWidth/2);
-//			bally.setYPos(screenHeight/2);
-//			bally.setBallYSpeed(0);
-//			bally.setBallXSpeed(0);
-		}
-	}
 
 }

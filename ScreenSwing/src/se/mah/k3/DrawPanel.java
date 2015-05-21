@@ -11,6 +11,9 @@ import java.util.Collections;
 import java.util.Random;
 import java.util.Vector;
 
+import java.awt.Polygon;
+import java.awt.geom.Area;
+
 import javax.swing.JPanel;
 
 import com.firebase.client.ChildEventListener;
@@ -29,12 +32,19 @@ public class DrawPanel extends JPanel {
 	//hdmi (== non existing);
 	//creates a ball
 	
+	Level level = new Level();
+	
 	private boolean start = false;
-	int ballXPos = ballLogic.screenWidth;
-	int ballYPos = ballLogic.screenHeight;
+	int ballXPos = level.screenWidth;
+	int ballYPos = level.screenHeight;
 	
 	//private int player1lives = 5;
 	//private int player2lives = 5;
+	public Polygon polyTRC;
+	public Polygon polyTLC;
+	public Polygon polyBRC;
+	public Polygon polyBLC;
+	public Polygon polyBally;
 	
 
 	//A vector is like an ArrayList a little bit slower but Thread-safe. This means that it can handle concurrent changes. 
@@ -175,6 +185,72 @@ public class DrawPanel extends JPanel {
 		g2.fillOval(ballXPos, ballYPos, ball.getSize(), ball.getSize());
 
 	    g2.drawRect (130, 40,540,540);	
+	    //CORNERS
+	    //TOP LEFT CORNER
+	    g.drawPolygon(polyTLC);
+	    g.fillPolygon (polyTLC);
+	    //BOT LEFT CORNER 
+	    g.drawPolygon(polyBLC);
+	    g.fillPolygon (polyBLC);
+	    //TOP RIGHT CORNER
+	    g.drawPolygon(polyTRC);
+	    g.fillPolygon (polyTRC);
+	    //BOT RIGHT CORNER
+	    g.drawPolygon(polyBRC);
+	    g.fillPolygon (polyBRC);
+	    
+	    
+	    g.drawPolygon(polyBally);
+	    g.fillPolygon (polyBally);
+	    
+	    
+	    
+	    //Collision between corners and ball polygon
+	    
+	    
+	    Area areaBall = new Area (polyBally);
+	    Area areaTLC = new Area (polyTLC);
+	    Area areaBLC = new Area (polyBLC);
+	    Area areaTRC = new Area (polyTRC);
+	    Area areaBRC = new Area (polyBRC);
+	    
+	    
+	    
+	    
+//	    areaBall.intersect(new Area (polyTLC));
+//	    areaBall.intersect(new Area (polyBLC));
+//	    areaBall.intersect(new Area (polyTRC));
+//	    areaBall.intersect(new Area (polyBRC));
+	    
+	    
+	    
+	    areaTLC.intersect(areaBall);
+	    if (!areaTLC.isEmpty()){
+	    	// insert bounce method
+	    	System.out.println("intercects TLC");
+	    }
+	    
+	    
+	    areaBLC.intersect(areaBall);
+	    if (!areaBLC.isEmpty()){
+	    	
+	    	System.out.println("intercects BLC");
+	    }
+	   
+	    areaTRC.intersect(areaBall);
+	    if (!areaTRC.isEmpty()){
+	    	
+	    	System.out.println("intercects TRC");
+	    }
+	    
+	    areaBRC.intersect(areaBall);
+	    if (!areaBRC.isEmpty()){
+	    	
+	    	System.out.println("intercects BRC");
+	    }
+	    
+	    
+	    
 	    try {
 	    	   // thread to sleep for 1000 milliseconds
 	    	   Thread.sleep(3);
@@ -186,7 +262,8 @@ public class DrawPanel extends JPanel {
 	    
 		//Test
 		for (User user : users) {
-			if(users.size()>=1){  // defines how many players that needs to be in the game for it to start
+		 // defines how many players that needs to be in the game for it to start
+			if(users.size()>=1){ 
 			start = true;
 			
 			int x = (int)(user.getxRel()*getSize().height);
@@ -218,10 +295,19 @@ public class DrawPanel extends JPanel {
 			g.drawString(livesLeftPlayerThree, 15, 750); // this prints out how many lives player three has left
 			g.drawString(livesLeftPlayerFour,  750,  15); // this prints out how many lives player four has left
 			
+			//System.out.println(user.getId() + user.getDelay());
+			//This prints out the ping to drawpanel
+			String userDelay = String.valueOf(user.getDelay());
+			g.drawString(userDelay, user.getxPos(), 30);
+			
 			//This prints out the ping to drawpanel
 			String userDelay = String.valueOf(user.getDelay());
 			g.drawString(userDelay, user.getxPos(), 30);
 			//System.out.println(user.getId() + user.getDelay());
+			
+//			if(users.size()>4){
+//			start = false;
+//		}
 			
 		}
 		
