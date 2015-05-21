@@ -64,7 +64,20 @@ public class BallLogic {
 				reMatch();
 			}
 			
-
+			//Goal on Y axis
+            //Wall 1
+            if (bally.getYPos()<= level.relY + bally.getSize()/2){
+                    bally.setBallYSpeed(1);
+                    reMatch();
+            }
+           
+           
+            //WAll 3
+           
+            if (bally.getYPos()>= level.screenHeight - bally.getSize()/2){
+                    bally.setBallYSpeed(-1);
+                    reMatch();
+            }
 			
 			if(bally.getBallYSpeed()== 0){
 				Random r = new Random();

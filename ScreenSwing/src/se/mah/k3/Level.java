@@ -21,6 +21,10 @@ public class Level {
 	}
 	GameState gS = GameState.START;
 	
+	public Level(){
+		gS = GameState.START;
+	}
+	
 	void GameStateUpdate(){
 		switch(gS){
 		case START:
@@ -38,10 +42,6 @@ public class Level {
 		}
 	}
 	
-	public Level(){
-		
-	}
-	
 	public boolean getWall1(){
 		return wall1;
 	}
@@ -56,7 +56,7 @@ public class Level {
 	}
 	
 	
-	public boolean getWAll3(){
+	public boolean getWall3(){
 		return wall3;
 	}
 	public void setWall3(){
