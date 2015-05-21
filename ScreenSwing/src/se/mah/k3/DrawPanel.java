@@ -117,7 +117,7 @@ public class DrawPanel extends JPanel {
 				 		}
 					}
 					 if (listCount ==1){
-						User user = new User(arg0.getKey(), 650, ballLogic.screenWidth-10, ballLogic.player2lives); // create player 2
+						User user = new User(arg0.getKey(), 650, level.screenWidth-10, ballLogic.player2lives); // create player 2
 						if (!users.contains(user)){
 							users.add(user);
 							user.userHeight = 100;
@@ -137,7 +137,7 @@ public class DrawPanel extends JPanel {
 						 }
 					 }
 					 if (listCount == 3){
-						 User user = new User(arg0.getKey(),100,ballLogic.screenHeight-10, ballLogic.player4lives); // create player 4
+						 User user = new User(arg0.getKey(),100,level.screenHeight-10, ballLogic.player4lives); // create player 4
 						 if (!users.contains(user)){
 							 users.add(user);
 								user.userHeight = 100;
@@ -173,9 +173,9 @@ public class DrawPanel extends JPanel {
 	    g2.drawImage(img1, -100, 20, 1000, 580, this); 
 	    g2.finalize();
 	    if(start == false){
-	    	ballXPos = ballLogic.screenWidth/2;
-	    	ballYPos = ballLogic.screenHeight/2;
-	    	g.drawString("PING PONG", ballLogic.screenWidth/2-20, ballLogic.screenHeight/2-5);
+	    	ballXPos = level.screenWidth/2;
+	    	ballYPos = level.screenHeight/2;
+	    	g.drawString("PING PONG", level.screenWidth/2-20, level.screenHeight/2-5);
 	    }else{
 	    	ballXPos = ball.getXPos();
 			ballYPos = ball.getYPos();
@@ -296,9 +296,6 @@ public class DrawPanel extends JPanel {
 			g.drawString(livesLeftPlayerFour,  750,  15); // this prints out how many lives player four has left
 			
 			//System.out.println(user.getId() + user.getDelay());
-			//This prints out the ping to drawpanel
-			String userDelay = String.valueOf(user.getDelay());
-			g.drawString(userDelay, user.getxPos(), 30);
 			
 			//This prints out the ping to drawpanel
 			String userDelay = String.valueOf(user.getDelay());
