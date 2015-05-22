@@ -371,14 +371,6 @@ public class DrawPanel extends JPanel {
 			
 			//Draws paddle from center of finger placement on android
 			playerPingSize = user.userHeight + playerPing/4;
-			 
-			
-			//draw out player
-			g2.fillRect(user.getxPos(), y- playerPingSize/2, user.userWidth, playerPingSize);
-			//collision
-			ballLogic.comparePosition(user.getxPos(), y- playerPingSize/2 ,user.userWidth, playerPingSize);
-			
-			
 
 
 		 // defines how many players that needs to be in the game for it to start
@@ -391,21 +383,22 @@ public class DrawPanel extends JPanel {
 
 			//draw out players
 			if(users.indexOf(user) == 0){
-				g2.fillRect(user.getxPos(), y, user.userWidth, user.userHeight);
-				ballLogic.comparePosition(user.getxPos(), y, user.userWidth, user.userHeight);
+				g2.fillRect(user.getxPos(), y - playerPingSize/2, user.userWidth, playerPingSize);
+				ballLogic.comparePosition(user.getxPos(), y - playerPingSize/2, user.userWidth, playerPingSize);
 		
 			}   else if (users.indexOf(user) == 1){
-				g2.fillRect(x, user.getyPos(), user.userHeight, user.userWidth);
-				ballLogic.comparePosition(x, user.getyPos(), user.userHeight, user.userWidth);
+				g2.fillRect(user.getxPos(), y - playerPingSize/2, user.userWidth, playerPingSize);
+				ballLogic.comparePosition(user.getxPos(), y - playerPingSize/2, user.userWidth, playerPingSize);
 			
-			}	else if (users.indexOf(user) == 2){
-				g2.fillRect(x, user.getyPos(), user.userHeight, user.userWidth);
-				ballLogic.comparePosition(x, user.getyPos(), user.userHeight, user.userWidth);
-			
-			}	else if (users.indexOf(user) == 3){
-				g2.fillRect(x, user.getyPos(), user.userHeight, user.userWidth);
-				ballLogic.comparePosition(x, user.getyPos(), user.userHeight, user.userWidth);
 			}
+//				else if (users.indexOf(user) == 2){
+//				g2.fillRect(x, user.getyPos(), user.userHeight, user.userWidth);
+//				ballLogic.comparePosition(x, user.getyPos(), user.userHeight, user.userWidth);
+//			
+//			}	else if (users.indexOf(user) == 3){
+//				g2.fillRect(x, user.getyPos(), user.userHeight, user.userWidth);
+//				ballLogic.comparePosition(x, user.getyPos(), user.userHeight, user.userWidth);
+//			}
 			//System.out.println("User number "+ user +" has the position " + users.indexOf(user));	
 			
 
