@@ -292,8 +292,14 @@ public class DrawPanel extends JPanel {
 	    }else{
 	    	ballXPos = ball.getXPos();
 			ballYPos = ball.getYPos();
-			g2.fillOval(ballXPos, ballYPos, ball.getSize(), ball.getSize());
 			
+
+			//ball
+			//g2.fillOval(ballXPos, ballYPos, ball.getSize(), ball.getSize());
+			Image boll = Toolkit.getDefaultToolkit().getImage("src/images/boll.png");
+			g2.drawImage(boll, ballXPos, ballYPos, ball.getSize(),ball.getSize(), this);
+			
+
 	    
 		//Background
 	    }
@@ -301,6 +307,7 @@ public class DrawPanel extends JPanel {
 			g2.setColor(c);
 			g2.drawRect (level.relX, level.relY, level.screenWidthForRect, level.screenHeightHeightForRect);	
 	   
+
 	    //CORNERS
 	    //TOP LEFT CORNER
 	 
