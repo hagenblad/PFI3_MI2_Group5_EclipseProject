@@ -273,8 +273,8 @@ public class DrawPanel extends JPanel {
 		g2.setColor(Color.black);
 		
 		//Background
-		Image img1 = Toolkit.getDefaultToolkit().getImage("src/images/bakis.jpg");
-	    g2.drawImage(img1, -100, 20, 1000, 580, this); 
+		Image img1 = Toolkit.getDefaultToolkit().getImage("src/images/bakgrundis.jpg");
+	    g2.drawImage(img1, 0, 0, this); 
 		
  
 	    g2.finalize();
@@ -296,7 +296,7 @@ public class DrawPanel extends JPanel {
 			
 	    
 		//Background
-
+		
 		
 	    g2.drawRect (130, 40,540,540);	
 	    //CORNERS
