@@ -318,17 +318,17 @@ public class DrawPanel extends JPanel {
 	    Area areaTRC = new Area (polyTRC);
 	    Area areaBRC = new Area (polyBRC);
 
-	    g.drawPolygon(polyTLC);
-	    g.fillPolygon (polyTLC);
-	    //BOT LEFT CORNER 
-	    g.drawPolygon(polyBLC);
-	    g.fillPolygon (polyBLC);
-	    //TOP RIGHT CORNER
-	    g.drawPolygon(polyTRC);
-	    g.fillPolygon (polyTRC);
-	    //BOT RIGHT CORNER
-	    g.drawPolygon(polyBRC);
-	    g.fillPolygon (polyBRC);
+//	    g.drawPolygon(polyTLC);
+//	    g.fillPolygon (polyTLC);
+//	    //BOT LEFT CORNER 
+//	    g.drawPolygon(polyBLC);
+//	    g.fillPolygon (polyBLC);
+//	    //TOP RIGHT CORNER
+//	    g.drawPolygon(polyTRC);
+//	    g.fillPolygon (polyTRC);
+//	    //BOT RIGHT CORNER
+//	    g.drawPolygon(polyBRC);
+//	    g.fillPolygon (polyBRC);
 	    
 	    
 	    //corner collision
@@ -391,22 +391,31 @@ public class DrawPanel extends JPanel {
 			g2.setColor(user.getColor());
 
 			//draw out players
+			Image player1 = Toolkit.getDefaultToolkit().getImage("src/images/paddle_left.png");
+			Image player2 = Toolkit.getDefaultToolkit().getImage("src/images/paddle_right.png");
+			//Image player3 = Toolkit.getDefaultToolkit().getImage("src/images/paddle_top.png");
+			//Image player4 = Toolkit.getDefaultToolkit().getImage("src/images/paddle_bottom.png");
+			
 			if(users.indexOf(user) == 0){
-				g2.fillRect(user.getxPos(), y - playerPingSize/2, user.userWidth, playerPingSize);
+				g2.fillRect(level.relX+1, y - playerPingSize/2, user.userWidth, playerPingSize);
 				ballLogic.comparePosition(user.getxPos(), y - playerPingSize/2, user.userWidth, playerPingSize);
+				g2.drawImage(player1, level.relX+1, y - playerPingSize/2, user.userWidth, playerPingSize, this);
 		
 			}   else if (users.indexOf(user) == 1){
-				g2.fillRect(user.getxPos(), y - playerPingSize/2, user.userWidth, playerPingSize);
+				g2.fillRect(800-9, y - playerPingSize/2, user.userWidth, playerPingSize);
 				ballLogic.comparePosition(user.getxPos(), y - playerPingSize/2, user.userWidth, playerPingSize);
+				g2.drawImage(player2, 800-9, y - playerPingSize/2, user.userWidth, playerPingSize, this);
 			
 			}
 //				else if (users.indexOf(user) == 2){
 //				g2.fillRect(x, user.getyPos(), user.userHeight, user.userWidth);
 //				ballLogic.comparePosition(x, user.getyPos(), user.userHeight, user.userWidth);
+//			    g2.drawImage(player3, user.getxPos(), y - playerPingSize/2, user.userWidth, playerPingSize, this);
 //			
 //			}	else if (users.indexOf(user) == 3){
 //				g2.fillRect(x, user.getyPos(), user.userHeight, user.userWidth);
 //				ballLogic.comparePosition(x, user.getyPos(), user.userHeight, user.userWidth);
+//			g2.drawImage(player4, user.getxPos(), y - playerPingSize/2, user.userWidth, playerPingSize, this);
 //			}
 			//System.out.println("User number "+ user +" has the position " + users.indexOf(user));	
 			
