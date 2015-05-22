@@ -394,11 +394,11 @@ public class DrawPanel extends JPanel {
 				g2.fillRect(x, user.getyPos(), user.userHeight, user.userWidth);
 				ballLogic.comparePosition(x, user.getyPos(), user.userHeight, user.userWidth);
 			
-			}	else if (users.indexOf(user) == 3){
+			}	else if (users.indexOf(user) == 2){
 				g2.fillRect(x, user.getyPos(), user.userHeight, user.userWidth);
 				ballLogic.comparePosition(x, user.getyPos(), user.userHeight, user.userWidth);
 			
-			}	else if (users.indexOf(user) == 4){
+			}	else if (users.indexOf(user) == 3){
 				g2.fillRect(x, user.getyPos(), user.userHeight, user.userWidth);
 				ballLogic.comparePosition(x, user.getyPos(), user.userHeight, user.userWidth);
 			}
