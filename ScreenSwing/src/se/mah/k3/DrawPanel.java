@@ -374,9 +374,9 @@ public class DrawPanel extends JPanel {
 			 
 			
 			//draw out player
-			g2.fillRect(user.getxPos(), paddlePosY/2, user.userWidth, playerPingSize);
+			g2.fillRect(user.getxPos(), y- playerPingSize/2, user.userWidth, playerPingSize);
 			//collision
-			ballLogic.comparePosition(user.getxPos(), paddlePosY ,user.userWidth, playerPingSize);
+			ballLogic.comparePosition(user.getxPos(), y- playerPingSize/2 ,user.userWidth, playerPingSize);
 			
 			
 
