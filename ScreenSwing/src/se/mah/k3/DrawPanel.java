@@ -272,6 +272,10 @@ public class DrawPanel extends JPanel {
 		g2.fillRect(0, 0, getSize().width, getSize().height);
 		g2.setColor(Color.black);
 		
+		//Background
+		Image img1 = Toolkit.getDefaultToolkit().getImage("src/images/bakis.jpg");
+	    g2.drawImage(img1, -100, 20, 1000, 580, this); 
+		
  
 	    g2.finalize();
 	    if(start == false){
