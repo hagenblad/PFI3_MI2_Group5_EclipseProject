@@ -233,28 +233,28 @@ public class DrawPanel extends JPanel {
 	public void paint(Graphics g) {
 	
 		//TOP LEFT CORNER
-		int TLCxpoints[] = {130, 190, 130};
-	    int TLCypoints[] = {40, 40, 100};
+		int TLCxpoints[] = {level.relX, level.relX + 60+10, level.relX};
+	    int TLCypoints[] = {level.relY, level.relY, level.relY+60+10};
 	    int npoints = 3;
 	    
 	    polyTLC = new Polygon(TLCxpoints, TLCypoints, npoints);
 	    
 	   //TOP RIGHT CORNER
-	    int TRCxpoints[] = {670, 610, 670};
-	    int TRCypoints[] = {40, 40, 100};
+	    int TRCxpoints[] = {level.screenWidth+60, level.screenWidth-10, level.screenWidth+60};
+	    int TRCypoints[] = {level.relY, level.relY, level.relY+60+10};
 	    
 	    polyTRC = new Polygon(TRCxpoints, TRCypoints, npoints);
 	    
 	   //BOT LEFT CORNER
 	    
-	    int BLCxpoints[] = {130,190,130};
-	    int BLCypoints[] = {580,580,520};
+	    int BLCxpoints[] = {level.relX,level.relX+60+10,level.relX};
+	    int BLCypoints[] = {level.screenHeight+60,level.screenHeight+60,level.screenHeight-10};
 	    
 	    polyBLC = new Polygon(BLCxpoints, BLCypoints, npoints);
 	    
 	    //BOT RIGHT CORNER
-	    int BRCxpoints[] = {670, 610, 670};
-	    int BRCypoints[] = {580, 580, 520};
+	    int BRCxpoints[] = {level.screenWidth+60, level.screenWidth-12, level.screenWidth+60};
+	    int BRCypoints[] = {level.screenHeight+60, level.screenHeight+60, level.screenHeight-12};
 	    
 	    polyBRC = new Polygon(BRCxpoints, BRCypoints, npoints);
 		
@@ -282,13 +282,13 @@ public class DrawPanel extends JPanel {
 	    	ballXPos = level.screenWidth/2;
 	    	ballYPos = level.screenHeight/2;
 	    	
-			Color c = new Color(19,156,234);
-			g2.setColor(c);
-			g2.fillRect(0,0,800,640);
-			c = new Color(255,255,255);
-			g2.setColor(c);
-			g.drawString("TEMP SCREEN",level.screenWidth/2-10,level.screenHeight/2-40);
-			g.drawString("The game will start when two players connects", level.screenWidth/2-200, level.screenHeight/2);
+//			Color c = new Color(19,156,234);
+//			g2.setColor(c);
+//			g2.fillRect(0,0,800,640);
+//			c = new Color(255,255,255);
+//			g2.setColor(c);
+//			g.drawString("TEMP SCREEN",level.screenWidth/2-10,level.screenHeight/2-40);
+//			g.drawString("The game will start when two players connects", level.screenWidth/2-200, level.screenHeight/2);
 	    }else{
 	    	ballXPos = ball.getXPos();
 			ballYPos = ball.getYPos();
@@ -296,12 +296,14 @@ public class DrawPanel extends JPanel {
 			
 	    
 		//Background
-		
-		
-	    g2.drawRect (130, 40,540,540);	
+	    }
+			Color c = new Color(19,156,234);
+			g2.setColor(c);
+			g2.drawRect (level.relX, level.relY, level.screenWidthForRect, level.screenHeightHeightForRect);	
+	   
 	    //CORNERS
 	    //TOP LEFT CORNER
-	    }
+	 
 	    
 	    Area areaBall = new Area (polyBally);
 	    Area areaTLC = new Area (polyTLC);
