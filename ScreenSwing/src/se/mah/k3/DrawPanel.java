@@ -120,7 +120,7 @@ public class DrawPanel extends JPanel {
 					System.out.println("number of players: " + listCount); //räknar antal spelar och skriver ut i konsollen. (börjar på 0)
 //					
 					if (listCount ==0){
-						User user = new User(arg0.getKey(), 140, ballLogic.relX+10, ballLogic.player1lives); // create player 1
+						User user = new User(arg0.getKey(), level.relX+11, level.relX+11, ballLogic.player1lives); // create player 1
 						if (!users.contains(user)){
 							users.add(user);
 							user.userHeight = 100;
@@ -130,7 +130,7 @@ public class DrawPanel extends JPanel {
 				 		}
 					}
 					 if (listCount ==1){
-						User user = new User(arg0.getKey(), 650, level.screenWidth-10, ballLogic.player2lives); // create player 2
+						User user = new User(arg0.getKey(), level.screenWidth-11, level.screenWidth-10, ballLogic.player2lives); // create player 2
 						if (!users.contains(user)){
 							users.add(user);
 							user.userHeight = 100;
@@ -240,7 +240,7 @@ public class DrawPanel extends JPanel {
 	    polyTLC = new Polygon(TLCxpoints, TLCypoints, npoints);
 	    
 	   //TOP RIGHT CORNER
-	    int TRCxpoints[] = {level.screenWidth+60, level.screenWidth-10, level.screenWidth+60};
+	    int TRCxpoints[] = {level.screenWidth, level.screenWidth-10-60, level.screenWidth};
 	    int TRCypoints[] = {level.relY, level.relY, level.relY+60+10};
 	    
 	    polyTRC = new Polygon(TRCxpoints, TRCypoints, npoints);
@@ -248,13 +248,13 @@ public class DrawPanel extends JPanel {
 	   //BOT LEFT CORNER
 	    
 	    int BLCxpoints[] = {level.relX,level.relX+60+10,level.relX};
-	    int BLCypoints[] = {level.screenHeight+60,level.screenHeight+60,level.screenHeight-10};
+	    int BLCypoints[] = {level.screenHeight,level.screenHeight,level.screenHeight-60-10};
 	    
 	    polyBLC = new Polygon(BLCxpoints, BLCypoints, npoints);
 	    
 	    //BOT RIGHT CORNER
-	    int BRCxpoints[] = {level.screenWidth+60, level.screenWidth-12, level.screenWidth+60};
-	    int BRCypoints[] = {level.screenHeight+60, level.screenHeight+60, level.screenHeight-12};
+	    int BRCxpoints[] = {level.screenWidth, level.screenWidth-12-60, level.screenWidth};
+	    int BRCypoints[] = {level.screenHeight, level.screenHeight, level.screenHeight-60-12};
 	    
 	    polyBRC = new Polygon(BRCxpoints, BRCypoints, npoints);
 		
@@ -282,13 +282,13 @@ public class DrawPanel extends JPanel {
 	    	ballXPos = level.screenWidth/2;
 	    	ballYPos = level.screenHeight/2;
 	    	
-//			Color c = new Color(19,156,234);
-//			g2.setColor(c);
-//			g2.fillRect(0,0,800,640);
-//			c = new Color(255,255,255);
-//			g2.setColor(c);
-//			g.drawString("TEMP SCREEN",level.screenWidth/2-10,level.screenHeight/2-40);
-//			g.drawString("The game will start when two players connects", level.screenWidth/2-200, level.screenHeight/2);
+			Color c = new Color(19,156,234);
+			g2.setColor(c);
+			g2.fillRect(0,0,1000,700);
+			c = new Color(255,255,255);
+			g2.setColor(c);
+			g.drawString("PING PONG TEMP SCREEN",level.screenWidth/2-30,level.screenHeight/2-40);
+			g.drawString("The game will start when two players connects", level.screenWidth/2-200, level.screenHeight/2);
 	    }else{
 	    	ballXPos = ball.getXPos();
 			ballYPos = ball.getYPos();
@@ -305,7 +305,7 @@ public class DrawPanel extends JPanel {
 	    }
 			Color c = new Color(19,156,234);
 			g2.setColor(c);
-			g2.drawRect (level.relX, level.relY, level.screenWidthForRect, level.screenHeightHeightForRect);	
+		//	g2.drawRect (level.relX, level.relY, level.screenWidthForRect, level.screenHeightHeightForRect);	
 	   
 
 	    //CORNERS
@@ -351,7 +351,12 @@ public class DrawPanel extends JPanel {
 	   	    
 	     try {
 	    	   // thread to sleep for 1000 milliseconds
+	    	 if(users.size()==1){
 	    	   Thread.sleep(3);
+	    	 }else if(users.size()>1){
+	    		 Thread.sleep(6);
+	    		 
+	    	 }
 	    	   } catch (Exception e) {
 	    	   System.out.println(e);
 	    	   }
@@ -360,7 +365,7 @@ public class DrawPanel extends JPanel {
 	    
 		//Test
 		for (User user : users) {
-			if(users.size()>=1){  // defines how many players that needs to be in the game for it to start
+			if(users.size()>=2){  // defines how many players that needs to be in the game for it to start
 			start = true;
 			
 			paddleTop = y - playerPingSize;
@@ -397,47 +402,43 @@ public class DrawPanel extends JPanel {
 			//Image player4 = Toolkit.getDefaultToolkit().getImage("src/images/paddle_bottom.png");
 			
 			if(users.indexOf(user) == 0){
-				g2.fillRect(level.relX+1, y - playerPingSize/2, user.userWidth, playerPingSize);
-				ballLogic.comparePosition(user.getxPos(), y - playerPingSize/2, user.userWidth, playerPingSize);
-				g2.drawImage(player1, level.relX+1, y - playerPingSize/2, user.userWidth, playerPingSize, this);
+			//	g2.fillRect(level.relX+1, y - (playerPingSize/2), user.userWidth, playerPingSize);
+				ballLogic.comparePosition(user.getxPos()-2, y - (playerPingSize/2), user.userWidth, playerPingSize);
+				g2.drawImage(player1, level.relX+1, y - (playerPingSize/2), user.userWidth, playerPingSize, this);
 		
-			}   else if (users.indexOf(user) == 1){
-				g2.fillRect(800-9, y - playerPingSize/2, user.userWidth, playerPingSize);
-				ballLogic.comparePosition(user.getxPos(), y - playerPingSize/2, user.userWidth, playerPingSize);
-				g2.drawImage(player2, 800-9, y - playerPingSize/2, user.userWidth, playerPingSize, this);
+			}   else if (users.indexOf(user)==1 ){
+		//		g2.fillRect(level.screenHeight-11, y - (playerPingSize/2), user.userWidth, playerPingSize);
+				ballLogic.comparePosition(user.getxPos(), y - (playerPingSize/2), user.userWidth, playerPingSize);
+				g2.drawImage(player2, level.screenWidth-11, y - (playerPingSize/2), user.userWidth, playerPingSize, this);
 			
 			}
-//				else if (users.indexOf(user) == 2){
-//				g2.fillRect(x, user.getyPos(), user.userHeight, user.userWidth);
-//				ballLogic.comparePosition(x, user.getyPos(), user.userHeight, user.userWidth);
-//			    g2.drawImage(player3, user.getxPos(), y - playerPingSize/2, user.userWidth, playerPingSize, this);
-//			
-//			}	else if (users.indexOf(user) == 3){
-//				g2.fillRect(x, user.getyPos(), user.userHeight, user.userWidth);
-//				ballLogic.comparePosition(x, user.getyPos(), user.userHeight, user.userWidth);
-//			g2.drawImage(player4, user.getxPos(), y - playerPingSize/2, user.userWidth, playerPingSize, this);
-//			}
-			//System.out.println("User number "+ user +" has the position " + users.indexOf(user));	
 			
+			else if (users.indexOf(user) == 1){
+				//g2.fillRect(1000, user.getyPos(), user.userHeight, user.userWidth);
+				ballLogic.comparePosition(1000, user.getyPos(), user.userHeight, user.userWidth);
+			   g2.drawImage(player2, user.getxPos(), y - playerPingSize/2, user.userWidth, playerPingSize, this);
+			}
+			//System.out.println("User number "+ user +" has the position " + users.indexOf(user));	
+				
 
 			}
-			g.drawString(user.getId(), user.getxPos(), 15); // This prints out the player names
-			
+			//g.drawString(user.getId(), user.getxPos(), 15); // This prints out the player names
+			c = Color.WHITE;
 			String livesLeftPlayerOne = String.valueOf(ballLogic.player1lives);
 			String livesLeftPlayerTwo = String.valueOf(ballLogic.player2lives);
 			String livesLeftPlayerThree = String.valueOf(ballLogic.player3lives);
 			String livesLeftPlayerFour = String.valueOf(ballLogic.player4lives);
 
-			g.drawString(livesLeftPlayerOne, 15, 15); // this prints out how many lives player one has left
-			g.drawString(livesLeftPlayerTwo, 750, 15); // this prints out how many lives player two has left
-			g.drawString(livesLeftPlayerThree, 15, 750); // this prints out how many lives player three has left
-			g.drawString(livesLeftPlayerFour,  750,  15); // this prints out how many lives player four has left
+			g.drawString(livesLeftPlayerOne + " Lives left ", level.relX-150, 40); // this prints out how many lives player one has left
+			g.drawString(livesLeftPlayerTwo + " Lives left ", level.screenWidth+20, 40); // this prints out how many lives player two has left
+			//g.drawString(livesLeftPlayerThree, 15, 750); // this prints out how many lives player three has left
+			//g.drawString(livesLeftPlayerFour,  750,  15); // this prints out how many lives player four has left
 			
 			//System.out.println(user.getId() + user.getDelay());
 			
 			//This prints out the ping to drawpanel
 			String userDelay = String.valueOf(user.getDelay());
-			g.drawString(userDelay, user.getxPos(), 30);
+			g.drawString("PING = " + userDelay, user.getxPos(), 10);
 			//System.out.println(user.getId() + user.getDelay());
 			
 //			if(users.size()>4){
