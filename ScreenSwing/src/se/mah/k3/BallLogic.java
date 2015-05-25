@@ -7,25 +7,25 @@ public class BallLogic {
 
 	private Ball bally = new Ball();
 	private User user = new User();
+	Level level = new Level();
 		
 	//relative to screen variables, startposition for level	
-	int relX = 120;
-	int relY = 40;
+	int relX = level.relX;
+	int relY = level.relY;
 	
 	public int player1lives = 5;
 	public int player2lives = 5;
 	public int player3lives = 5;
 	public int player4lives = 5;
 
-	Level level = new Level();
 	
 	//Fluxuating values in X-axis
 	int minXSpeed = 1;
 	int maxXSpeed = 4;
 	
 	// Fluxuating values in Y-axis 
-	int minYSpeed = -1;
-	int maxYSpeed = 1;
+	int minYSpeed = -3;
+	int maxYSpeed = 3;
 	
 	public BallLogic(Ball ball){
 		this.bally = ball;
