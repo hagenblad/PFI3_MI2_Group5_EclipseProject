@@ -109,6 +109,9 @@ public class DrawPanel extends JPanel {
 						 users.get(place).setDelay((long)dataSnapshot.getValue());
 //						 horizontalUsers.get(position).setDelay((long)dataSnapshot.getValue());
 					 }
+					 if (dataSnapshot.getKey().equals("color")){
+
+					 }
 				 }
 					
 				 repaint();
@@ -124,15 +127,17 @@ public class DrawPanel extends JPanel {
 					int y = r.nextInt(getSize().height); 
 					listCount = users.size();
 					System.out.println("number of players: " + listCount); //räknar antal spelar och skriver ut i konsollen. (börjar på 0)
-//					
+
 					if (listCount ==0){
 						User user = new User(arg0.getKey(), level.relX+11, level.relX+11, ballLogic.player1lives); // create player 1
 						if (!users.contains(user)){
 							users.add(user);
 							user.userHeight = 100;
 							user.userWidth = 10;
-							user.setColor(Color.BLACK);
+							Color blue = Color.decode("#599bb9");
+							user.setColor(blue);
 							System.out.println("player 1 in");
+							myFirebaseRef.child(arg0.getKey()).child("playercolor").setValue("#599bb9");
 				 		}
 					}
 					 if (listCount ==1){
@@ -141,28 +146,37 @@ public class DrawPanel extends JPanel {
 							users.add(user);
 							user.userHeight = 100;
 							user.userWidth = 10;
-							user.setColor(Color.RED);
+							Color red = Color.decode("#d35959");
+							user.setColor(red);
 							System.out.println("player 2 in");
+							myFirebaseRef.child(arg0.getKey()).child("playercolor").setValue("#d35959");
+
 						}
 					}	
 					 if (listCount == 2){
 						 User user = new User(arg0.getKey(),100, ballLogic.relY+10 , ballLogic.player3lives); // create player 3
 						 if(!users.contains(user)){
 							 users.add(user);
-								user.userHeight = 100;
-								user.userWidth = 10;
-							 user.setColor(Color.BLUE);
+							 user.userHeight = 100;
+							 user.userWidth = 10;
+							 Color green = Color.decode("#8cba66");
+							 user.setColor(green);
 							 System.out.println("player 3 in");
+							 myFirebaseRef.child(arg0.getKey()).child("playercolor").setValue("#8cba66");
+
 						 }
 					 }
 					 if (listCount == 3){
 						 User user = new User(arg0.getKey(),100,level.screenHeight-10, ballLogic.player4lives); // create player 4
 						 if (!users.contains(user)){
 							 users.add(user);
-								user.userHeight = 100;
-								user.userWidth = 10;
-							 user.setColor(Color.GREEN);
+							 user.userHeight = 100;
+							 user.userWidth = 10;
+							 Color yellow = Color.decode("#e5d672");
+							 user.setColor(yellow);
 							 System.out.println("player 4 in");
+							 myFirebaseRef.child(arg0.getKey()).child("playercolor").setValue("#e5d672");
+
 						 }
 					if(listCount <3){
 						try {
