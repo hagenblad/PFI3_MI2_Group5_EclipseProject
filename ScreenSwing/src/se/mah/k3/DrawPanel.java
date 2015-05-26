@@ -10,7 +10,6 @@ import java.awt.Toolkit;
 import java.util.Collections;
 import java.util.Random;
 import java.util.Vector;
-
 import java.awt.Polygon;
 import java.awt.geom.Area;
 
@@ -31,10 +30,12 @@ public class DrawPanel extends JPanel {
 	// work on mac = false;
 	//hdmi (== non existing);
 	//creates a ball
+	BallLogicV2[] ships = BallLogicV2.lives(4);
 	
 	Level level = new Level();
 	
 	private boolean start = false;
+	
 	int ballXPos = level.screenWidth;
 	int ballYPos = level.screenHeight;
 	
@@ -271,11 +272,13 @@ public class DrawPanel extends JPanel {
 		g2.setColor(Color.LIGHT_GRAY);
 		g2.fillRect(0, 0, getSize().width, getSize().height);
 		g2.setColor(Color.black);
-		
+    	 
+ ///NYA GREJER VA
+    				
 		//Background
 		Image img1 = Toolkit.getDefaultToolkit().getImage("src/images/bakgrundis.jpg");
 	    g2.drawImage(img1, 0, 0, this); 
-		
+
  
 	    g2.finalize();
 	    if(start == false){
@@ -284,7 +287,7 @@ public class DrawPanel extends JPanel {
 	    	
 			Color c = new Color(19,156,234);
 			g2.setColor(c);
-			g2.fillRect(0,0,1000,700);
+			//g2.fillRect(0,0,1000,700);
 			c = new Color(255,255,255);
 			g2.setColor(c);
 			g.drawString("PING PONG TEMP SCREEN",level.screenWidth/2-30,level.screenHeight/2-40);
@@ -297,6 +300,9 @@ public class DrawPanel extends JPanel {
 			//ball
 			//g2.fillOval(ballXPos, ballYPos, ball.getSize(), ball.getSize());
 			Image boll = Toolkit.getDefaultToolkit().getImage("src/images/boll.png");
+		    
+			ships[0].move(ballXPos,ballYPos);
+	        ships[0].paint(g2);
 			g2.drawImage(boll, ballXPos, ballYPos, ball.getSize(),ball.getSize(), this);
 			
 
@@ -330,7 +336,9 @@ public class DrawPanel extends JPanel {
 //	    g.drawPolygon(polyBRC);
 //	    g.fillPolygon (polyBRC);
 	    
-	    
+	    //g.setColor(Color.black);
+    	//g.fillRect(0,0,width,height);
+	
 	    //corner collision
 	    if(areaTLC.intersects(ballXPos, ballYPos, ball.getSize(), ball.getSize())){
 
@@ -365,7 +373,7 @@ public class DrawPanel extends JPanel {
 	    
 		//Test
 		for (User user : users) {
-			if(users.size()>=2){  // defines how many players that needs to be in the game for it to start
+			if(users.size()>=0){  // defines how many players that needs to be in the game for it to start
 			start = true;
 			
 			paddleTop = y - playerPingSize;
