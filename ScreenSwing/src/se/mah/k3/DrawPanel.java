@@ -199,6 +199,15 @@ public class DrawPanel extends JPanel {
 
 	}
 	
+	public void initiateTimer(){
+		if(timerController == true){
+		System.out.println("About to start timer.");
+	    new TimerClass(5);
+	    System.out.println("Timer started.");
+	    timerController = false;
+		}
+		}
+	
 	public void setPlayerBounds(User user){
 		
 		if(paddlePosY < 100){
@@ -399,8 +408,8 @@ public class DrawPanel extends JPanel {
 			
 			paddlePosY = y - playerPingSize;
 			
-			System.out.println(paddleTop + "paddletop");
-			System.out.println(paddleBottom + "paddleBottom");
+//			System.out.println(paddleTop + "paddletop");
+//			System.out.println(paddleBottom + "paddleBottom");
 			
 			y = (int)(user.getyRel()*getSize().height);
 			g2.setColor( user.getColor());
@@ -465,7 +474,7 @@ public class DrawPanel extends JPanel {
 			//This prints out the ping to drawpanel
 			String userDelay = String.valueOf(user.getDelay());
 			g.drawString("PING = " + userDelay, user.getxPos(), 10);
-			System.out.println(user.getId() + user.getDelay());
+			//System.out.println(user.getId() + user.getDelay());
 			
 //			if(users.size()>4){
 //			start = false;
