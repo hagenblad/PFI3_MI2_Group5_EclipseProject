@@ -3,9 +3,15 @@ import java.awt.Toolkit;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import se.mah.k3.Level.GameState;
+
 public class TimerClass {
 	Toolkit toolkit;
 
+	Ball ball = new Ball();
+	BallLogic bL = new BallLogic(ball);
+	
+	Level level = new Level();
 	  Timer timer;
 	  DrawPanel dP = new DrawPanel();
 	  
@@ -20,11 +26,10 @@ public class TimerClass {
 	  
 	  class RemindTask extends TimerTask {
 		    public void run() {
-		      dP.start = true;
-		      System.out.println("Timer completed");
+		    	dP.start = true;
+				System.out.println("Game is starting");
 		     // toolkit.beep();
-		      //timer.cancel(); //Not necessary because we call System.exit
-		      timer.cancel(); //Stops the AWT thread (and everything else)
+		    	timer.cancel(); //Stops the AWT thread (and everything else)
 		    }
 		  }
 }

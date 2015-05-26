@@ -16,6 +16,8 @@ import java.awt.geom.Area;
 
 import javax.swing.JPanel;
 
+import se.mah.k3.Level.GameState;
+
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -153,7 +155,7 @@ public class DrawPanel extends JPanel {
 
 						}
 					}	
-					 if (listCount == 2){
+/*					 if (listCount == 2){
 						 User user = new User(arg0.getKey(),100, ballLogic.relY+10 , ballLogic.player3lives); // create player 3
 						 if(!users.contains(user)){
 							 users.add(user);
@@ -178,6 +180,7 @@ public class DrawPanel extends JPanel {
 							 myFirebaseRef.child(arg0.getKey()).child("playercolor").setValue("#e5d672");
 
 						 }
+						 */
 					if(listCount <3){
 						try {
 							
@@ -186,7 +189,7 @@ public class DrawPanel extends JPanel {
 						}
 					}
 					 }
-				}
+				//}
 			}
 			
 			@Override
@@ -195,8 +198,6 @@ public class DrawPanel extends JPanel {
 			}
 		});
 		 
-		 
-
 	}
 	
 	public void initiateTimer(){
@@ -206,7 +207,7 @@ public class DrawPanel extends JPanel {
 	    System.out.println("Timer started.");
 	    timerController = false;
 		}
-		}
+	}
 	
 	public void setPlayerBounds(User user){
 		
@@ -289,11 +290,6 @@ public class DrawPanel extends JPanel {
 		g2.fillRect(0, 0, getSize().width, getSize().height);
 		g2.setColor(Color.black);
 		
-		//Background
-		Image img1 = Toolkit.getDefaultToolkit().getImage("src/images/bakgrundis.jpg");
-	    g2.drawImage(img1, 0, 0, this); 
-		
- 
 	    g2.finalize();
 	    
 	    if(start == false){
@@ -325,8 +321,8 @@ public class DrawPanel extends JPanel {
 			
 
 	    
-		//Background
 	    }
+		//Background
 			Color c = new Color(19,156,234);
 			g2.setColor(c);
 		//	g2.drawRect (level.relX, level.relY, level.screenWidthForRect, level.screenHeightHeightForRect);	
@@ -388,21 +384,39 @@ public class DrawPanel extends JPanel {
 	     c = new Color(100,100,100);
 	     g2.setColor(c);
 	     
-			if(users.size() == 1){
+			if(users.size() >= 1){
 				g.drawString("Player 1 connected", 100, 100);
 			}
 			
 			if(users.size() == 2){
 				g.drawString("Player 2 connected", 700, 100);
+//				start = true;
 			}
 
 
 	    super.repaint();
 
+	    if(users.size()>=2){
+	    initiateTimer();	
+	    
+	    if(start == true){
+			//Background
+			Image img1 = Toolkit.getDefaultToolkit().getImage("src/images/bakgrundis.jpg");
+		    g2.drawImage(img1, 0, 0, this); 
+	    	
+	    	ballXPos = ball.getXPos();
+			ballYPos = ball.getYPos();
+
+			//ball
+			//g2.fillOval(ballXPos, ballYPos, ball.getSize(), ball.getSize());
+			Image boll = Toolkit.getDefaultToolkit().getImage("src/images/boll.png");
+			g2.drawImage(boll, ballXPos, ballYPos, ball.getSize(),ball.getSize(), this);
+			
+//	    	System.out.println("Game started");
+			
 		//Test
 		for (User user : users) {
 			if(users.size()>=2){  // defines how many players that needs to be in the game for it to start			
-			start = true;
 			paddleTop = y - playerPingSize;
 			paddleBottom = y;
 			
@@ -423,8 +437,8 @@ public class DrawPanel extends JPanel {
 
 
 		 // defines how many players that needs to be in the game for it to start
-			if(users.size()>=1){ 
-			start = true;
+		    if(users.size()>=1){ 
+	//		start = true;
 			
 			int x = (int)(user.getxRel()*getSize().height);
 			int y = (int)(user.getyRel()*getSize().height);
@@ -448,7 +462,7 @@ public class DrawPanel extends JPanel {
 			
 			}
 			
-			else if (users.indexOf(user) == 1){
+			else if (users.indexOf(user) >= 1){
 				//g2.fillRect(1000, user.getyPos(), user.userHeight, user.userWidth);
 				ballLogic.comparePosition(1000, user.getyPos(), user.userHeight, user.userWidth);
 			   g2.drawImage(player2, user.getxPos(), y - playerPingSize, user.userWidth, playerPingSize, this);
@@ -486,6 +500,8 @@ public class DrawPanel extends JPanel {
 		
 	}
 	    }
+	    }
+}
 }
 }
 
