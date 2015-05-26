@@ -1,5 +1,6 @@
 package se.mah.k3;
-
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Random;
 
 
@@ -62,6 +63,9 @@ public class BallLogic {
 	
 	public void checkBounceGoal(){
 		
+		
+
+/*
 		//if the ball bounce on x-axis on right side
 		if (bally.getXPos()>= level.screenWidth - bally.getSize()/2){
 			 //Random rand = new Random();
@@ -118,7 +122,7 @@ public class BallLogic {
 		}
 
 		
-		
+*/		
 	}
 	//if ball bounces on y-axis
 	public void checkBounceWall(){
