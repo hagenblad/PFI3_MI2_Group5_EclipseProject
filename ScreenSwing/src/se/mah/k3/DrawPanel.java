@@ -9,8 +9,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.Collections;
 import java.util.Random;
+import java.util.TimerTask;
 import java.util.Vector;
-
 import java.awt.Polygon;
 import java.awt.geom.Area;
 
@@ -27,6 +27,10 @@ public class DrawPanel extends JPanel {
 	private Ball ball = new Ball();
 	private BallLogic ballLogic = new BallLogic(ball);
 	
+	private TimerClass timer;
+	
+	private boolean timerController = true;
+	
 // Boolean = work on mac;
 	// work on mac = false;
 	//hdmi (== non existing);
@@ -34,10 +38,11 @@ public class DrawPanel extends JPanel {
 	
 	Level level = new Level();
 	
-	private boolean start = false;
+	public boolean start = false;
 	int ballXPos = level.screenWidth;
 	int ballYPos = level.screenHeight;
 	
+	int listCount;
 
 	int paddlePosY;
 	int paddleBottom;
@@ -47,6 +52,7 @@ public class DrawPanel extends JPanel {
 	//player ping
 	long playerDelay;
 	int playerPing;
+	int playerDelayint;
 	int playerPingSize;
 	
 	public Polygon polyTRC;
@@ -67,6 +73,7 @@ public class DrawPanel extends JPanel {
 
 	public DrawPanel() {
 		
+	    
 		myFirebaseRef = new Firebase("https://pingispong.firebaseio.com/");
 		myFirebaseRef.removeValue(); //Cleans out everything
 		myFirebaseRef.child("ScreenNbr").setValue(Constants.screenNbr);  //Has to be same as on the app. So place specific can't you see the screen you don't know the number
@@ -105,7 +112,6 @@ public class DrawPanel extends JPanel {
 				 }
 					
 				 repaint();
-
 			}
 			
 			//We got a new user
@@ -115,8 +121,8 @@ public class DrawPanel extends JPanel {
 					//System.out.println("ADD user with Key: "+arg1+ arg0.getKey());
 					Random r = new Random();
 					int x = r.nextInt(getSize().width);
-					int y = r.nextInt(getSize().height);
-					int listCount = users.size();
+					int y = r.nextInt(getSize().height); 
+					listCount = users.size();
 					System.out.println("number of players: " + listCount); //räknar antal spelar och skriver ut i konsollen. (börjar på 0)
 //					
 					if (listCount ==0){
@@ -174,6 +180,8 @@ public class DrawPanel extends JPanel {
 				
 			}
 		});
+		 
+		 
 
 	}
 	
@@ -195,38 +203,24 @@ public class DrawPanel extends JPanel {
 	
 	public void setPlayerHeight(User user){
 		playerDelay = user.getDelay();
+		playerDelayint = (int) playerDelay;
 		
 		if(playerDelay > 0 && playerDelay < 600){
-
 		playerPing = 0;
-
 		}
-
 		if(playerDelay > 600 && playerDelay < 900){
-
-		playerPing = 300;
-
+		playerPing = 150;
 		}
-
 
 		if(playerDelay > 900 && playerDelay < 1200){
-
-		playerPing = 600;
-
+		playerPing = 300;
 		}
-
-
 		if (playerDelay > 1200){
-
-		playerPing = 900;
-
+		playerPing = 450;
 		} else{ 
-
 		playerPing = (int) playerDelay;
-
 		}
 	}
-
 	
 	//Called when the screen needs a repaint.
 	@Override
@@ -278,17 +272,24 @@ public class DrawPanel extends JPanel {
 		
  
 	    g2.finalize();
+	    
 	    if(start == false){
 	    	ballXPos = level.screenWidth/2;
 	    	ballYPos = level.screenHeight/2;
 	    	
 			Color c = new Color(19,156,234);
 			g2.setColor(c);
-			g2.fillRect(0,0,1000,700);
-			c = new Color(255,255,255);
+			//g2.fillRect(0,0,1000,700);
+			Image imgStart = Toolkit.getDefaultToolkit().getImage("src/images/Startscreen.jpg");
+			
+			g2.drawImage(imgStart, 0, 0, this);
+			c = new Color(100,100,100);
 			g2.setColor(c);
-			g.drawString("PING PONG TEMP SCREEN",level.screenWidth/2-30,level.screenHeight/2-40);
-			g.drawString("The game will start when two players connects", level.screenWidth/2-200, level.screenHeight/2);
+			//g.drawString("PING PONG TEMP SCREEN",level.screenWidth/2-30,level.screenHeight/2-40);
+			g.drawString("The game will start when two players connects", level.screenWidth/2-150, level.screenHeight/2 + 200);
+//			g.drawString("Player 1 connected", 100, 100);
+//			g.drawString("Player 2 connected", 700, 100);
+			
 	    }else{
 	    	ballXPos = ball.getXPos();
 			ballYPos = ball.getYPos();
@@ -360,14 +361,25 @@ public class DrawPanel extends JPanel {
 	    	   } catch (Exception e) {
 	    	   System.out.println(e);
 	    	   }
+	     
+	     c = new Color(100,100,100);
+	     g2.setColor(c);
+	     
+			if(users.size() == 1){
+				g.drawString("Player 1 connected", 100, 100);
+			}
+			
+			if(users.size() == 2){
+				g.drawString("Player 2 connected", 700, 100);
+			}
+
 
 	    super.repaint();
-	    
+
 		//Test
 		for (User user : users) {
-			if(users.size()>=2){  // defines how many players that needs to be in the game for it to start
+			if(users.size()>=2){  // defines how many players that needs to be in the game for it to start			
 			start = true;
-			
 			paddleTop = y - playerPingSize;
 			paddleBottom = y;
 			
@@ -403,25 +415,25 @@ public class DrawPanel extends JPanel {
 			
 			if(users.indexOf(user) == 0){
 			//	g2.fillRect(level.relX+1, y - (playerPingSize/2), user.userWidth, playerPingSize);
-				ballLogic.comparePosition(user.getxPos()-2, y - (playerPingSize/2), user.userWidth, playerPingSize);
-				g2.drawImage(player1, level.relX+1, y - (playerPingSize/2), user.userWidth, playerPingSize, this);
+				ballLogic.comparePosition(user.getxPos()-2, y - (playerPingSize), user.userWidth, playerPingSize);
+				g2.drawImage(player1, level.relX+1, y - (playerPingSize), user.userWidth, playerPingSize, this);
 		
 			}   else if (users.indexOf(user)==1 ){
 		//		g2.fillRect(level.screenHeight-11, y - (playerPingSize/2), user.userWidth, playerPingSize);
-				ballLogic.comparePosition(user.getxPos(), y - (playerPingSize/2), user.userWidth, playerPingSize);
-				g2.drawImage(player2, level.screenWidth-11, y - (playerPingSize/2), user.userWidth, playerPingSize, this);
+				ballLogic.comparePosition(user.getxPos(), y - (playerPingSize), user.userWidth, playerPingSize);
+				g2.drawImage(player2, level.screenWidth-11, y - (playerPingSize), user.userWidth, playerPingSize, this);
 			
 			}
 			
 			else if (users.indexOf(user) == 1){
 				//g2.fillRect(1000, user.getyPos(), user.userHeight, user.userWidth);
 				ballLogic.comparePosition(1000, user.getyPos(), user.userHeight, user.userWidth);
-			   g2.drawImage(player2, user.getxPos(), y - playerPingSize/2, user.userWidth, playerPingSize, this);
+			   g2.drawImage(player2, user.getxPos(), y - playerPingSize, user.userWidth, playerPingSize, this);
 			}
 			//System.out.println("User number "+ user +" has the position " + users.indexOf(user));	
 				
 
-			}
+		//	}
 			//g.drawString(user.getId(), user.getxPos(), 15); // This prints out the player names
 			c = Color.WHITE;
 			String livesLeftPlayerOne = String.valueOf(ballLogic.player1lives);
@@ -439,7 +451,7 @@ public class DrawPanel extends JPanel {
 			//This prints out the ping to drawpanel
 			String userDelay = String.valueOf(user.getDelay());
 			g.drawString("PING = " + userDelay, user.getxPos(), 10);
-			//System.out.println(user.getId() + user.getDelay());
+			System.out.println(user.getId() + user.getDelay());
 			
 //			if(users.size()>4){
 //			start = false;
@@ -450,6 +462,7 @@ public class DrawPanel extends JPanel {
 		
 		
 	}
+	    }
 }
 }
 
