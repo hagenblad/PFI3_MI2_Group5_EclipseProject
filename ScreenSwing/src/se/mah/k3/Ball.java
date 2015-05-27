@@ -8,7 +8,7 @@ public class Ball {
 	private int xSpeed = 1;
 	
 	//Ball size
-	private int size = 10;
+	private int size = 20;
 	
 	//Current position for the ball
 	private int x = 0;

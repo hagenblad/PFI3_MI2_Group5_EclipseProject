@@ -29,22 +29,24 @@ public class DrawPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private Firebase myFirebaseRef;
 	private Ball ball = new Ball();
-	private BallLogic ballLogic = new BallLogic(ball);
 
 	// Boolean = work on mac;
 	// work on mac = false;
 	//hdmi (== non existing);
 	//creates a ball
+	BallLogicV2[] ships = BallLogicV2.lives(4);
 
 	Level level = new Level();
 
-	public boolean start = false;
+	private boolean start = false;
+
 	int ballXPos = level.screenWidth;
 	int ballYPos = level.screenHeight;
 
 	int listCount;
 
 	int paddlePosY;
+	int paddlePosX;
 	int paddleBottom;
 	int paddleTop;
 	int y;
@@ -61,7 +63,10 @@ public class DrawPanel extends JPanel {
 	public Polygon polyBLC;
 	public Polygon polyBally;
 
-
+	//background image
+	
+	Image img1 = Toolkit.getDefaultToolkit().getImage("src/images/bakgrundis.jpg");
+	
 	//private int player1lives = 5;
 	//private int player2lives = 5;
 
@@ -126,7 +131,7 @@ public class DrawPanel extends JPanel {
 					System.out.println("number of players: " + listCount); //räknar antal spelar och skriver ut i konsollen. (börjar på 0)
 
 					if (listCount ==0){
-						User user = new User(arg0.getKey(), level.relX+11, level.relX+11, ballLogic.player1lives); // create player 1
+						User user = new User(arg0.getKey(), level.relX+11, level.relX+11, ships[0].player1lives); // create player 1
 						if (!users.contains(user)){
 							users.add(user);
 							user.userHeight = 100;
@@ -137,8 +142,10 @@ public class DrawPanel extends JPanel {
 							myFirebaseRef.child(arg0.getKey()).child("playercolor").setValue("#599bb9");
 						}
 					}
+
 					if (listCount ==1){
-						User user = new User(arg0.getKey(), level.screenWidth-11, level.screenWidth-10, ballLogic.player2lives); // create player 2
+						User user = new User(arg0.getKey(), level.screenWidth-11, level.screenWidth-10, ships[0].player2lives); // create player 2
+
 						if (!users.contains(user)){
 							users.add(user);
 							user.userHeight = 100;
@@ -150,40 +157,27 @@ public class DrawPanel extends JPanel {
 
 						}
 					}	
-					if (listCount == 2){
-						User user = new User(arg0.getKey(),100, ballLogic.relY+10 , ballLogic.player3lives); // create player 3
-						if(!users.contains(user)){
-							users.add(user);
-							user.userHeight = 100;
-							user.userWidth = 10;
-							Color green = Color.decode("#8cba66");
-							user.setColor(green);
-							System.out.println("player 3 in");
-							myFirebaseRef.child(arg0.getKey()).child("playercolor").setValue("#8cba66");
 
-						}
-					}
-					if (listCount == 3){
-						User user = new User(arg0.getKey(),100,level.screenHeight-10, ballLogic.player4lives); // create player 4
-						if (!users.contains(user)){
-							users.add(user);
-							user.userHeight = 100;
-							user.userWidth = 10;
-							Color yellow = Color.decode("#e5d672");
-							user.setColor(yellow);
-							System.out.println("player 4 in");
-							myFirebaseRef.child(arg0.getKey()).child("playercolor").setValue("#e5d672");
-
-						}
-
-						if(listCount <3){
-							try {
-
-							} catch (Exception e) {
-								// TODO: handle exception
-							}
-						}
-					}
+//					if (listCount == 2){
+//						User user = new User(arg0.getKey(),100, level.relY+10 , ships[0].player3lives); // create player 3
+//						if(!users.contains(user)){
+//							users.add(user);
+//							user.userHeight = 100;
+//							user.userWidth = 10;
+//							user.setColor(Color.BLUE);
+//							System.out.println("player 3 in");
+//						}
+//					}
+//					if (listCount == 3){
+//						User user = new User(arg0.getKey(),100,level.screenHeight-10, ships[0].player4lives); // create player 4
+//						if (!users.contains(user)){
+//							users.add(user);
+//							user.userHeight = 100;
+//							user.userWidth = 10;
+//							user.setColor(Color.GREEN);
+//							System.out.println("player 4 in");
+//						}
+//					}
 				}
 			}
 
@@ -245,30 +239,20 @@ public class DrawPanel extends JPanel {
 	public void paint(Graphics g) {
 
 		//TOP LEFT CORNER
-		int TLCxpoints[] = {level.relX, level.relX + 60+10, level.relX};
-		int TLCypoints[] = {level.relY, level.relY, level.relY+60+10};
-		int npoints = 3;
+		polyTLC = new Polygon(level.TLCxpoints, level.TLCypoints, level.npoints);
 
-		polyTLC = new Polygon(TLCxpoints, TLCypoints, npoints);
 
 		//TOP RIGHT CORNER
-		int TRCxpoints[] = {level.screenWidth, level.screenWidth-10-60, level.screenWidth};
-		int TRCypoints[] = {level.relY, level.relY, level.relY+60+10};
+		polyTRC = new Polygon(level.TRCxpoints, level.TRCypoints, level.npoints);
 
-		polyTRC = new Polygon(TRCxpoints, TRCypoints, npoints);
+
 
 		//BOT LEFT CORNER
+		polyBLC = new Polygon(level.BLCxpoints, level.BLCypoints, level.npoints);
 
-		int BLCxpoints[] = {level.relX,level.relX+60+10,level.relX};
-		int BLCypoints[] = {level.screenHeight,level.screenHeight,level.screenHeight-60-10};
-
-		polyBLC = new Polygon(BLCxpoints, BLCypoints, npoints);
 
 		//BOT RIGHT CORNER
-		int BRCxpoints[] = {level.screenWidth, level.screenWidth-12-60, level.screenWidth};
-		int BRCypoints[] = {level.screenHeight, level.screenHeight, level.screenHeight-60-12};
-
-		polyBRC = new Polygon(BRCxpoints, BRCypoints, npoints);
+		polyBRC = new Polygon(level.BRCxpoints, level.BRCypoints, level.npoints);
 
 		//Ball polygon
 		int ballNpoints = 4;
@@ -284,8 +268,9 @@ public class DrawPanel extends JPanel {
 		g2.fillRect(0, 0, getSize().width, getSize().height);
 		g2.setColor(Color.black);
 
-		g2.finalize();
 
+
+		g2.finalize();
 		if(start == false){
 			ballXPos = level.screenWidth/2;
 			ballYPos = level.screenHeight/2;
@@ -298,29 +283,29 @@ public class DrawPanel extends JPanel {
 			g2.drawImage(imgStart, 0, 0, this);
 			c = new Color(100,100,100);
 			g2.setColor(c);
-			//g.drawString("PING PONG TEMP SCREEN",level.screenWidth/2-30,level.screenHeight/2-40);
 			g.drawString("The game will start when two players connects", level.screenWidth/2-150, level.screenHeight/2 + 200);
-			//			g.drawString("Player 1 connected", 100, 100);
-			//			g.drawString("Player 2 connected", 700, 100);
-
 		}else{
-			ballXPos = ball.getXPos();
-			ballYPos = ball.getYPos();
+			//	    	ballXPos = ball.getXPos();
+			//			ballYPos = ball.getYPos();
 
-
+			ballXPos = ships[0].getXPos();
+			//System.out.println("X "+ ballXPos);
+			ballYPos = ships[0].getYPos(); 
+			//System.out.println(""+ballYPos);
 			//ball
 			//g2.fillOval(ballXPos, ballYPos, ball.getSize(), ball.getSize());
-			Image boll = Toolkit.getDefaultToolkit().getImage("src/images/boll.png");
-			g2.drawImage(boll, ballXPos, ballYPos, ball.getSize(),ball.getSize(), this);
 
 
 
 		}
 		//Background
+
+
 		Color c = new Color(19,156,234);
 		g2.setColor(c);
 		//	g2.drawRect (level.relX, level.relY, level.screenWidthForRect, level.screenHeightHeightForRect);	
 
+		Image boll = Toolkit.getDefaultToolkit().getImage("src/images/boll.png");
 
 		//CORNERS
 		//TOP LEFT CORNER
@@ -344,23 +329,33 @@ public class DrawPanel extends JPanel {
 		//	    g.drawPolygon(polyBRC);
 		//	    g.fillPolygon (polyBRC);
 
+		//g.setColor(Color.black);
+		//g.fillRect(0,0,width,height);
 
 		//corner collision
 		if(areaTLC.intersects(ballXPos, ballYPos, ball.getSize(), ball.getSize())){
-
-			ballLogic.cornerBounce();
+			System.out.println("CORNER");
+			//ballLogic.cornerBounce();
+			ships[0].topLeftCornerBounce();
 
 		}else if(areaBLC.intersects(ballXPos, ballYPos, ball.getSize(), ball.getSize())){
-			ballLogic.cornerBounce();
-
+			System.out.println("CORNER");
+			//ballLogic.cornerBounce();
+			ships[0].bottomLeftCornerBounce();
 		}else if(areaTRC.intersects(ballXPos, ballYPos, ball.getSize(), ball.getSize())){
-
-			ballLogic.cornerBounce();
-
+			System.out.println("CORNER");
+			//ballLogic.cornerBounce();
+			ships[0].topRightCornerBounce();
 		}else if(areaBRC.intersects(ballXPos, ballYPos, ball.getSize(), ball.getSize())){
-
-			ballLogic.cornerBounce();
+			System.out.println("CORNER");
+			//ballLogic.cornerBounce();
+			ships[0].bottomRightCornerBounce();
 		}
+		
+		
+		ships[0].move();
+		//ships[0].paint(g2);
+		g2.drawImage(boll, ballXPos, ballYPos, ball.getSize(),ball.getSize(), this);
 
 
 		try {
@@ -375,8 +370,8 @@ public class DrawPanel extends JPanel {
 			System.out.println(e);
 		}
 
-		c = new Color(100,100,100);
-		g2.setColor(c);
+
+		super.repaint();
 
 
 		if(users.size() >= 1){
@@ -403,15 +398,15 @@ public class DrawPanel extends JPanel {
 
 			if(start == true){ // när timern kört klart och gjort om start till true, ska skärmen ändras till spelplanen och spelet ska laddas
 				//Background
-				Image img1 = Toolkit.getDefaultToolkit().getImage("src/images/bakgrundis.jpg");
+				
 				g2.drawImage(img1, 0, 0, this); 
 
-				ballXPos = ball.getXPos();
-				ballYPos = ball.getYPos();
+				ballXPos = ships[0].xPos;
+				ballYPos = ships[0].yPos;
 
 				//ball
 				//g2.fillOval(ballXPos, ballYPos, ball.getSize(), ball.getSize());
-				Image boll = Toolkit.getDefaultToolkit().getImage("src/images/boll.png");
+				boll = Toolkit.getDefaultToolkit().getImage("src/images/boll.png");
 				g2.drawImage(boll, ballXPos, ballYPos, ball.getSize(),ball.getSize(), this);
 
 				//	    	System.out.println("Game started");
@@ -424,8 +419,6 @@ public class DrawPanel extends JPanel {
 
 						paddlePosY = y - playerPingSize;
 
-						//			System.out.println(paddleTop + "paddletop");
-						//			System.out.println(paddleBottom + "paddleBottom");
 
 						y = (int)(user.getyRel()*getSize().height);
 						g2.setColor( user.getColor());
@@ -440,7 +433,7 @@ public class DrawPanel extends JPanel {
 
 						// defines how many players that needs to be in the game for it to start
 						if(users.size()>=1){ 
-							//		start = true;
+							start = true;
 
 							int x = (int)(user.getxRel()*getSize().height);
 							int y = (int)(user.getyRel()*getSize().height);
@@ -449,146 +442,151 @@ public class DrawPanel extends JPanel {
 							//draw out players
 							Image player1 = Toolkit.getDefaultToolkit().getImage("src/images/paddle_left.png");
 							Image player2 = Toolkit.getDefaultToolkit().getImage("src/images/paddle_right.png");
-							//Image player3 = Toolkit.getDefaultToolkit().getImage("src/images/paddle_top.png");
-							//Image player4 = Toolkit.getDefaultToolkit().getImage("src/images/paddle_bottom.png");
+							Image player3 = Toolkit.getDefaultToolkit().getImage("src/images/paddle_top.png");
+							Image player4 = Toolkit.getDefaultToolkit().getImage("src/images/paddle_bottom.png");
 
 							if(users.indexOf(user) == 0){
 								//	g2.fillRect(level.relX+1, y - (playerPingSize/2), user.userWidth, playerPingSize);
-								ballLogic.comparePosition(user.getxPos()-2, y - (playerPingSize), user.userWidth, playerPingSize);
-								g2.drawImage(player1, level.relX+1, y - (playerPingSize), user.userWidth, playerPingSize, this);
+								ships[0].paddleOneHit(level.relX+1, y - (playerPingSize/2), user.userWidth, playerPingSize);
+
+								g2.drawImage(player1, level.relX+1, y - (playerPingSize/2), user.userWidth, playerPingSize, this);
 
 							}   else if (users.indexOf(user)==1 ){
+
 								//		g2.fillRect(level.screenHeight-11, y - (playerPingSize/2), user.userWidth, playerPingSize);
-								ballLogic.comparePosition(user.getxPos(), y - (playerPingSize), user.userWidth, playerPingSize);
-								g2.drawImage(player2, level.screenWidth-11, y - (playerPingSize), user.userWidth, playerPingSize, this);
+								ships[0].paddleTwoHit(level.screenWidth-11, y - (playerPingSize/2), user.userWidth, playerPingSize);
+								g2.drawImage(player2, level.screenWidth-11, y - (playerPingSize/2), user.userWidth, playerPingSize, this);
 
 							}
 
-							else if (users.indexOf(user) >= 1){
+							else if (users.indexOf(user) == 2){
 								//g2.fillRect(1000, user.getyPos(), user.userHeight, user.userWidth);
-								ballLogic.comparePosition(1000, user.getyPos(), user.userHeight, user.userWidth);
-								g2.drawImage(player2, user.getxPos(), y - playerPingSize, user.userWidth, playerPingSize, this);
+								ships[0].paddleThreeHit(level.relY-11, level.screenWidth-11 ,playerPingSize, user.userWidth );
+
+								g2.drawImage(player3, level.relY-11, level.screenWidth-11 ,playerPingSize, user.userWidth,this);
 							}
-							//System.out.println("User number "+ user +" has the position " + users.indexOf(user));	
+							else if (users.indexOf(user) == 3){
+								//g2.fillRect(1000, user.getyPos(), user.userHeight, user.userWidth);
+								ships[0].paddleFourHit(y - (playerPingSize/2),level.relX+10, playerPingSize,user.userWidth);
 
-							//			}
-							//g.drawString(user.getId(), user.getxPos(), 15); // This prints out the player names
-							c = Color.WHITE;
+								g2.drawImage(player4, y - (playerPingSize/2),level.relX+1, playerPingSize, user.userWidth, this);
+							}
 
 
+								// draw out player 1 info
+								Color blue = users.get(0).getColor();
+								g.setColor(blue);
+								//This prints out the ping to drawpanel
+								String player1Delay = String.valueOf(users.get(0).getDelay());
+								g.drawString("PING = " + player1Delay, 20, 610);
+								String player1name = users.get(0).getId();
+								//System.out.println(player1name);
+								g.drawString(player1name, 20, 550);
+								String livesLeftPlayerOne = String.valueOf(ships[0].player1lives);
+								g.drawString(livesLeftPlayerOne + " Lives left ", 20, 580); // this prints out how many lives player one has left
 
-							//System.out.println(user.getId() + user.getDelay());
-
-							// draw out player 1 info
-							Color blue = users.get(0).getColor();
-							g.setColor(blue);
-							//This prints out the ping to drawpanel
-							String player1Delay = String.valueOf(users.get(0).getDelay());
-							g.drawString("PING = " + player1Delay, 20, 610);
-							String player1name = users.get(0).getId();
-							//System.out.println(player1name);
-							g.drawString(player1name, 20, 550);
-							String livesLeftPlayerOne = String.valueOf(ballLogic.player1lives);
-							g.drawString(livesLeftPlayerOne + " Lives left ", 20, 580); // this prints out how many lives player one has left
-
-							// draw out player 2 info
-							Color red = users.get(1).getColor();
-							g.setColor(red);
-							String player2Delay = String.valueOf(users.get(1).getDelay());
-							g.drawString("PING = " + player2Delay, 807, 130);
-							String player2name = users.get(1).getId();
-							//System.out.println(player2name);
-							g.drawString(player2name, 807, 70);
-							String livesLeftPlayerTwo = String.valueOf(ballLogic.player2lives);
-							g.drawString(livesLeftPlayerTwo + " Lives left ", 807, 100); // this prints out how many lives player two has left
+								// draw out player 2 info
+								Color red = users.get(1).getColor();
+								g.setColor(red);
+								String player2Delay = String.valueOf(users.get(1).getDelay());
+								g.drawString("PING = " + player2Delay, 807, 130);
+								String player2name = users.get(1).getId();
+								//System.out.println(player2name);
+								g.drawString(player2name, 807, 70);
+								String livesLeftPlayerTwo = String.valueOf(ships[0].player2lives);
+								g.drawString(livesLeftPlayerTwo + " Lives left ", 807, 100); // this prints out how many lives player two has left
 
 
 
-							//					// draw out player 3 info
-							//					Color green = users.get(2).getColor();
-							//					g.setColor(green);
-							//					String player3Delay = String.valueOf(users.get(2).getDelay());
-							//					g.drawString("PING = " + player3Delay, 20, 130);
-							//					String player3name = users.get(2).getId();
-							//					//System.out.println(player3name);
-							//					g.drawString(player3name, 20, 70);
-							//					String livesLeftPlayerThree = String.valueOf(ballLogic.player3lives);
-							//					g.drawString(livesLeftPlayerThree + " Lives left ", 20, 100); // this prints out how many lives player three has left
-							//					
-							//					// draw out player 4 info
-							//					Color yellow = users.get(3).getColor();
-							//					g.setColor(yellow);
-							//					String player4Delay = String.valueOf(users.get(3).getDelay());
-							//					g.drawString("PING = "+ player4Delay, 807,610);
-							//					String player4name = users.get(3).getId();
-							//					//System.out.println(player4name);
-							//					g.drawString(player4name, 807, 550);
-							//					String livesLeftPlayerFour = String.valueOf(ballLogic.player4lives);
-							//					g.drawString(livesLeftPlayerFour,  807,  580); // this prints out how many lives player four has left
+//								// draw out player 3 info
+//								Color green = users.get(2).getColor();
+//								g.setColor(green);
+//								String player3Delay = String.valueOf(users.get(2).getDelay());
+//								g.drawString("PING = " + player3Delay, 20, 130);
+//								String player3name = users.get(2).getId();
+//								//System.out.println(player3name);
+//								g.drawString(player3name, 20, 70);
+//								String livesLeftPlayerThree = String.valueOf(ships[0].player3lives);
+//								g.drawString(livesLeftPlayerThree + " Lives left ", 20, 100); // this prints out how many lives player three has left
+//
+//								// draw out player 4 info
+//								Color yellow = users.get(3).getColor();
+//								g.setColor(yellow);
+//								String player4Delay = String.valueOf(users.get(3).getDelay());
+//								g.drawString("PING = "+ player4Delay, 807,610);
+//								String player4name = users.get(3).getId();
+//								//System.out.println(player4name);
+//								g.drawString(player4name, 807, 550);
+//								String livesLeftPlayerFour = String.valueOf(ships[0].player4lives);
+//								g.drawString(livesLeftPlayerFour,  807,  580); // this prints out how many lives player four has left
 
+							
+						}		
+					}
+			
+
+				}
+			}
+		}
+	}
+
+			public class TimerClass {
+				Toolkit toolkit;
+
+				Timer timer = new Timer();
+
+				public TimerClass() {
+					toolkit = Toolkit.getDefaultToolkit();
+					timer = new Timer();
+					timer.schedule(new StartGameTimer(), 0, 1 * 1000);
+
+				}
+
+				class StartGameTimer extends TimerTask {
+					int count = 5;
+					public void run() {
+						if (count > 0){
+							toolkit.beep();
+							//	System.out.println(count + " seconds left");
+							count--;
+						} else {
+							toolkit.beep();
+							//		System.out.println(count + " seconds left, Game is starting!");
+							start = true; // här bestämmer vi att vår start boolean ska bli true när timern körts klart
+							timer.cancel(); //Stops the AWT thread (and everything else)
 						}
-					}		
+					}
+				
 				}
 			}
-		}
-	}
 
+			public class LivesTimer {
+				Toolkit toolkit;
+				Timer timer = new Timer();
 
-	public class TimerClass {
-		Toolkit toolkit;
+				public LivesTimer(){
+					toolkit = Toolkit.getDefaultToolkit();
+					timer = new Timer();
+					timer.schedule(new GameOverTimer(), 0, 1* 1000);
+				}
 
-		Timer timer = new Timer();
-
-		public TimerClass() {
-			toolkit = Toolkit.getDefaultToolkit();
-			timer = new Timer();
-			timer.schedule(new StartGameTimer(), 0, 1 * 1000);
-
-		}
-
-		class StartGameTimer extends TimerTask {
-			int count = 5;
-			public void run() {
-				if (count > 0){
-					toolkit.beep();
-					//	System.out.println(count + " seconds left");
-					count--;
-				} else {
-					toolkit.beep();
-					//		System.out.println(count + " seconds left, Game is starting!");
-					start = true; // här bestämmer vi att vår start boolean ska bli true när timern körts klart
-					timer.cancel(); //Stops the AWT thread (and everything else)
+				class GameOverTimer extends TimerTask {
+					int count = 5;
+					public void run(){
+						if (count > 0){
+							toolkit.beep();
+							count--;
+						} else {
+							toolkit.beep();
+							timer.cancel();
+						}
+					}
 				}
 			}
+
 		}
-	}
-
-	public class LivesTimer {
-		Toolkit toolkit;
-		Timer timer = new Timer();
-
-		public LivesTimer(){
-			toolkit = Toolkit.getDefaultToolkit();
-			timer = new Timer();
-			timer.schedule(new GameOverTimer(), 0, 1* 1000);
-		}
-
-		class GameOverTimer extends TimerTask {
-			int count = 5;
-			public void run(){
-				if (count > 0){
-					toolkit.beep();
-					count--;
-				} else {
-					toolkit.beep();
-					timer.cancel();
-				}
-			}
-		}
-	}
-
-}
-
+	
+	
 
 
 
