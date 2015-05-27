@@ -158,24 +158,27 @@ public class DrawPanel extends JPanel {
 						}
 					}	
 
-//					if (listCount == 2){
-//						User user = new User(arg0.getKey(),100, level.relY+10 , ships[0].player3lives); // create player 3
-//						if(!users.contains(user)){
-//							users.add(user);
-//							user.userHeight = 100;
-//							user.userWidth = 10;
-//							user.setColor(Color.BLUE);
-//							System.out.println("player 3 in");
-//						}
-//					}
+					if (listCount == 2){
+						User user = new User(arg0.getKey(),100, level.relY+10 , ships[0].player3lives); // create player 3
+						if(!users.contains(user)){
+							users.add(user);
+							user.userHeight = 100;
+							user.userWidth = 10;
+							Color green= Color.decode("#8cba66");
+							user.setColor(green);
+							myFirebaseRef.child(arg0.getKey()).child("playercolor").setValue("#8cba66");
+						}
+					}
 //					if (listCount == 3){
 //						User user = new User(arg0.getKey(),100,level.screenHeight-10, ships[0].player4lives); // create player 4
 //						if (!users.contains(user)){
 //							users.add(user);
 //							user.userHeight = 100;
 //							user.userWidth = 10;
-//							user.setColor(Color.GREEN);
-//							System.out.println("player 4 in");
+//							Color green= Color.decode("#8cba66");
+//							user.setColor(green);
+//							myFirebaseRef.child(arg0.getKey()).child("playercolor").setValue("#8cba66");
+				
 //						}
 //					}
 				}
@@ -435,8 +438,8 @@ public class DrawPanel extends JPanel {
 						if(users.size()>=1){ 
 							start = true;
 
-							int x = (int)(user.getxRel()*getSize().height);
-							int y = (int)(user.getyRel()*getSize().height);
+							//int x = (int)(user.getxRel()*getSize().height);
+							//int y = (int)(user.getyRel()*getSize().height);
 							g2.setColor(user.getColor());
 
 							//draw out players
@@ -445,6 +448,10 @@ public class DrawPanel extends JPanel {
 							Image player3 = Toolkit.getDefaultToolkit().getImage("src/images/paddle_top.png");
 							Image player4 = Toolkit.getDefaultToolkit().getImage("src/images/paddle_bottom.png");
 
+							g2.drawImage(player3, level.screenWidth/2, level.relY+11,          playerPingSize, user.userWidth,this);
+							g2.drawImage(player4, level.screenWidth/2,  level.screenHeight-11, playerPingSize, user.userWidth, this);
+							
+							
 							if(users.indexOf(user) == 0){
 								//	g2.fillRect(level.relX+1, y - (playerPingSize/2), user.userWidth, playerPingSize);
 								ships[0].paddleOneHit(level.relX+1, y - (playerPingSize/2), user.userWidth, playerPingSize);
@@ -456,21 +463,23 @@ public class DrawPanel extends JPanel {
 								//		g2.fillRect(level.screenHeight-11, y - (playerPingSize/2), user.userWidth, playerPingSize);
 								ships[0].paddleTwoHit(level.screenWidth-11, y - (playerPingSize/2), user.userWidth, playerPingSize);
 								g2.drawImage(player2, level.screenWidth-11, y - (playerPingSize/2), user.userWidth, playerPingSize, this);
-
+								
 							}
 
 							else if (users.indexOf(user) == 2){
 								//g2.fillRect(1000, user.getyPos(), user.userHeight, user.userWidth);
 								ships[0].paddleThreeHit(level.relY-11, level.screenWidth-11 ,playerPingSize, user.userWidth );
-
-								g2.drawImage(player3, level.relY-11, level.screenWidth-11 ,playerPingSize, user.userWidth,this);
-							}
+								
+								g2.drawImage(player3, y - (playerPingSize/2) , level.relY+11 ,playerPingSize, user.userWidth,this);
+								}
 							else if (users.indexOf(user) == 3){
 								//g2.fillRect(1000, user.getyPos(), user.userHeight, user.userWidth);
 								ships[0].paddleFourHit(y - (playerPingSize/2),level.relX+10, playerPingSize,user.userWidth);
 
-								g2.drawImage(player4, y - (playerPingSize/2),level.relX+1, playerPingSize, user.userWidth, this);
-							}
+								g2.drawImage(player4, y - (playerPingSize/2),  level.screenHeight-11, playerPingSize, user.userWidth, this);
+								}
+
+
 
 
 								// draw out player 1 info
@@ -498,17 +507,17 @@ public class DrawPanel extends JPanel {
 
 
 
-//								// draw out player 3 info
-//								Color green = users.get(2).getColor();
-//								g.setColor(green);
-//								String player3Delay = String.valueOf(users.get(2).getDelay());
-//								g.drawString("PING = " + player3Delay, 20, 130);
-//								String player3name = users.get(2).getId();
-//								//System.out.println(player3name);
-//								g.drawString(player3name, 20, 70);
-//								String livesLeftPlayerThree = String.valueOf(ships[0].player3lives);
-//								g.drawString(livesLeftPlayerThree + " Lives left ", 20, 100); // this prints out how many lives player three has left
-//
+								// draw out player 3 info
+								Color green = users.get(2).getColor();
+								g.setColor(green);
+								String player3Delay = String.valueOf(users.get(2).getDelay());
+								g.drawString("PING = " + player3Delay, 20, 130);
+								String player3name = users.get(2).getId();
+								//System.out.println(player3name);
+								g.drawString(player3name, 20, 70);
+								String livesLeftPlayerThree = String.valueOf(ships[0].player3lives);
+								g.drawString(livesLeftPlayerThree + " Lives left ", 20, 100); // this prints out how many lives player three has left
+
 //								// draw out player 4 info
 //								Color yellow = users.get(3).getColor();
 //								g.setColor(yellow);

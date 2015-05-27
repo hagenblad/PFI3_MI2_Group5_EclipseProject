@@ -230,15 +230,15 @@ public class BallLogicV2 extends Polygon {
 		public void paddleThreeHit(int x, int y, int width, int height){
 			
 			
-			if(position.x <= x +width+5){
+			if(position.y <= y +width +5){
 				
 				//	System.out.println("Nice X pos");	
 				
 				if( position.y >= y -5 && position.y <= y + height+5){
 					
 					System.out.println("Nice YYY Pos");
-					position.x = position.x +10;
-					rotate();
+					position.y = position.y +10;
+					rotateY();
 					/*int xSpeed = bally.getBallXSpeed(); 
 						
 					bally.setBallXSpeed(bounceX(xSpeed));
