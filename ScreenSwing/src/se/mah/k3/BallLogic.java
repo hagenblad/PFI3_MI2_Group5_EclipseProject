@@ -1,6 +1,7 @@
 package se.mah.k3;
 
 import java.util.Random;
+import java.util.Timer;
 
 
 public class BallLogic {
@@ -8,7 +9,7 @@ public class BallLogic {
 	private Ball bally = new Ball();
 	private User user = new User();
 	Level level = new Level();
-		
+	
 	//relative to screen variables, startposition for level	
 	int relX = level.relX;
 	int relY = level.relY;
@@ -186,8 +187,8 @@ public class BallLogic {
 	//	int xSpeed = bally.getBallXSpeed(); 
 	//	int ySpeed = bally.getBallYSpeed();
 		
-		System.out.println("1x = " + bally.getBallXSpeed());
-		System.out.println("1y = " + bally.getBallYSpeed() + "");
+		//System.out.println("1x = " + bally.getBallXSpeed());
+		//System.out.println("1y = " + bally.getBallYSpeed() + "");
 		bally.setBallXSpeed(bounceX(bally.getBallXSpeed()));
 	//	xSpeed = bally.getBallXSpeed();
 		
@@ -195,8 +196,8 @@ public class BallLogic {
 	//	ySpeed = bally.getBallYSpeed();
 		
 		
-		System.out.println("2x = " + bally.getBallXSpeed() + "");
-		System.out.println("2y = " + bally.getBallYSpeed() + "\n");
+		//System.out.println("2x = " + bally.getBallXSpeed() + "");
+		//System.out.println("2y = " + bally.getBallYSpeed() + "\n");
 		//Variables for position
 		
 		int y = bally.getYPos();
