@@ -446,38 +446,55 @@ public class DrawPanel extends JPanel {
 			}
 			//System.out.println("User number "+ user +" has the position " + users.indexOf(user));	
 				
+//			}
+					//g.drawString(user.getId(), user.getxPos(), 15); // This prints out the player names
+					c = Color.WHITE;
+					String livesLeftPlayerThree = String.valueOf(ballLogic.player3lives);
+					String livesLeftPlayerFour = String.valueOf(ballLogic.player4lives);
 
-		//	}
-			//g.drawString(user.getId(), user.getxPos(), 15); // This prints out the player names
-			c = Color.WHITE;
-			String livesLeftPlayerOne = String.valueOf(ballLogic.player1lives);
-			String livesLeftPlayerTwo = String.valueOf(ballLogic.player2lives);
-			String livesLeftPlayerThree = String.valueOf(ballLogic.player3lives);
-			String livesLeftPlayerFour = String.valueOf(ballLogic.player4lives);
+					//g.drawString(livesLeftPlayerThree, 15, 750); // this prints out how many lives player three has left
+					//g.drawString(livesLeftPlayerFour,  750,  15); // this prints out how many lives player four has left
+					
+					//System.out.println(user.getId() + user.getDelay());
+					
+					// draw out player 1 info
+					Color blue = users.get(0).getColor();
+					g.setColor(blue);
+					//This prints out the ping to drawpanel
+					String player1Delay = String.valueOf(users.get(0).getDelay());
+					g.drawString("PING = " + player1Delay, 20, 610);
+//					System.out.println(user.getId() + user.getDelay());
+					String player1name = users.get(0).getId();
+//			        System.out.println(player1name);
+			        g.drawString(player1name, 20, 550);
+					String livesLeftPlayerOne = String.valueOf(ballLogic.player1lives);
+					g.drawString(livesLeftPlayerOne + " Lives left ", 20, 580); // this prints out how many lives player one has left
 
-			g.drawString(livesLeftPlayerOne + " Lives left ", level.relX-150, 40); // this prints out how many lives player one has left
-			g.drawString(livesLeftPlayerTwo + " Lives left ", level.screenWidth+20, 40); // this prints out how many lives player two has left
-			//g.drawString(livesLeftPlayerThree, 15, 750); // this prints out how many lives player three has left
-			//g.drawString(livesLeftPlayerFour,  750,  15); // this prints out how many lives player four has left
-			
-			//System.out.println(user.getId() + user.getDelay());
-			
-			//This prints out the ping to drawpanel
-			String userDelay = String.valueOf(user.getDelay());
-			g.drawString("PING = " + userDelay, user.getxPos(), 10);
-			System.out.println(user.getId() + user.getDelay());
-			
-//			if(users.size()>4){
-//			start = false;
-//		}
-			
+			        // draw out player 2 info
+					Color red = users.get(1).getColor();
+					g.setColor(red);
+			        String player2Delay = String.valueOf(users.get(1).getDelay());
+					g.drawString("PING = " + player2Delay, 807, 130);
+					String player2name = users.get(1).getId();
+//			        System.out.println(player2name);
+			        g.drawString(player2name, 807, 70);
+					String livesLeftPlayerTwo = String.valueOf(ballLogic.player2lives);
+					g.drawString(livesLeftPlayerTwo + " Lives left ", 807, 100); // this prints out how many lives player two has left
+
+					
+					
+					
+//					if(users.size()>4){
+//					start = false;
+//				}
+					
+				}
+
+				
+				
+			}
+			    }
+		}
 		}
 
-		
-		
-	}
-	    }
-}
-}
-
-	
+			
