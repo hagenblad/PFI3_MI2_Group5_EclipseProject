@@ -74,20 +74,40 @@ class Polygon {
     }
     return crossingNumber%2 == 1;
   }
-  
-  public void rotate(int degrees) {
+  //rotate on x walls
+  public void rotate() {
 
 		  rotation= ((360-rotation) -180) %360;
-
+		  
   }
-  public void rotateY(int degrees) {
+  
+//rotate on y walls
+  public void rotateY() {
 	  
 	  //rotation = (rotation+degrees)%360;
 
 		  rotation= (360-rotation)%360;
 
+  }
+  
+//rotate on two corners
+  public void rotateCornerTopLeftBottomRight() {
+	  
+	  //rotation = (rotation+degrees)%360;
+	  System.out.println("before" + rotation);
+		  rotation= ((360-rotation)+270+2)%360;
+		  
+		  System.out.println("after" + rotation);
   }  
   
+//rotate on two corners
+  public void rotateCornerBottomLeftTopRight() {
+	  
+	  //rotation = (rotation+degrees)%360;
+
+		  rotation= ((360-rotation) +90+5) %360;
+
+  }    
   /*
   The following methods are private access restricted because, as this access
   level always implies, they are intended for use only as helpers of the
