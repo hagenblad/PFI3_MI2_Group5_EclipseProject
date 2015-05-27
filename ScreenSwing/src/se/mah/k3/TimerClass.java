@@ -26,7 +26,7 @@ public class TimerClass {
 	  
 	  class RemindTask extends TimerTask {
 		    public void run() {
-		    	dP.start = true;
+		    	dP.start = true; // här bestämmer vi att vår start boolean ska bli true när timern körts klart
 				System.out.println("Game is starting");
 		     // toolkit.beep();
 		    	timer.cancel(); //Stops the AWT thread (and everything else)

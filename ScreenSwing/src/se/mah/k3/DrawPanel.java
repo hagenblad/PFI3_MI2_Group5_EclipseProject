@@ -200,6 +200,7 @@ public class DrawPanel extends JPanel {
 		 
 	}
 	
+	// här är vår metod för att starta timern
 	public void initiateTimer(){
 		if(timerController == true){
 		System.out.println("About to start timer.");
@@ -390,6 +391,8 @@ public class DrawPanel extends JPanel {
 			
 			if(users.size() == 2){
 				g.drawString("Player 2 connected", 700, 100);
+			    initiateTimer(); // här försöker vi starta timern när 2 spelare har anslutit till spelet
+			    System.out.println(start);
 //				start = true;
 			}
 
@@ -397,9 +400,8 @@ public class DrawPanel extends JPanel {
 	    super.repaint();
 
 	    if(users.size()>=2){
-	    initiateTimer();	
 	    
-	    if(start == true){
+	    if(start == true){ // när timern kört klart och gjort om start till true, ska skärmen ändras till spelplanen och spelet ska laddas
 			//Background
 			Image img1 = Toolkit.getDefaultToolkit().getImage("src/images/bakgrundis.jpg");
 		    g2.drawImage(img1, 0, 0, this); 
@@ -489,16 +491,9 @@ public class DrawPanel extends JPanel {
 			String userDelay = String.valueOf(user.getDelay());
 			g.drawString("PING = " + userDelay, user.getxPos(), 10);
 			//System.out.println(user.getId() + user.getDelay());
-			
-//			if(users.size()>4){
-//			start = false;
-//		}
-			
+						
+		}		
 		}
-
-		
-		
-	}
 	    }
 	    }
 }
