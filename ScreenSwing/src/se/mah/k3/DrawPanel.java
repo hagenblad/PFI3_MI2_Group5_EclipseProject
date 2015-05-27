@@ -9,6 +9,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.Collections;
 import java.util.Random;
+import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
 import java.awt.Polygon;
@@ -17,6 +18,7 @@ import java.awt.geom.Area;
 import javax.swing.JPanel;
 
 import se.mah.k3.Level.GameState;
+import se.mah.k3.TimerClass.RemindTask;
 
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
@@ -28,11 +30,7 @@ public class DrawPanel extends JPanel {
 	private Firebase myFirebaseRef;
 	private Ball ball = new Ball();
 	private BallLogic ballLogic = new BallLogic(ball);
-	
-	private TimerClass timer;
-	
-	private boolean timerController = true;
-	
+			
 // Boolean = work on mac;
 	// work on mac = false;
 	//hdmi (== non existing);
@@ -202,12 +200,10 @@ public class DrawPanel extends JPanel {
 	
 	// här är vår metod för att starta timern
 	public void initiateTimer(){
-		if(timerController == true){
-		System.out.println("About to start timer.");
-	    new TimerClass(5);
-	    System.out.println("Timer started.");
-	    timerController = false;
-		}
+//		System.out.println("About to start game countdown.");
+	    new TimerClass();
+//	    System.out.println("Countdown started, game will start in 5 seconds.");
+//		}
 	}
 	
 	public void setPlayerBounds(User user){
@@ -387,12 +383,13 @@ public class DrawPanel extends JPanel {
 	     
 			if(users.size() >= 1){
 				g.drawString("Player 1 connected", 100, 100);
+//				System.out.println(timerController);
 			}
 			
 			if(users.size() == 2){
 				g.drawString("Player 2 connected", 700, 100);
 			    initiateTimer(); // här försöker vi starta timern när 2 spelare har anslutit till spelet
-			    System.out.println(start);
+//			    System.out.println(start);
 //				start = true;
 			}
 
@@ -498,6 +495,60 @@ public class DrawPanel extends JPanel {
 	    }
 }
 }
+	
+	public class TimerClass {
+		Toolkit toolkit;
+
+		  Timer timer = new Timer();
+		  
+		  public TimerClass() {
+			    toolkit = Toolkit.getDefaultToolkit();
+			    timer = new Timer();
+			    timer.schedule(new StartGameTimer(), 0, 1 * 1000);
+
+		  }
+		  
+		  class StartGameTimer extends TimerTask {
+			    int count = 5;
+			  	public void run() {
+			  		if (count > 0){
+			  			toolkit.beep();
+			  		//	System.out.println(count + " seconds left");
+			  			count--;
+			  		} else {
+			  		toolkit.beep();
+			  //		System.out.println(count + " seconds left, Game is starting!");
+			    	start = true; // här bestämmer vi att vår start boolean ska bli true när timern körts klart
+			    	timer.cancel(); //Stops the AWT thread (and everything else)
+			  		}
+			    }
+		 }
+	}
+	
+	public class LivesTimer {
+		Toolkit toolkit;
+		Timer timer = new Timer();
+		
+		public LivesTimer(){
+			toolkit = Toolkit.getDefaultToolkit();
+			timer = new Timer();
+			timer.schedule(new GameOverTimer(), 0, 1* 1000);
+		}
+		
+		class GameOverTimer extends TimerTask {
+			int count = 5;
+			public void run(){
+				if (count > 0){
+					toolkit.beep();
+					count--;
+				} else {
+					toolkit.beep();
+					timer.cancel();
+				}
+			}
+		}
+	}
+
 }
 
 	
