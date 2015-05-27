@@ -9,12 +9,9 @@ public class BallLogicV2 extends Polygon {
 	static int speed = 0;
 	Ball ball = new Ball();
 	Level level = new Level();
-//	boolean space = false;
-//	boolean upKey = false;
-//	boolean downKey = false;
-//	boolean leftKey = false;
-//	boolean rightKey = false;
-//	boolean otherKey = false;
+
+	
+	
 	static Point[] ship = { new Point(0, 0), new Point(10, 10),
 			new Point(0, 20), new Point(20, 10) };
 	static Point[] boost = { new Point(0, 0), new Point(20, 10),
@@ -113,7 +110,7 @@ public class BallLogicV2 extends Polygon {
 			//
 			
 			//Right Wall
-			if (position.x > level.screenWidth) {
+			if (position.x > level.screenWidth-5) {
 				
 				position = new Point(position.x-10, position.y);	
 				System.out.println("before = " + rotation);
@@ -183,9 +180,79 @@ public class BallLogicV2 extends Polygon {
 			yPos = (int)position.y;
 	}
 	
-		public void paddlexHit(int x, int y, int width, int height){
+		public void paddleOneHit(int x, int y, int width, int height){
 			
 		
+			if(position.x <= x +width+5){
+				
+				//	System.out.println("Nice X pos");	
+				
+				if( position.y >= y -5 && position.y <= y + height+5){
+					
+					System.out.println("Nice YYY Pos");
+					position.x = position.x +10;
+					rotate();
+					/*int xSpeed = bally.getBallXSpeed(); 
+						
+					bally.setBallXSpeed(bounceX(xSpeed));
+					xSpeed = bally.getBallXSpeed();
+					int tempx = bally.getXPos();
+					bally.setXPos(tempx += xSpeed);
+				*/
+				}
+			}
+		}
+		
+		public void paddleTwoHit(int x, int y, int width, int height){
+			
+			
+			if(position.x >= x-10){
+				//if(position.x >= x +width+5){
+					
+				//	System.out.println("Nice X pos");	
+				
+				if( position.y >= y -5 && position.y <= y + height+5){
+					
+					System.out.println("Nice YYY Pos");
+					position.x = position.x -10;
+					rotate();
+					/*int xSpeed = bally.getBallXSpeed(); 
+						
+					bally.setBallXSpeed(bounceX(xSpeed));
+					xSpeed = bally.getBallXSpeed();
+					int tempx = bally.getXPos();
+					bally.setXPos(tempx += xSpeed);
+				*/
+				}
+			}
+		}
+		
+		public void paddleThreeHit(int x, int y, int width, int height){
+			
+			
+			if(position.x <= x +width+5){
+				
+				//	System.out.println("Nice X pos");	
+				
+				if( position.y >= y -5 && position.y <= y + height+5){
+					
+					System.out.println("Nice YYY Pos");
+					position.x = position.x +10;
+					rotate();
+					/*int xSpeed = bally.getBallXSpeed(); 
+						
+					bally.setBallXSpeed(bounceX(xSpeed));
+					xSpeed = bally.getBallXSpeed();
+					int tempx = bally.getXPos();
+					bally.setXPos(tempx += xSpeed);
+				*/
+				}
+			}
+		}
+		
+		public void paddleFourHit(int x, int y, int width, int height){
+			
+			
 			if(position.x <= x +width+5){
 				
 				//	System.out.println("Nice X pos");	

@@ -24,7 +24,6 @@ public class DrawPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private Firebase myFirebaseRef;
 	private Ball ball = new Ball();
-	private BallLogic ballLogic = new BallLogic(ball);
 	
 // Boolean = work on mac;
 	// work on mac = false;
@@ -122,7 +121,7 @@ public class DrawPanel extends JPanel {
 					//System.out.println("number of players: " + listCount); //räknar antal spelar och skriver ut i konsollen. (börjar på 0)
 //					
 					if (listCount ==0){
-						User user = new User(arg0.getKey(), level.relX+11, level.relX+11, ballLogic.player1lives); // create player 1
+						User user = new User(arg0.getKey(), level.relX+11, level.relX+11, ships[0].player1lives); // create player 1
 						if (!users.contains(user)){
 							users.add(user);
 							user.userHeight = 100;
@@ -132,7 +131,7 @@ public class DrawPanel extends JPanel {
 				 		}
 					}
 					 if (listCount ==1){
-						User user = new User(arg0.getKey(), level.screenWidth-11, level.screenWidth-10, ballLogic.player2lives); // create player 2
+						User user = new User(arg0.getKey(), level.screenWidth-11, level.screenWidth-10, ships[0].player2lives); // create player 2
 						if (!users.contains(user)){
 							users.add(user);
 							user.userHeight = 100;
@@ -142,7 +141,7 @@ public class DrawPanel extends JPanel {
 						}
 					}	
 					 if (listCount == 2){
-						 User user = new User(arg0.getKey(),100, ballLogic.relY+10 , ballLogic.player3lives); // create player 3
+						 User user = new User(arg0.getKey(),100, level.relY+10 , ships[0].player3lives); // create player 3
 						 if(!users.contains(user)){
 							 users.add(user);
 								user.userHeight = 100;
@@ -152,7 +151,7 @@ public class DrawPanel extends JPanel {
 						 }
 					 }
 					 if (listCount == 3){
-						 User user = new User(arg0.getKey(),100,level.screenHeight-10, ballLogic.player4lives); // create player 4
+						 User user = new User(arg0.getKey(),100,level.screenHeight-10, ships[0].player4lives); // create player 4
 						 if (!users.contains(user)){
 							 users.add(user);
 								user.userHeight = 100;
@@ -402,25 +401,41 @@ public class DrawPanel extends JPanel {
 			//draw out players
 			Image player1 = Toolkit.getDefaultToolkit().getImage("src/images/paddle_left.png");
 			Image player2 = Toolkit.getDefaultToolkit().getImage("src/images/paddle_right.png");
-			//Image player3 = Toolkit.getDefaultToolkit().getImage("src/images/paddle_top.png");
-			//Image player4 = Toolkit.getDefaultToolkit().getImage("src/images/paddle_bottom.png");
+			Image player3 = Toolkit.getDefaultToolkit().getImage("src/images/paddle_top.png");
+			Image player4 = Toolkit.getDefaultToolkit().getImage("src/images/paddle_bottom.png");
 			
 			if(users.indexOf(user) == 0){
 			//	g2.fillRect(level.relX+1, y - (playerPingSize/2), user.userWidth, playerPingSize);
-				ships[0].paddlexHit(level.relX+1, y - (playerPingSize/2), user.userWidth, playerPingSize);
+				ships[0].paddleOneHit(level.relX+1, y - (playerPingSize/2), user.userWidth, playerPingSize);
 				
 				g2.drawImage(player1, level.relX+1, y - (playerPingSize/2), user.userWidth, playerPingSize, this);
 		
 			}   else if (users.indexOf(user)==1 ){
+				
 		//		g2.fillRect(level.screenHeight-11, y - (playerPingSize/2), user.userWidth, playerPingSize);
+				ships[0].paddleTwoHit(level.screenWidth-11, y - (playerPingSize/2), user.userWidth, playerPingSize);
 				g2.drawImage(player2, level.screenWidth-11, y - (playerPingSize/2), user.userWidth, playerPingSize, this);
-			
+				
 			}
 			
-			else if (users.indexOf(user) == 1){
+			else if (users.indexOf(user) == 2){
 				//g2.fillRect(1000, user.getyPos(), user.userHeight, user.userWidth);
-				ballLogic.comparePosition(1000, user.getyPos(), user.userHeight, user.userWidth);
-			   g2.drawImage(player2, user.getxPos(), y - playerPingSize/2, user.userWidth, playerPingSize, this);
+				ships[0].paddleThreeHit(level.relY-11, level.screenWidth-11 ,playerPingSize, user.userWidth );
+				
+			   g2.drawImage(player3, level.relY-11, level.screenWidth-11 ,playerPingSize, user.userWidth,this);
+			}
+			else if (users.indexOf(user) == 3){
+				//g2.fillRect(1000, user.getyPos(), user.userHeight, user.userWidth);
+				ships[0].paddleFourHit(y - (playerPingSize/2),level.relX+10, playerPingSize,user.userWidth);
+				
+			   g2.drawImage(player2, y - (playerPingSize/2),level.relX+1, playerPingSize, user.userWidth, this);
+			}
+			
+			else if (users.indexOf(user) == 4){
+				//g2.fillRect(1000, user.getyPos(), user.userHeight, user.userWidth);
+				ships[0].paddleFourHit(y - (playerPingSize/2),level.screenWidth-11, user.userWidth, playerPingSize);
+				
+			   g2.drawImage(player2, y - (playerPingSize/2),level.screenWidth-11, user.userWidth, playerPingSize, this);
 			}
 			//System.out.println("User number "+ user +" has the position " + users.indexOf(user));	
 				
@@ -429,9 +444,9 @@ public class DrawPanel extends JPanel {
 			//g.drawString(user.getId(), user.getxPos(), 15); // This prints out the player names
 			Color c = Color.WHITE;
 			String livesLeftPlayerOne = String.valueOf(ships[0].player1lives);
-			String livesLeftPlayerTwo = String.valueOf(ballLogic.player2lives);
-			String livesLeftPlayerThree = String.valueOf(ballLogic.player3lives);
-			String livesLeftPlayerFour = String.valueOf(ballLogic.player4lives);
+			String livesLeftPlayerTwo = String.valueOf(ships[0].player2lives);
+			String livesLeftPlayerThree = String.valueOf(ships[0].player3lives);
+			String livesLeftPlayerFour = String.valueOf(ships[0].player4lives);
 			
 			g.drawString(livesLeftPlayerOne + " Lives left ", level.relX-150, 40); // this prints out how many lives player one has left
 			g.drawString(livesLeftPlayerTwo + " Lives left ", level.screenWidth+20, 40); // this prints out how many lives player two has left
