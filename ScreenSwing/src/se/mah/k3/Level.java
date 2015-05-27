@@ -2,7 +2,6 @@ package se.mah.k3;
 
 public class Level {
 	
-	
 	//relative to screen variables, startposition for level	
 	static int relX = 200;
 	static int relY = 20;
@@ -57,7 +56,7 @@ public class Level {
 			
 			break;
 		case GAME:
-			
+
 			break;
 		case END:
 			
@@ -86,9 +85,5 @@ public class Level {
 		return wall3;
 	}
 	public void setWall3(){
-	}
-	
-	
-	
-
+	}	
 }
