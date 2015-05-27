@@ -65,64 +65,64 @@ public class BallLogic {
 		
 		
 
-/*
-		//if the ball bounce on x-axis on right side
-		if (bally.getXPos()>= level.screenWidth - bally.getSize()/2){
-			 //Random rand = new Random();
-			 bally.setBallXSpeed(-1);
-				//Reset the ball
-			 player2lives--;
-			// System.out.println("player 2 lost a life");
-			// System.out.println(String.valueOf(player2lives));
-			 reMatch();
-			 gameOver();
-		}
+
+//		//if the ball bounce on x-axis on right side
+//		if (bally.getXPos()>= level.screenWidth - bally.getSize()/2){
+//			 //Random rand = new Random();
+//			 bally.setBallXSpeed(-1);
+//				//Reset the ball
+//			 player2lives--;
+//			// System.out.println("player 2 lost a life");
+//			// System.out.println(String.valueOf(player2lives));
+//			 reMatch();
+//			 gameOver();
+//		}
+//
+//		
+//		if(bally.getXPos() <= relX + bally.getSize()/2){
+//			//Random rand2 = new Random();
+//			bally.setBallXSpeed(1);
+//			//Reset the ball
+//			player1lives--;
+////			System.out.println("player 1 lost a life");
+////			System.out.println(String.valueOf(player1lives));
+//			reMatch();
+//			gameOver();
+//		}
+//			
+//			
+//
+////			//Goal on Y axis
+////            //Wall 1
+////            if (bally.getYPos()<= level.relY + bally.getSize()/2){
+////                    bally.setBallYSpeed(1);
+////                    reMatch();
+////            }
+////           
+////           
+////            //WAll 3
+////           
+////            if (bally.getYPos()>= level.screenHeight - bally.getSize()/2){
+////                    bally.setBallYSpeed(-1);
+////                    reMatch();
+////            }
+//			
+//		if(bally.getBallYSpeed()== 0){
+//			Random r = new Random();
+//			int i = r.nextInt(1);
+//			
+//			if(i == 0){
+//				bally.setBallYSpeed(-2);
+//			}
+//			if(i == 1){
+//				bally.setBallYSpeed(2);
+//			}
+//			
+//			
+//		}
 
 		
-		if(bally.getXPos() <= relX + bally.getSize()/2){
-			//Random rand2 = new Random();
-			bally.setBallXSpeed(1);
-			//Reset the ball
-			player1lives--;
-//			System.out.println("player 1 lost a life");
-//			System.out.println(String.valueOf(player1lives));
-			reMatch();
-			gameOver();
-		}
-			
-			
-
-//			//Goal on Y axis
-//            //Wall 1
-//            if (bally.getYPos()<= level.relY + bally.getSize()/2){
-//                    bally.setBallYSpeed(1);
-//                    reMatch();
-//            }
-//           
-//           
-//            //WAll 3
-//           
-//            if (bally.getYPos()>= level.screenHeight - bally.getSize()/2){
-//                    bally.setBallYSpeed(-1);
-//                    reMatch();
-//            }
-			
-		if(bally.getBallYSpeed()== 0){
-			Random r = new Random();
-			int i = r.nextInt(1);
-			
-			if(i == 0){
-				bally.setBallYSpeed(-2);
-			}
-			if(i == 1){
-				bally.setBallYSpeed(2);
-			}
-			
-			
-		}
-
 		
-*/		
 	}
 	//if ball bounces on y-axis
 	public void checkBounceWall(){
