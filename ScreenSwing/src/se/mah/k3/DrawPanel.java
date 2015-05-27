@@ -9,12 +9,16 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.Collections;
 import java.util.Random;
+import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
 import java.awt.Polygon;
 import java.awt.geom.Area;
 
 import javax.swing.JPanel;
+
+import se.mah.k3.Level.GameState;
+import se.mah.k3.TimerClass.RemindTask;
 
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
@@ -26,11 +30,7 @@ public class DrawPanel extends JPanel {
 	private Firebase myFirebaseRef;
 	private Ball ball = new Ball();
 	private BallLogic ballLogic = new BallLogic(ball);
-	
-	private TimerClass timer;
-	
-	private boolean timerController = true;
-	
+			
 // Boolean = work on mac;
 	// work on mac = false;
 	//hdmi (== non existing);
@@ -153,7 +153,7 @@ public class DrawPanel extends JPanel {
 
 						}
 					}	
-					 if (listCount == 2){
+/*					 if (listCount == 2){
 						 User user = new User(arg0.getKey(),100, ballLogic.relY+10 , ballLogic.player3lives); // create player 3
 						 if(!users.contains(user)){
 							 users.add(user);
@@ -178,6 +178,7 @@ public class DrawPanel extends JPanel {
 							 myFirebaseRef.child(arg0.getKey()).child("playercolor").setValue("#e5d672");
 
 						 }
+						 */
 					if(listCount <3){
 						try {
 							
@@ -186,7 +187,7 @@ public class DrawPanel extends JPanel {
 						}
 					}
 					 }
-				}
+				//}
 			}
 			
 			@Override
@@ -195,8 +196,14 @@ public class DrawPanel extends JPanel {
 			}
 		});
 		 
-		 
-
+	}
+	
+	// här är vår metod för att starta timern
+	public void initiateTimer(){
+//		System.out.println("About to start game countdown.");
+	    new TimerClass();
+//	    System.out.println("Countdown started, game will start in 5 seconds.");
+//		}
 	}
 	
 	public void setPlayerBounds(User user){
@@ -280,11 +287,6 @@ public class DrawPanel extends JPanel {
 		g2.fillRect(0, 0, getSize().width, getSize().height);
 		g2.setColor(Color.black);
 		
-		//Background
-		Image img1 = Toolkit.getDefaultToolkit().getImage("src/images/bakgrundis.jpg");
-	    g2.drawImage(img1, 0, 0, this); 
-		
- 
 	    g2.finalize();
 	    
 	    if(start == false){
@@ -316,8 +318,8 @@ public class DrawPanel extends JPanel {
 			
 
 	    
-		//Background
 	    }
+		//Background
 			Color c = new Color(19,156,234);
 			g2.setColor(c);
 		//	g2.drawRect (level.relX, level.relY, level.screenWidthForRect, level.screenHeightHeightForRect);	
@@ -379,28 +381,48 @@ public class DrawPanel extends JPanel {
 	     c = new Color(100,100,100);
 	     g2.setColor(c);
 	     
-			if(users.size() == 1){
+			if(users.size() >= 1){
 				g.drawString("Player 1 connected", 100, 100);
+//				System.out.println(timerController);
 			}
 			
 			if(users.size() == 2){
 				g.drawString("Player 2 connected", 700, 100);
+			    initiateTimer(); // här försöker vi starta timern när 2 spelare har anslutit till spelet
+//			    System.out.println(start);
+//				start = true;
 			}
 
 
 	    super.repaint();
 
+	    if(users.size()>=2){
+	    
+	    if(start == true){ // när timern kört klart och gjort om start till true, ska skärmen ändras till spelplanen och spelet ska laddas
+			//Background
+			Image img1 = Toolkit.getDefaultToolkit().getImage("src/images/bakgrundis.jpg");
+		    g2.drawImage(img1, 0, 0, this); 
+	    	
+	    	ballXPos = ball.getXPos();
+			ballYPos = ball.getYPos();
+
+			//ball
+			//g2.fillOval(ballXPos, ballYPos, ball.getSize(), ball.getSize());
+			Image boll = Toolkit.getDefaultToolkit().getImage("src/images/boll.png");
+			g2.drawImage(boll, ballXPos, ballYPos, ball.getSize(),ball.getSize(), this);
+			
+//	    	System.out.println("Game started");
+			
 		//Test
 		for (User user : users) {
 			if(users.size()>=2){  // defines how many players that needs to be in the game for it to start			
-			start = true;
 			paddleTop = y - playerPingSize;
 			paddleBottom = y;
 			
 			paddlePosY = y - playerPingSize;
 			
-			System.out.println(paddleTop + "paddletop");
-			System.out.println(paddleBottom + "paddleBottom");
+//			System.out.println(paddleTop + "paddletop");
+//			System.out.println(paddleBottom + "paddleBottom");
 			
 			y = (int)(user.getyRel()*getSize().height);
 			g2.setColor( user.getColor());
@@ -414,8 +436,8 @@ public class DrawPanel extends JPanel {
 
 
 		 // defines how many players that needs to be in the game for it to start
-			if(users.size()>=1){ 
-			start = true;
+		    if(users.size()>=1){ 
+	//		start = true;
 			
 			int x = (int)(user.getxRel()*getSize().height);
 			int y = (int)(user.getyRel()*getSize().height);
@@ -439,7 +461,7 @@ public class DrawPanel extends JPanel {
 			
 			}
 			
-			else if (users.indexOf(user) == 1){
+			else if (users.indexOf(user) >= 1){
 				//g2.fillRect(1000, user.getyPos(), user.userHeight, user.userWidth);
 				ballLogic.comparePosition(1000, user.getyPos(), user.userHeight, user.userWidth);
 			   g2.drawImage(player2, user.getxPos(), y - playerPingSize, user.userWidth, playerPingSize, this);
@@ -465,19 +487,68 @@ public class DrawPanel extends JPanel {
 			//This prints out the ping to drawpanel
 			String userDelay = String.valueOf(user.getDelay());
 			g.drawString("PING = " + userDelay, user.getxPos(), 10);
-			System.out.println(user.getId() + user.getDelay());
-			
-//			if(users.size()>4){
-//			start = false;
-//		}
-			
+			//System.out.println(user.getId() + user.getDelay());
+						
+		}		
 		}
-
-		
-		
-	}
+	    }
 	    }
 }
+}
+	
+	public class TimerClass {
+		Toolkit toolkit;
+
+		  Timer timer = new Timer();
+		  
+		  public TimerClass() {
+			    toolkit = Toolkit.getDefaultToolkit();
+			    timer = new Timer();
+			    timer.schedule(new StartGameTimer(), 0, 1 * 1000);
+
+		  }
+		  
+		  class StartGameTimer extends TimerTask {
+			    int count = 5;
+			  	public void run() {
+			  		if (count > 0){
+			  			toolkit.beep();
+			  		//	System.out.println(count + " seconds left");
+			  			count--;
+			  		} else {
+			  		toolkit.beep();
+			  //		System.out.println(count + " seconds left, Game is starting!");
+			    	start = true; // här bestämmer vi att vår start boolean ska bli true när timern körts klart
+			    	timer.cancel(); //Stops the AWT thread (and everything else)
+			  		}
+			    }
+		 }
+	}
+	
+	public class LivesTimer {
+		Toolkit toolkit;
+		Timer timer = new Timer();
+		
+		public LivesTimer(){
+			toolkit = Toolkit.getDefaultToolkit();
+			timer = new Timer();
+			timer.schedule(new GameOverTimer(), 0, 1* 1000);
+		}
+		
+		class GameOverTimer extends TimerTask {
+			int count = 5;
+			public void run(){
+				if (count > 0){
+					toolkit.beep();
+					count--;
+				} else {
+					toolkit.beep();
+					timer.cancel();
+				}
+			}
+		}
+	}
+
 }
 
 	
