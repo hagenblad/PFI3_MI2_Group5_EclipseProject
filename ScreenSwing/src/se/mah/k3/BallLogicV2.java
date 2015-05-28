@@ -189,7 +189,7 @@ public class BallLogicV2 extends Polygon {
 				
 				if( position.y >= y -5 && position.y <= y + height+5){
 					
-					System.out.println("Nice YYY Pos");
+					System.out.println("player 1 bounce");
 					position.x = position.x +10;
 					rotate();
 					/*int xSpeed = bally.getBallXSpeed(); 
@@ -213,7 +213,7 @@ public class BallLogicV2 extends Polygon {
 				
 				if( position.y >= y -5 && position.y <= y + height+5){
 					
-					System.out.println("Nice YYY Pos");
+					System.out.println("player 2 bounce");
 					position.x = position.x -10;
 					rotate();
 					/*int xSpeed = bally.getBallXSpeed(); 
@@ -226,49 +226,42 @@ public class BallLogicV2 extends Polygon {
 				}
 			}
 		}
+		// x y = paddlepos hight width = paddle H W
+		//pos.x & pos.y = bollen
 		
-		public void paddleThreeHit(int x, int y, int width, int height){
+		public void paddleThreeHit(int x, int y, int height, int width){
 			
 			
-			if(position.y <= y +width +5){
+				if(position.y <= y+5){
 				
 				//	System.out.println("Nice X pos");	
 				
-				if( position.y >= y -5 && position.y <= y + height+5){
+				if( position.x >= x -5 && position.x <= x + width+5){
 					
-					System.out.println("Nice YYY Pos");
-					position.y = position.y +10;
+					System.out.println("player three bounce");
+					position.y = position.y -10;
 					rotateY();
-					/*int xSpeed = bally.getBallXSpeed(); 
-						
-					bally.setBallXSpeed(bounceX(xSpeed));
-					xSpeed = bally.getBallXSpeed();
-					int tempx = bally.getXPos();
-					bally.setXPos(tempx += xSpeed);
-				*/
+
+					
 				}
 			}
 		}
 		
-		public void paddleFourHit(int x, int y, int width, int height){
+		
+		public void paddleFourHit(int x, int y, int height, int width){
 			
 			
-			if(position.x <= x +width+5){
+			if(position.y >= y-5){
 				
 				//	System.out.println("Nice X pos");	
 				
-				if( position.y >= y -5 && position.y <= y + height+5){
+				if( position.x >= x -5 && position.x <= x + width+5){
 					
-					System.out.println("Nice YYY Pos");
-					position.x = position.x +10;
-					rotate();
-					/*int xSpeed = bally.getBallXSpeed(); 
-						
-					bally.setBallXSpeed(bounceX(xSpeed));
-					xSpeed = bally.getBallXSpeed();
-					int tempx = bally.getXPos();
-					bally.setXPos(tempx += xSpeed);
-				*/
+					System.out.println("player four bounce");
+					position.y = position.y +10;
+					rotateY();
+
+					
 				}
 			}
 		}
