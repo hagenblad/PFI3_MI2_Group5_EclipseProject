@@ -375,20 +375,21 @@ public class DrawPanel extends JPanel {
 
 
 		if(users.size() >= 1){
-			g.drawString("Player 1 connected", 400, 200);
+			g.drawString("Player 1 connected", 400, 120);
 		}
 
 		if(users.size() == 2){
-			g.drawString("Player 2 connected", 400, 200);
+			g.drawString("Player 2 connected", 400, 150);
 			initiateTimer(); // här försöker vi starta timern när 2 spelare har anslutit till spelet
+			
 		}
 
 		if(users.size() == 3){
-			g.drawString("Player 3 connected", 400, 200);
+			g.drawString("Player 3 connected", 400, 180);
 		}
 
 		if(users.size() == 4){
-			g.drawString("Player 4 connected", 400, 200);
+			g.drawString("Player 4 connected", 400, 210);
 		}
 
 
@@ -471,30 +472,31 @@ public class DrawPanel extends JPanel {
 
 								g2.drawImage(player4, y - (playerPingSize/2),level.relX+1, playerPingSize, user.userWidth, this);
 							}
-
+								
+							
 
 								// draw out player 1 info
 								Color blue = users.get(0).getColor();
 								g.setColor(blue);
 								//This prints out the ping to drawpanel
 								String player1Delay = String.valueOf(users.get(0).getDelay());
-								g.drawString("PING = " + player1Delay, 20, 610);
+								g.drawString("PING = " + player1Delay, 20, 130);
 								String player1name = users.get(0).getId();
 								//System.out.println(player1name);
-								g.drawString(player1name, 20, 550);
+								g.drawString(player1name, 20, 70);
 								String livesLeftPlayerOne = String.valueOf(ships[0].player1lives);
-								g.drawString(livesLeftPlayerOne + " Lives left ", 20, 580); // this prints out how many lives player one has left
+								g.drawString(livesLeftPlayerOne + " Lives left ", 20, 100); // this prints out how many lives player one has left
 
 								// draw out player 2 info
 								Color red = users.get(1).getColor();
 								g.setColor(red);
 								String player2Delay = String.valueOf(users.get(1).getDelay());
-								g.drawString("PING = " + player2Delay, 807, 130);
+								g.drawString("PING = " + player2Delay, 807, 610);
 								String player2name = users.get(1).getId();
 								//System.out.println(player2name);
-								g.drawString(player2name, 807, 70);
+								g.drawString(player2name, 807, 550);
 								String livesLeftPlayerTwo = String.valueOf(ships[0].player2lives);
-								g.drawString(livesLeftPlayerTwo + " Lives left ", 807, 100); // this prints out how many lives player two has left
+								g.drawString(livesLeftPlayerTwo + " Lives left ", 807, 580); // this prints out how many lives player two has left
 
 
 
@@ -502,23 +504,23 @@ public class DrawPanel extends JPanel {
 //								Color green = users.get(2).getColor();
 //								g.setColor(green);
 //								String player3Delay = String.valueOf(users.get(2).getDelay());
-//								g.drawString("PING = " + player3Delay, 20, 130);
+//								g.drawString("PING = " + player3Delay, 807, 130);
 //								String player3name = users.get(2).getId();
 //								//System.out.println(player3name);
-//								g.drawString(player3name, 20, 70);
+//								g.drawString(player3name, 807, 70);
 //								String livesLeftPlayerThree = String.valueOf(ships[0].player3lives);
-//								g.drawString(livesLeftPlayerThree + " Lives left ", 20, 100); // this prints out how many lives player three has left
+//								g.drawString(livesLeftPlayerThree + " Lives left ", 807, 100); // this prints out how many lives player three has left
 //
 //								// draw out player 4 info
 //								Color yellow = users.get(3).getColor();
 //								g.setColor(yellow);
 //								String player4Delay = String.valueOf(users.get(3).getDelay());
-//								g.drawString("PING = "+ player4Delay, 807,610);
+//								g.drawString("PING = "+ player4Delay, 20,610);
 //								String player4name = users.get(3).getId();
 //								//System.out.println(player4name);
-//								g.drawString(player4name, 807, 550);
+//								g.drawString(player4name, 20, 550);
 //								String livesLeftPlayerFour = String.valueOf(ships[0].player4lives);
-//								g.drawString(livesLeftPlayerFour,  807,  580); // this prints out how many lives player four has left
+//								g.drawString(livesLeftPlayerFour,  20,  580); // this prints out how many lives player four has left
 
 							
 						}		
