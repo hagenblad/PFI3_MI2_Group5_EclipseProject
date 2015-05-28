@@ -498,43 +498,43 @@ public class DrawPanel extends JPanel {
 								
 							}
 
-							else if (users.indexOf(user) == 2){
-								//g2.fillRect(1000, user.getyPos(), user.userHeight, user.userWidth);
-								ships[0].paddleThreeHit(level.relY-11, level.screenWidth-11 ,playerPingSize, user.userWidth );
-								
-								// draw out player 3 info
-								Color green = users.get(2).getColor();
-								g.setColor(green);
-								String player3Delay = String.valueOf(users.get(2).getDelay());
-								g.drawString("PING = " + player3Delay, 20, 130);
-								String player3name = users.get(2).getId();
-								//System.out.println(player3name);
-								g.drawString(player3name, 20, 70);
-								String livesLeftPlayerThree = String.valueOf(ships[0].player3lives);
-								g.drawString(livesLeftPlayerThree + " Lives left ", 20, 100); // this prints out how many lives player three has left
-
-								
-								g2.drawImage(player3, y - (playerPingSize/2) , level.relY+11 ,playerPingSize, user.userWidth,this);
-								}
-							else if (users.indexOf(user) == 3){
-								//g2.fillRect(1000, user.getyPos(), user.userHeight, user.userWidth);
-
-								// draw out player 4 info
-								Color yellow = users.get(3).getColor();
-								g.setColor(yellow);
-								String player4Delay = String.valueOf(users.get(3).getDelay());
-								g.drawString("PING = "+ player4Delay, 807,610);
-								String player4name = users.get(3).getId();
-								//System.out.println(player4name);
-								g.drawString(player4name, 807, 550);
-								String livesLeftPlayerFour = String.valueOf(ships[0].player4lives);
-								g.drawString(livesLeftPlayerFour,  807,  580); // this prints out how many lives player four has left
-
-								
-								ships[0].paddleFourHit(y - (playerPingSize/2),level.relX+10, playerPingSize,user.userWidth);
-
-								g2.drawImage(player4, y - (playerPingSize/2),  level.screenHeight-11, playerPingSize, user.userWidth, this);
-								}
+//							else if (users.indexOf(user) == 2){
+//								//g2.fillRect(1000, user.getyPos(), user.userHeight, user.userWidth);
+//								ships[0].paddleThreeHit(level.relY-11, level.screenWidth-11 ,playerPingSize, user.userWidth );
+//								
+//								// draw out player 3 info
+//								Color green = users.get(2).getColor();
+//								g.setColor(green);
+//								String player3Delay = String.valueOf(users.get(2).getDelay());
+//								g.drawString("PING = " + player3Delay, 20, 130);
+//								String player3name = users.get(2).getId();
+//								//System.out.println(player3name);
+//								g.drawString(player3name, 20, 70);
+//								String livesLeftPlayerThree = String.valueOf(ships[0].player3lives);
+//								g.drawString(livesLeftPlayerThree + " Lives left ", 20, 100); // this prints out how many lives player three has left
+//
+//								
+//								g2.drawImage(player3, y - (playerPingSize/2) , level.relY+11 ,playerPingSize, user.userWidth,this);
+//								}
+//							else if (users.indexOf(user) == 3){
+//								//g2.fillRect(1000, user.getyPos(), user.userHeight, user.userWidth);
+//
+//								// draw out player 4 info
+//								Color yellow = users.get(3).getColor();
+//								g.setColor(yellow);
+//								String player4Delay = String.valueOf(users.get(3).getDelay());
+//								g.drawString("PING = "+ player4Delay, 807,610);
+//								String player4name = users.get(3).getId();
+//								//System.out.println(player4name);
+//								g.drawString(player4name, 807, 550);
+//								String livesLeftPlayerFour = String.valueOf(ships[0].player4lives);
+//								g.drawString(livesLeftPlayerFour,  807,  580); // this prints out how many lives player four has left
+//
+//								
+//								ships[0].paddleFourHit(y - (playerPingSize/2),level.relX+10, playerPingSize,user.userWidth);
+//
+//								g2.drawImage(player4, y - (playerPingSize/2),  level.screenHeight-11, playerPingSize, user.userWidth, this);
+//								}
 							
 						}		
 					}

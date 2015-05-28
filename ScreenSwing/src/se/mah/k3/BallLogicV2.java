@@ -179,7 +179,7 @@ public class BallLogicV2 extends Polygon {
 			xPos = (int)position.x;
 			yPos = (int)position.y;
 	}
-	
+		//(level.relX+1, y - (playerPingSize/2), user.userWidth, playerPingSize);
 		public void paddleOneHit(int x, int y, int width, int height){
 			
 		
@@ -202,7 +202,7 @@ public class BallLogicV2 extends Polygon {
 				}
 			}
 		}
-		
+		//(level.screenWidth-11, y - (playerPingSize/2), user.userWidth, playerPingSize);
 		public void paddleTwoHit(int x, int y, int width, int height){
 			
 			
@@ -226,17 +226,16 @@ public class BallLogicV2 extends Polygon {
 				}
 			}
 		}
-		// x y = paddlepos hight width = paddle H W
-		//pos.x & pos.y = bollen
 		
-		public void paddleThreeHit(int x, int y, int height, int width){
+		//(level.relY-11, level.screenWidth-11 ,playerPingSize, user.userWidth );
+		public void paddleThreeHit(int x, int y, int width, int height){
 			
 			
-				if(position.y <= y+5){
+				if(position.y <= x+5){
 				
 				//	System.out.println("Nice X pos");	
 				
-				if( position.x >= x -5 && position.x <= x + width+5){
+				if( position.x >= y -5 && position.x <= x + width+5){
 					
 					System.out.println("player three bounce");
 					position.y = position.y -10;
@@ -247,8 +246,8 @@ public class BallLogicV2 extends Polygon {
 			}
 		}
 		
-		
-		public void paddleFourHit(int x, int y, int height, int width){
+		//ships[0].paddleFourHit(y - (playerPingSize/2),level.relX+10, playerPingSize,user.userWidth);
+		public void paddleFourHit(int x, int y, int width, int heigth){
 			
 			
 			if(position.y >= y-5){
