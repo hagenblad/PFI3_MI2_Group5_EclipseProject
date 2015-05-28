@@ -204,13 +204,7 @@ public class BallLogicV2 extends Polygon {
 
 					position.x = position.x +10;
 					rotate();
-					/*int xSpeed = bally.getBallXSpeed(); 
-						
-					bally.setBallXSpeed(bounceX(xSpeed));
-					xSpeed = bally.getBallXSpeed();
-					int tempx = bally.getXPos();
-					bally.setXPos(tempx += xSpeed);
-				*/
+
 				}
 			}
 		}
@@ -229,54 +223,42 @@ public class BallLogicV2 extends Polygon {
 
 					position.x = position.x -10;
 					rotate();
-					/*int xSpeed = bally.getBallXSpeed(); 
-						
-					bally.setBallXSpeed(bounceX(xSpeed));
-					xSpeed = bally.getBallXSpeed();
-					int tempx = bally.getXPos();
-					bally.setXPos(tempx += xSpeed);
-				*/
 				}
 			}
 		}
 		
 		//(level.relY-11, level.screenWidth-11 ,playerPingSize, user.userWidth );
 		public void paddleThreeHit(int x, int y, int width, int height){
+				
+			//THE PLAYER ON TOP
 			
-			
+				//SHOULD MEASURE IF THE BALL IS ABOVE
 				if(position.y <= x+5){
 				
-				//	System.out.println("Nice X pos");	
-				
-				if( position.x >= y -5 && position.x <= x + width+5){
+				//AND IN FRONT
+				if( position.x >= y -5 && position.x <= y + width+5){
+					
 					
 					System.out.println("player three bounce");
-					position.y = position.y -10;
+					
+					//THEN GO DOWN 10 PIXELS
+					position.y = position.y +10;
+					//THEN ROTATE
 					rotateY();
 
-					
-			//		System.out.println("Nice YYY Pos");
-					position.x = position.x +10;
-					rotate();
-					/*int xSpeed = bally.getBallXSpeed(); 
-						
-					bally.setBallXSpeed(bounceX(xSpeed));
-					xSpeed = bally.getBallXSpeed();
-					int tempx = bally.getXPos();
-					bally.setXPos(tempx += xSpeed);
-				*/
+
 
 				}
 			}
 		}
 		
-		//ships[0].paddleFourHit(y - (playerPingSize/2),level.relX+10, playerPingSize,user.userWidth);
+
 		public void paddleFourHit(int x, int y, int width, int heigth){
 			
-			
+			//THE PLAYER AT THE BOTTOM
+			//SHOULD MEASURE IF THE BALL IS BENEATH
 			if(position.y >= y-5){
-				
-				//	System.out.println("Nice X pos");	
+
 				
 				if( position.x >= x -5 && position.x <= x + width+5){
 					
@@ -284,16 +266,7 @@ public class BallLogicV2 extends Polygon {
 					position.y = position.y +10;
 					rotateY();
 
-		//			System.out.println("Nice YYY Pos");
-					position.x = position.x +10;
-					rotate();
-					/*int xSpeed = bally.getBallXSpeed(); 
-						
-					bally.setBallXSpeed(bounceX(xSpeed));
-					xSpeed = bally.getBallXSpeed();
-					int tempx = bally.getXPos();
-					bally.setXPos(tempx += xSpeed);
-				*/
+
 				}
 			}
 		}
