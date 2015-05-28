@@ -137,10 +137,10 @@ public class BallLogicV2 extends Polygon {
 				position = new Point(position.x, position.y-10);
 	//			System.out.println("before = " + rotation);
 				rotateY();
-		//		System.out.println("after = " + rotation);
-		//		player4lives--;
-		//		ballRespawn();
-
+				player4lives--;
+				ballRespawn();
+				//		System.out.println("after = " + rotation);
+		
 
 			} 
 			
@@ -148,9 +148,10 @@ public class BallLogicV2 extends Polygon {
 			else if (position.y < level.relY){
 				position = new Point(position.x, position.y+10);
 				rotateY();
+				player3lives--;
+				ballRespawn();
 	//			System.out.println("after = " + rotation);
-		//		player3lives--;
-		//		ballRespawn();
+	
 
 
 			}
@@ -204,6 +205,8 @@ public class BallLogicV2 extends Polygon {
 
 					position.x = position.x +10;
 					rotate();
+					
+
 					/*int xSpeed = bally.getBallXSpeed(); 
 						
 					bally.setBallXSpeed(bounceX(xSpeed));
@@ -229,6 +232,7 @@ public class BallLogicV2 extends Polygon {
 
 					position.x = position.x -10;
 					rotate();
+
 					/*int xSpeed = bally.getBallXSpeed(); 
 						
 					bally.setBallXSpeed(bounceX(xSpeed));
@@ -240,24 +244,23 @@ public class BallLogicV2 extends Polygon {
 			}
 		}
 		
-		//(level.relY-11, level.screenWidth-11 ,playerPingSize, user.userWidth );
+		// (x-(playerPingSize/2), level.relY+10 ,playerPingSize, user.userWidth );
 		public void paddleThreeHit(int x, int y, int width, int height){
 			
 			
-				if(position.y <= x+5){
+				if(position.y <= y+height+5){
 				
 				//	System.out.println("Nice X pos");	
 				
-				if( position.x >= y -5 && position.x <= x + width+5){
+				if( position.x >= x -5 && position.x <= x+width+5){
 					
 					System.out.println("player three bounce");
-					position.y = position.y -10;
+					position.y = position.y +10;
 					rotateY();
 
 					
 			//		System.out.println("Nice YYY Pos");
-					position.x = position.x +10;
-					rotate();
+			
 					/*int xSpeed = bally.getBallXSpeed(); 
 						
 					bally.setBallXSpeed(bounceX(xSpeed));
@@ -270,23 +273,22 @@ public class BallLogicV2 extends Polygon {
 			}
 		}
 		
-		//ships[0].paddleFourHit(y - (playerPingSize/2),level.relX+10, playerPingSize,user.userWidth);
-		public void paddleFourHit(int x, int y, int width, int heigth){
+	//	ships[0].paddleFourHit (y-(playerPingSize/2),level.screenHeight-15 , playerPingSize ,user.userWidth);
+		public void paddleFourHit(int x, int y, int width, int height){
 			
 			
-			if(position.y >= y-5){
+			if(position.y >= y-height-5){
 				
 				//	System.out.println("Nice X pos");	
 				
-				if( position.x >= x -5 && position.x <= x + width+5){
+				if( position.x >= x +5 && position.x <= x - width-5){
 					
 					System.out.println("player four bounce");
 					position.y = position.y +10;
 					rotateY();
 
 		//			System.out.println("Nice YYY Pos");
-					position.x = position.x +10;
-					rotate();
+			
 					/*int xSpeed = bally.getBallXSpeed(); 
 						
 					bally.setBallXSpeed(bounceX(xSpeed));
@@ -334,7 +336,7 @@ public class BallLogicV2 extends Polygon {
 	}
 	
 	public boolean player1Win (){
-		if (player1lives > 0 && player2lives == 0 /*&& player3lives == 0 && player4lives == 0*/){
+		if (player1lives > 0 && player2lives <= 0 && player3lives <= 0 && player4lives <= 0){
 			return true;
 		} else {
 			return false;
@@ -342,7 +344,7 @@ public class BallLogicV2 extends Polygon {
 	}
 	
 	public boolean player2Win (){
-		if (player2lives > 0 && player1lives == 0 /*&& player3lives == 0 && player4lives == 0*/){
+		if (player2lives > 0 && player1lives <= 0 && player3lives <= 0 && player4lives <= 0){
 			return true;
 		} else {
 			return false;
@@ -350,7 +352,7 @@ public class BallLogicV2 extends Polygon {
 	}
 	
 	public boolean player3Win (){
-		if (player3lives > 0 && player1lives == 0 && player2lives == 0 && player4lives == 0){
+		if (player3lives > 0 && player1lives <= 0 && player2lives <= 0 && player4lives <= 0){
 			return true;
 		} else {
 			return false;
@@ -358,7 +360,7 @@ public class BallLogicV2 extends Polygon {
 	}
 	
 	public boolean player4Win (){
-		if (player4lives > 0 && player1lives == 0 && player2lives == 0 && player3lives == 0){
+		if (player4lives > 0 && player1lives <= 0 && player2lives <= 0 && player3lives <= 0){
 			return true;
 		} else {
 			return false;
