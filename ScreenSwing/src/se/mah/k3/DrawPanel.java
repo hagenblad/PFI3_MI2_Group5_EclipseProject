@@ -14,6 +14,8 @@ import java.util.TimerTask;
 import java.util.Vector;
 import java.awt.Polygon;
 import java.awt.geom.Area;
+import java.io.File;
+import java.io.FileInputStream;
 
 import javax.swing.JPanel;
 
@@ -57,6 +59,8 @@ public class DrawPanel extends JPanel {
 	int playerDelayint;
 	int playerPingSize;
 
+	public Font ExoExtraLightSize;
+	
 	public Polygon polyTRC;
 	public Polygon polyTLC;
 	public Polygon polyBRC;
@@ -74,11 +78,17 @@ public class DrawPanel extends JPanel {
 	//A vector is like an ArrayList a little bit slower but Thread-safe. This means that it can handle concurrent changes. 
 	private Vector<User> users= new Vector<User>();
 	//	private Vector<User> horizontalUsers = new Vector<User>();
-	Font font = new Font("Verdana", Font.PLAIN, 20); //Har du Exo installerat, byt "Verdana" till "Exo"..
+	//Font font = new Font("Exo", Font.PLAIN, 20); //Har du Exo installerat, byt "Verdana" till "Exo"..
 
 	public DrawPanel() {
 
-
+		try {
+			loadFont();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		myFirebaseRef = new Firebase("https://pingispong.firebaseio.com/");
 		myFirebaseRef.removeValue(); //Cleans out everything
 		myFirebaseRef.child("ScreenNbr").setValue(Constants.screenNbr);  //Has to be same as on the app. So place specific can't you see the screen you don't know the number
@@ -188,6 +198,14 @@ public class DrawPanel extends JPanel {
 		});
 
 	}
+	
+	public void loadFont() throws Exception{
+		
+		File f = new File("lib/ExoExtraLight.ttf");
+		FileInputStream in = new FileInputStream(f);
+		Font ExoExtraLight = Font.createFont(Font.TRUETYPE_FONT, in);
+		ExoExtraLightSize = ExoExtraLight.deriveFont(25f);
+	}
 
 	// här är vår metod för att starta timern
 	public void initiateTimer(){
@@ -263,7 +281,7 @@ public class DrawPanel extends JPanel {
 
 		//super.paint(g);
 		Graphics2D g2= (Graphics2D) g;
-		g2.setFont(font);
+		g2.setFont(ExoExtraLightSize);
 		g2.setColor(Color.LIGHT_GRAY);
 		g2.fillRect(0, 0, getSize().width, getSize().height);
 		g2.setColor(Color.black);
@@ -280,10 +298,12 @@ public class DrawPanel extends JPanel {
 			//g2.fillRect(0,0,1000,700);
 			Image imgStart = Toolkit.getDefaultToolkit().getImage("src/images/Startscreen.jpg");
 
+			
+			g.setFont(ExoExtraLightSize);
 			g2.drawImage(imgStart, 0, 0, this);
 			Color gray = Color.decode("#2b2b2b");
 			g.setColor(gray);
-			g.drawString("The game will start when two players connects", level.screenWidth/2-120, level.screenHeight/2 + 200);
+			g.drawString("The game will start when two players connects", level.screenWidth/2-160, level.screenHeight/2 + 200);
 		}else{
 			//	    	ballXPos = ball.getXPos();
 			//			ballYPos = ball.getYPos();
@@ -378,23 +398,23 @@ public class DrawPanel extends JPanel {
 		
 		if(users.size() >= 1){
 			String player1name = users.get(0).getId();
-			g.drawString(player1name + " connected", 425, 100);
+			g.drawString(player1name + " connected", 400, 100);
 		}
 
 		if(users.size() == 2){
 			String player2name = users.get(1).getId();
-			g.drawString(player2name + " connected", 425, 150);
+			g.drawString(player2name + " connected", 400, 150);
 			initiateTimer(); // här försöker vi starta timern när 2 spelare har anslutit till spelet
 		}
 
 		if(users.size() == 3){
 			String player3name =users.get(2).getId();
-			g.drawString(player3name + " connected", 425, 200);
+			g.drawString(player3name + " connected", 400, 200);
 		}
 
 		if(users.size() == 4){
 			String player4name = users.get(3).getId();
-			g.drawString(player4name + " connected", 425, 250);
+			g.drawString(player4name + " connected", 400, 250);
 		}
 
 
