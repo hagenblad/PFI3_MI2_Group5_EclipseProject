@@ -74,7 +74,7 @@ public class DrawPanel extends JPanel {
 	//A vector is like an ArrayList a little bit slower but Thread-safe. This means that it can handle concurrent changes. 
 	private Vector<User> users= new Vector<User>();
 	//	private Vector<User> horizontalUsers = new Vector<User>();
-	Font font = new Font("Verdana", Font.BOLD, 20);
+	Font font = new Font("Verdana", Font.PLAIN, 20); //Har du Exo installerat, byt "Verdana" till "Exo"..
 
 	public DrawPanel() {
 
@@ -281,9 +281,9 @@ public class DrawPanel extends JPanel {
 			Image imgStart = Toolkit.getDefaultToolkit().getImage("src/images/Startscreen.jpg");
 
 			g2.drawImage(imgStart, 0, 0, this);
-			c = new Color(100,100,100);
-			g2.setColor(c);
-			g.drawString("The game will start when two players connects", level.screenWidth/2-150, level.screenHeight/2 + 200);
+			Color gray = Color.decode("#2b2b2b");
+			g.setColor(gray);
+			g.drawString("The game will start when two players connects", level.screenWidth/2-120, level.screenHeight/2 + 200);
 		}else{
 			//	    	ballXPos = ball.getXPos();
 			//			ballYPos = ball.getYPos();
@@ -373,22 +373,28 @@ public class DrawPanel extends JPanel {
 
 		super.repaint();
 
-
+		Color gray = Color.decode("#2b2b2b");
+		g.setColor(gray);
+		
 		if(users.size() >= 1){
-			g.drawString("Player 1 connected", 400, 200);
+			String player1name = users.get(0).getId();
+			g.drawString(player1name + " connected", 425, 100);
 		}
 
 		if(users.size() == 2){
-			g.drawString("Player 2 connected", 400, 200);
+			String player2name = users.get(1).getId();
+			g.drawString(player2name + " connected", 425, 150);
 			initiateTimer(); // här försöker vi starta timern när 2 spelare har anslutit till spelet
 		}
 
 		if(users.size() == 3){
-			g.drawString("Player 3 connected", 400, 200);
+			String player3name =users.get(2).getId();
+			g.drawString(player3name + " connected", 425, 200);
 		}
 
 		if(users.size() == 4){
-			g.drawString("Player 4 connected", 400, 200);
+			String player4name = users.get(3).getId();
+			g.drawString(player4name + " connected", 425, 250);
 		}
 
 
