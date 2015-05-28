@@ -1,12 +1,16 @@
 package se.mah.k3;
 
 //import java.awt.Graphics;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.util.Random;
 //import java.awt.event.KeyListener;
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 public class BallLogicV2 extends Polygon {
-	static int speed = 0;
+	public static int speed = 0;
 	Ball ball = new Ball();
 	Level level = new Level();
 
@@ -113,37 +117,46 @@ public class BallLogicV2 extends Polygon {
 			if (position.x > level.screenWidth-5) {
 				
 				position = new Point(position.x-10, position.y);	
-				System.out.println("before = " + rotation);
+		//		System.out.println("before = " + rotation);
 				rotate();
 				player2lives--;
+				ballRespawn();
+				System.out.println("player 2 has " + player2lives + " lives left");
 			
 				//Left Wall	
 			} else if (position.x < level.relX) {
-				System.out.println("INNE UH");
+		//		System.out.println("INNE UH");
 				position = new Point(position.x+10, position.y);
-				System.out.println("before = " + rotation);
+		//		System.out.println("before = " + rotation);
 				rotate();
-				System.out.println("after = " + rotation);
+		//		System.out.println("after = " + rotation);
 				player1lives--;
-				
+				ballRespawn();
+				System.out.println("player 1 has " + player1lives + " lives left");
+
+
 				
 			}
 			
 			// Bottom Wall
 			if (position.y > level.screenHeight) {
 				position = new Point(position.x, position.y-10);
-				System.out.println("before = " + rotation);
+	//			System.out.println("before = " + rotation);
 				rotateY();
-				System.out.println("after = " + rotation);
-				player4lives--;
+		//		System.out.println("after = " + rotation);
+		//		player4lives--;
+
+
 			} 
 			
 			//Top Wall
 			else if (position.y < level.relY){
 				position = new Point(position.x, position.y+10);
 				rotateY();
-				System.out.println("after = " + rotation);
-				player3lives--;
+	//			System.out.println("after = " + rotation);
+		//		player3lives--;
+
+
 			}
 			
 			if (tlcHit == true){
@@ -189,7 +202,7 @@ public class BallLogicV2 extends Polygon {
 				
 				if( position.y >= y -5 && position.y <= y + height+5){
 					
-					System.out.println("Nice YYY Pos");
+	//				System.out.println("Nice YYY Pos");
 					position.x = position.x +10;
 					rotate();
 					/*int xSpeed = bally.getBallXSpeed(); 
@@ -213,7 +226,7 @@ public class BallLogicV2 extends Polygon {
 				
 				if( position.y >= y -5 && position.y <= y + height+5){
 					
-					System.out.println("Nice YYY Pos");
+		//			System.out.println("Nice YYY Pos");
 					position.x = position.x -10;
 					rotate();
 					/*int xSpeed = bally.getBallXSpeed(); 
@@ -236,7 +249,7 @@ public class BallLogicV2 extends Polygon {
 				
 				if( position.y >= y -5 && position.y <= y + height+5){
 					
-					System.out.println("Nice YYY Pos");
+			//		System.out.println("Nice YYY Pos");
 					position.x = position.x +10;
 					rotate();
 					/*int xSpeed = bally.getBallXSpeed(); 
@@ -259,7 +272,7 @@ public class BallLogicV2 extends Polygon {
 				
 				if( position.y >= y -5 && position.y <= y + height+5){
 					
-					System.out.println("Nice YYY Pos");
+		//			System.out.println("Nice YYY Pos");
 					position.x = position.x +10;
 					rotate();
 					/*int xSpeed = bally.getBallXSpeed(); 
@@ -298,4 +311,101 @@ public class BallLogicV2 extends Polygon {
 		return yPos;
 	}
 
+	public void ballRespawn (){
+		position.x = 400;
+		position.y = 260;
+		speed = 0;
+		System.out.println("respawntimer about to start");
+		new LivesTimer();
+		System.out.println("respawntimer started");
+	}
+	
+	public boolean player1Win (){
+		if (player1lives > 0 && player2lives == 0 && player3lives == 0 && player4lives == 0){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean player2Win (){
+		if (player2lives > 0 && player1lives == 0 && player3lives == 0 && player4lives == 0){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean player3Win (){
+		if (player3lives > 0 && player1lives == 0 && player2lives == 0 && player4lives == 0){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean player4Win (){
+		if (player4lives > 0 && player1lives == 0 && player2lives == 0 && player3lives == 0){
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	
+	public class LivesTimer {
+		Toolkit toolkit;
+		Timer timer = new Timer();
+
+		public LivesTimer(){
+			toolkit = Toolkit.getDefaultToolkit();
+			timer = new Timer();
+			timer.schedule(new RespawnTimer(), 0, 1* 1000);
+		}
+
+		class RespawnTimer extends TimerTask {
+			int count = 2;
+			public void run(){
+				if (count > 0){
+					toolkit.beep();
+					count--;
+				} else {
+					toolkit.beep();
+					speed = 2;
+					System.out.println("respawntimer over");
+					timer.cancel();
+				}
+			}
+		}
+	}
+
+	public class RestartTimer {
+		Toolkit toolkit;
+		Timer timer = new Timer();
+		
+		public RestartTimer(){
+			toolkit = Toolkit.getDefaultToolkit();
+			timer = new Timer();
+			timer.schedule(new GameTimer(),  0, 1*1000);
+		}
+		
+		class GameTimer extends TimerTask{
+			int count = 5;
+			public void run (){
+				if (count > 0){
+					toolkit.beep();
+					count--;
+				} else {
+					toolkit.beep();
+					System.out.println("Game is restarting");
+					player1lives = 5;
+					player2lives = 5;
+					player3lives = 5;
+					player4lives = 5;
+					timer.cancel();
+				}
+			}
+		}
+	}
+	
 }

@@ -268,10 +268,12 @@ public class DrawPanel extends JPanel {
 		g2.fillRect(0, 0, getSize().width, getSize().height);
 		g2.setColor(Color.black);
 
-
+		ships[0].speed = 0;
 
 		g2.finalize();
 		if(start == false){
+			ships[0].speed=0;
+			
 			ballXPos = level.screenWidth/2;
 			ballYPos = level.screenHeight/2;
 
@@ -353,10 +355,7 @@ public class DrawPanel extends JPanel {
 		}
 		
 		
-		ships[0].move();
-		//ships[0].paint(g2);
-		g2.drawImage(boll, ballXPos, ballYPos, ball.getSize(),ball.getSize(), this);
-
+		
 
 		try {
 			// thread to sleep for 1000 milliseconds
@@ -378,7 +377,7 @@ public class DrawPanel extends JPanel {
 			g.drawString("Player 1 connected", 400, 200);
 		}
 
-		if(users.size() == 2){
+		if(users.size() >= 2){
 			g.drawString("Player 2 connected", 400, 200);
 			initiateTimer(); // här försöker vi starta timern när 2 spelare har anslutit till spelet
 		}
@@ -395,12 +394,17 @@ public class DrawPanel extends JPanel {
 		super.repaint();
 
 		if(users.size()>=2){
+			//Background
+			g2.drawImage(img1, 0, 0, this); 
 
 			if(start == true){ // när timern kört klart och gjort om start till true, ska skärmen ändras till spelplanen och spelet ska laddas
-				//Background
-				
-				g2.drawImage(img1, 0, 0, this); 
 
+				ships[0].move();
+				//ships[0].paint(g2);
+				g2.drawImage(boll, ballXPos, ballYPos, ball.getSize(),ball.getSize(), this);
+				
+				ships[0].speed = 2;
+				
 				ballXPos = ships[0].xPos;
 				ballYPos = ships[0].yPos;
 
@@ -520,11 +524,37 @@ public class DrawPanel extends JPanel {
 //								String livesLeftPlayerFour = String.valueOf(ships[0].player4lives);
 //								g.drawString(livesLeftPlayerFour,  807,  580); // this prints out how many lives player four has left
 
+							if (ships[0].player1Win() == true){
+								String player1Wins = users.get(0).getId() + " wins!";
+								g.drawString(player1Wins, 400, 200);
+								System.out.println(users.get(0).getId() + " wins! Restart timer about to start");
+								ships[0].new RestartTimer();
+								System.out.println("Restart timer started");
+							}
+						    if (ships[0].player2Win() == true){
+								String player2Wins = users.get(1).getId() + " wins!";
+								g.drawString(player2Wins, 400, 200);
+								System.out.println(users.get(1).getId() + " wins! Restart timer about to start");
+								ships[0].new RestartTimer();
+								System.out.println("Restart timer started");
+							}
+							if (ships[0].player3Win() == true){
+								String player3Wins = users.get(2).getId() + " wins!";
+								g.drawString(player3Wins, 400, 200);
+								System.out.println(users.get(2).getId() + " wins! Restart timer about to start");
+								ships[0].new RestartTimer();
+								System.out.println("Restart timer started");
+							}
+							if (ships[0].player4Win() == true){
+								String player4Wins = users.get(3).getId() + " wins!";
+								g.drawString(player4Wins, 400, 200);
+								System.out.println(users.get(3).getId() + " wins! Restart timer about to start");
+								ships[0].new RestartTimer();
+								System.out.println("Restart timer started");
+							}
 							
 						}		
 					}
-			
-
 				}
 			}
 		}
@@ -557,30 +587,6 @@ public class DrawPanel extends JPanel {
 						}
 					}
 				
-				}
-			}
-
-			public class LivesTimer {
-				Toolkit toolkit;
-				Timer timer = new Timer();
-
-				public LivesTimer(){
-					toolkit = Toolkit.getDefaultToolkit();
-					timer = new Timer();
-					timer.schedule(new GameOverTimer(), 0, 1* 1000);
-				}
-
-				class GameOverTimer extends TimerTask {
-					int count = 5;
-					public void run(){
-						if (count > 0){
-							toolkit.beep();
-							count--;
-						} else {
-							toolkit.beep();
-							timer.cancel();
-						}
-					}
 				}
 			}
 
