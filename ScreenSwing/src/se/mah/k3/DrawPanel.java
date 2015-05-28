@@ -234,6 +234,7 @@ public class DrawPanel extends JPanel {
 		}
 	}
 
+
 	//Called when the screen needs a repaint.
 	@Override
 	public void paint(Graphics g) {
@@ -268,11 +269,11 @@ public class DrawPanel extends JPanel {
 		g2.fillRect(0, 0, getSize().width, getSize().height);
 		g2.setColor(Color.black);
 
-		ships[0].speed = 0;
+//		ships[0].speed = 0;
 
 		g2.finalize();
 		if(start == false){
-			ships[0].speed=0;
+//			ships[0].speed=0;
 			
 			ballXPos = level.screenWidth/2;
 			ballYPos = level.screenHeight/2;
@@ -307,7 +308,6 @@ public class DrawPanel extends JPanel {
 		g2.setColor(c);
 		//	g2.drawRect (level.relX, level.relY, level.screenWidthForRect, level.screenHeightHeightForRect);	
 
-		Image boll = Toolkit.getDefaultToolkit().getImage("src/images/boll.png");
 
 		//CORNERS
 		//TOP LEFT CORNER
@@ -354,8 +354,6 @@ public class DrawPanel extends JPanel {
 			ships[0].bottomRightCornerBounce();
 		}
 		
-		
-		
 
 		try {
 			// thread to sleep for 1000 milliseconds
@@ -401,17 +399,18 @@ public class DrawPanel extends JPanel {
 
 				ships[0].move();
 				//ships[0].paint(g2);
+				Image boll = Toolkit.getDefaultToolkit().getImage("src/images/boll.png");
 				g2.drawImage(boll, ballXPos, ballYPos, ball.getSize(),ball.getSize(), this);
 				
-				ships[0].speed = 2;
+//				ships[0].speed = 2;
 				
 				ballXPos = ships[0].xPos;
 				ballYPos = ships[0].yPos;
 
 				//ball
 				//g2.fillOval(ballXPos, ballYPos, ball.getSize(), ball.getSize());
-				boll = Toolkit.getDefaultToolkit().getImage("src/images/boll.png");
-				g2.drawImage(boll, ballXPos, ballYPos, ball.getSize(),ball.getSize(), this);
+//				boll = Toolkit.getDefaultToolkit().getImage("src/images/boll.png");
+//				g2.drawImage(boll, ballXPos, ballYPos, ball.getSize(),ball.getSize(), this);
 
 				//	    	System.out.println("Game started");
 
@@ -522,37 +521,42 @@ public class DrawPanel extends JPanel {
 //								//System.out.println(player4name);
 //								g.drawString(player4name, 807, 550);
 //								String livesLeftPlayerFour = String.valueOf(ships[0].player4lives);
-//								g.drawString(livesLeftPlayerFour,  807,  580); // this prints out how many lives player four has left
-
+//								g.drawString(livesLeftPlayerFour,  807,  580); // this prints out how many lives player four has left								
+								
+								
+								// these if statements decide which player wins
 							if (ships[0].player1Win() == true){
 								String player1Wins = users.get(0).getId() + " wins!";
-								g.drawString(player1Wins, 400, 200);
-								System.out.println(users.get(0).getId() + " wins! Restart timer about to start");
-								ships[0].new RestartTimer();
-								System.out.println("Restart timer started");
+								g.drawString(player1Wins, 450, 200);
+								ships[0].speed = 0;
+								ships[0].position.x = 450;
+								ships[0].position.y = 300;
+								new RestartTimer();
 							}
 						    if (ships[0].player2Win() == true){
 								String player2Wins = users.get(1).getId() + " wins!";
-								g.drawString(player2Wins, 400, 200);
-								System.out.println(users.get(1).getId() + " wins! Restart timer about to start");
-								ships[0].new RestartTimer();
-								System.out.println("Restart timer started");
+								g.drawString(player2Wins, 450, 200);
+								ships[0].speed = 0;
+								ships[0].position.x = 450;
+								ships[0].position.y = 300;
+								new RestartTimer();
 							}
-							if (ships[0].player3Win() == true){
-								String player3Wins = users.get(2).getId() + " wins!";
-								g.drawString(player3Wins, 400, 200);
-								System.out.println(users.get(2).getId() + " wins! Restart timer about to start");
-								ships[0].new RestartTimer();
-								System.out.println("Restart timer started");
-							}
-							if (ships[0].player4Win() == true){
-								String player4Wins = users.get(3).getId() + " wins!";
-								g.drawString(player4Wins, 400, 200);
-								System.out.println(users.get(3).getId() + " wins! Restart timer about to start");
-								ships[0].new RestartTimer();
-								System.out.println("Restart timer started");
-							}
-							
+//							if (ships[0].player3Win() == true){
+//								String player3Wins = users.get(2).getId() + " wins!";
+//								g.drawString(player3Wins, 450, 200);
+//			 					ships[0].speed = 0;
+//						    	ships[0].position.x = 450;
+//						    	ships[0].position.y = 300;	
+//						    	new RestartTimer();
+//							}
+//							if (ships[0].player4Win() == true){
+//								String player4Wins = users.get(3).getId() + " wins!";
+//								g.drawString(player4Wins, 450, 200);
+//								ships[0].speed = 0;
+//						    	ships[0].position.x = 450;
+//						    	ships[0].position.y = 300;	
+//						    	new RestartTimer();
+//							}						
 						}		
 					}
 				}
@@ -576,11 +580,11 @@ public class DrawPanel extends JPanel {
 					int count = 5;
 					public void run() {
 						if (count > 0){
-							toolkit.beep();
+							//toolkit.beep();
 							//	System.out.println(count + " seconds left");
 							count--;
 						} else {
-							toolkit.beep();
+							//toolkit.beep();
 							//		System.out.println(count + " seconds left, Game is starting!");
 							start = true; // här bestämmer vi att vår start boolean ska bli true när timern körts klart
 							timer.cancel(); //Stops the AWT thread (and everything else)
@@ -589,6 +593,36 @@ public class DrawPanel extends JPanel {
 				
 				}
 			}
+			public class RestartTimer {
+				Toolkit toolkit;
+				Timer timer = new Timer();
+				
+				public RestartTimer(){
+					toolkit = Toolkit.getDefaultToolkit();
+					timer = new Timer();
+					timer.schedule(new GameTimer(), 0, 1*1000);
+				}
+				
+				class GameTimer extends TimerTask{
+					int count = 5;
+					public void run (){
+						if (count > 0){
+						//	toolkit.beep();
+							count--;
+						} else {
+						//	toolkit.beep();
+//							System.out.println("Game is restarting");
+							ships[0].player1lives = 5;
+							ships[0].player2lives = 5;
+							ships[0].player3lives = 5;
+							ships[0].player4lives = 5;
+							ships[0].speed = 2;
+							timer.cancel();
+						}
+					}
+				}
+			}			
+
 
 		}
 	

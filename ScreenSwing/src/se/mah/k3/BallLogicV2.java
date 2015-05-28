@@ -8,7 +8,6 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
 public class BallLogicV2 extends Polygon {
 	public static int speed = 0;
 	Ball ball = new Ball();
@@ -97,7 +96,7 @@ public class BallLogicV2 extends Polygon {
 	//	System.out.println(" befo= " + rotation);
 		rotation = normalizeAngle( (int)rotation);
 	//	System.out.println(" afteh= " + rotation);
-		int speed = 2;
+		speed = 2;
 		
 
 
@@ -121,7 +120,6 @@ public class BallLogicV2 extends Polygon {
 				rotate();
 				player2lives--;
 				ballRespawn();
-				System.out.println("player 2 has " + player2lives + " lives left");
 			
 				//Left Wall	
 			} else if (position.x < level.relX) {
@@ -132,10 +130,6 @@ public class BallLogicV2 extends Polygon {
 		//		System.out.println("after = " + rotation);
 				player1lives--;
 				ballRespawn();
-				System.out.println("player 1 has " + player1lives + " lives left");
-
-
-				
 			}
 			
 			// Bottom Wall
@@ -145,6 +139,7 @@ public class BallLogicV2 extends Polygon {
 				rotateY();
 		//		System.out.println("after = " + rotation);
 		//		player4lives--;
+		//		ballRespawn();
 
 
 			} 
@@ -155,6 +150,7 @@ public class BallLogicV2 extends Polygon {
 				rotateY();
 	//			System.out.println("after = " + rotation);
 		//		player3lives--;
+		//		ballRespawn();
 
 
 			}
@@ -310,18 +306,19 @@ public class BallLogicV2 extends Polygon {
 	public int getYPos(){
 		return yPos;
 	}
-
+	
 	public void ballRespawn (){
-		position.x = 400;
-		position.y = 260;
 		speed = 0;
+		position.x = 450;
+		position.y = 300;
+		rotate();
 		System.out.println("respawntimer about to start");
-		new LivesTimer();
+		new LivesTimer(2);
 		System.out.println("respawntimer started");
 	}
 	
 	public boolean player1Win (){
-		if (player1lives > 0 && player2lives == 0 && player3lives == 0 && player4lives == 0){
+		if (player1lives > 0 && player2lives == 0 /*&& player3lives == 0 && player4lives == 0*/){
 			return true;
 		} else {
 			return false;
@@ -329,15 +326,15 @@ public class BallLogicV2 extends Polygon {
 	}
 	
 	public boolean player2Win (){
-		if (player2lives > 0 && player1lives == 0 && player3lives == 0 && player4lives == 0){
+		if (player2lives > 0 && player1lives == 0 /*&& player3lives == 0 && player4lives == 0*/){
 			return true;
 		} else {
 			return false;
 		}
 	}
 	
-	public boolean player3Win (){
-		if (player3lives > 0 && player1lives == 0 && player2lives == 0 && player4lives == 0){
+/*	public boolean player3Win (){
+		if (player3lives > 0 && player1lives == 0 /*&& player2lives == 0 && player4lives == 0){
 			return true;
 		} else {
 			return false;
@@ -345,63 +342,34 @@ public class BallLogicV2 extends Polygon {
 	}
 	
 	public boolean player4Win (){
-		if (player4lives > 0 && player1lives == 0 && player2lives == 0 && player3lives == 0){
+		if (player4lives > 0 && player1lives == 0 /*&& player2lives == 0 && player3lives == 0){
 			return true;
 		} else {
 			return false;
 		}
 	}
-
+*/
 	
 	public class LivesTimer {
 		Toolkit toolkit;
 		Timer timer = new Timer();
 
-		public LivesTimer(){
+		public LivesTimer(int seconds){
 			toolkit = Toolkit.getDefaultToolkit();
 			timer = new Timer();
-			timer.schedule(new RespawnTimer(), 0, 1* 1000);
+			timer.schedule(new RespawnTimer(), seconds * 1000);
 		}
 
 		class RespawnTimer extends TimerTask {
 			int count = 2;
 			public void run(){
 				if (count > 0){
-					toolkit.beep();
+				//	toolkit.beep();
 					count--;
 				} else {
-					toolkit.beep();
+				//	toolkit.beep();
 					speed = 2;
 					System.out.println("respawntimer over");
-					timer.cancel();
-				}
-			}
-		}
-	}
-
-	public class RestartTimer {
-		Toolkit toolkit;
-		Timer timer = new Timer();
-		
-		public RestartTimer(){
-			toolkit = Toolkit.getDefaultToolkit();
-			timer = new Timer();
-			timer.schedule(new GameTimer(),  0, 1*1000);
-		}
-		
-		class GameTimer extends TimerTask{
-			int count = 5;
-			public void run (){
-				if (count > 0){
-					toolkit.beep();
-					count--;
-				} else {
-					toolkit.beep();
-					System.out.println("Game is restarting");
-					player1lives = 5;
-					player2lives = 5;
-					player3lives = 5;
-					player4lives = 5;
 					timer.cancel();
 				}
 			}
