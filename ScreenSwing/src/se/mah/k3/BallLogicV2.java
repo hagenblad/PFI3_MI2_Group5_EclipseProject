@@ -188,7 +188,7 @@ public class BallLogicV2 extends Polygon {
 			xPos = (int)position.x;
 			yPos = (int)position.y;
 	}
-	
+		//(level.relX+1, y - (playerPingSize/2), user.userWidth, playerPingSize);
 		public void paddleOneHit(int x, int y, int width, int height){
 			
 		
@@ -199,6 +199,9 @@ public class BallLogicV2 extends Polygon {
 				if( position.y >= y -5 && position.y <= y + height+5){
 					
 	//				System.out.println("Nice YYY Pos");
+
+					System.out.println("player 1 bounce");
+
 					position.x = position.x +10;
 					rotate();
 					/*int xSpeed = bally.getBallXSpeed(); 
@@ -211,7 +214,7 @@ public class BallLogicV2 extends Polygon {
 				}
 			}
 		}
-		
+		//(level.screenWidth-11, y - (playerPingSize/2), user.userWidth, playerPingSize);
 		public void paddleTwoHit(int x, int y, int width, int height){
 			
 			
@@ -221,8 +224,9 @@ public class BallLogicV2 extends Polygon {
 				//	System.out.println("Nice X pos");	
 				
 				if( position.y >= y -5 && position.y <= y + height+5){
-					
 		//			System.out.println("Nice YYY Pos");
+					System.out.println("player 2 bounce");
+
 					position.x = position.x -10;
 					rotate();
 					/*int xSpeed = bally.getBallXSpeed(); 
@@ -236,14 +240,20 @@ public class BallLogicV2 extends Polygon {
 			}
 		}
 		
+		//(level.relY-11, level.screenWidth-11 ,playerPingSize, user.userWidth );
 		public void paddleThreeHit(int x, int y, int width, int height){
 			
 			
-			if(position.x <= x +width+5){
+				if(position.y <= x+5){
 				
 				//	System.out.println("Nice X pos");	
 				
-				if( position.y >= y -5 && position.y <= y + height+5){
+				if( position.x >= y -5 && position.x <= x + width+5){
+					
+					System.out.println("player three bounce");
+					position.y = position.y -10;
+					rotateY();
+
 					
 			//		System.out.println("Nice YYY Pos");
 					position.x = position.x +10;
@@ -255,19 +265,25 @@ public class BallLogicV2 extends Polygon {
 					int tempx = bally.getXPos();
 					bally.setXPos(tempx += xSpeed);
 				*/
+
 				}
 			}
 		}
 		
-		public void paddleFourHit(int x, int y, int width, int height){
+		//ships[0].paddleFourHit(y - (playerPingSize/2),level.relX+10, playerPingSize,user.userWidth);
+		public void paddleFourHit(int x, int y, int width, int heigth){
 			
 			
-			if(position.x <= x +width+5){
+			if(position.y >= y-5){
 				
 				//	System.out.println("Nice X pos");	
 				
-				if( position.y >= y -5 && position.y <= y + height+5){
+				if( position.x >= x -5 && position.x <= x + width+5){
 					
+					System.out.println("player four bounce");
+					position.y = position.y +10;
+					rotateY();
+
 		//			System.out.println("Nice YYY Pos");
 					position.x = position.x +10;
 					rotate();
@@ -333,8 +349,8 @@ public class BallLogicV2 extends Polygon {
 		}
 	}
 	
-/*	public boolean player3Win (){
-		if (player3lives > 0 && player1lives == 0 /*&& player2lives == 0 && player4lives == 0){
+	public boolean player3Win (){
+		if (player3lives > 0 && player1lives == 0 && player2lives == 0 && player4lives == 0){
 			return true;
 		} else {
 			return false;
@@ -342,13 +358,13 @@ public class BallLogicV2 extends Polygon {
 	}
 	
 	public boolean player4Win (){
-		if (player4lives > 0 && player1lives == 0 /*&& player2lives == 0 && player3lives == 0){
+		if (player4lives > 0 && player1lives == 0 && player2lives == 0 && player3lives == 0){
 			return true;
 		} else {
 			return false;
 		}
 	}
-*/
+
 	
 	public class LivesTimer {
 		Toolkit toolkit;
