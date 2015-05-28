@@ -122,12 +122,13 @@ public class DrawPanel extends JPanel {
 			//We got a new user
 			@Override
 			public void onChildAdded(DataSnapshot arg0, String arg1) {
+				listCount = users.size();
 				if (arg0.hasChildren()){
 					//System.out.println("ADD user with Key: "+arg1+ arg0.getKey());
 					Random r = new Random();
 					int x = r.nextInt(getSize().width);
 					int y = r.nextInt(getSize().height); 
-					listCount = users.size();
+					
 					System.out.println("number of players: " + listCount); //räknar antal spelar och skriver ut i konsollen. (börjar på 0)
 
 					if (listCount ==0){
@@ -179,6 +180,12 @@ public class DrawPanel extends JPanel {
 							user.setColor(yellow);
 							myFirebaseRef.child(arg0.getKey()).child("playercolor").setValue("#e5d672");
 				
+						}
+					}
+					//Check if too many players
+					if(listCount >3){
+						for(int i = users.size(); i>4; i--){
+						users.remove(i);
 						}
 					}
 				}
@@ -363,7 +370,7 @@ public class DrawPanel extends JPanel {
 			if(users.size()==1){
 				Thread.sleep(3);
 			}else if(users.size()>1){
-				Thread.sleep(6);
+				Thread.sleep(4);
 
 			}
 		} catch (Exception e) {
@@ -376,7 +383,7 @@ public class DrawPanel extends JPanel {
 		Color gray = Color.decode("#2b2b2b");
 		g.setColor(gray);
 		
-		if(users.size() >= 1){
+		if(users.size() == 1){
 			String player1name = users.get(0).getId();
 			g.drawString(player1name + " connected", 425, 100);
 		}
@@ -400,7 +407,7 @@ public class DrawPanel extends JPanel {
 
 		super.repaint();
 
-		if(users.size()==4){
+		if(users.size()>=2){
 			//Background
 			g2.drawImage(img1, 0, 0, this); 
 
@@ -451,7 +458,7 @@ public class DrawPanel extends JPanel {
 							
 							//Check if too many players
 							if(users.size()>4){
-								for(int i = users.size(); i>=4; i--){
+								for(int i = users.size(); i>4; i--){
 								users.remove(i);
 								}
 							}
@@ -470,8 +477,7 @@ public class DrawPanel extends JPanel {
 							
 							if(users.indexOf(user) == 0){
 								//	g2.fillRect(level.relX+1, y - (playerPingSize/2), user.userWidth, playerPingSize);
-								ships[0].paddleOneHit(level.relX+1, y - (playerPingSize/2), user.userWidth, playerPingSize);
-								
+
 								// draw out player 1 info
 								Color blue = users.get(0).getColor();
 								g.setColor(blue);
@@ -484,6 +490,7 @@ public class DrawPanel extends JPanel {
 								String livesLeftPlayerOne = String.valueOf(ships[0].player1lives);
 								g.drawString(livesLeftPlayerOne + " Lives left ", 20, 580); // this prints out how many lives player one has left
 							
+								ships[0].paddleOneHit(level.relX+1, y - (playerPingSize/2), user.userWidth, playerPingSize);
 								
 								g2.drawImage(player1, level.relX+1, y - (playerPingSize/2), user.userWidth, playerPingSize, this);
 
@@ -536,8 +543,12 @@ public class DrawPanel extends JPanel {
 								//System.out.println(player4name);
 								g.drawString(player4name, 807, 550);
 								String livesLeftPlayerFour = String.valueOf(ships[0].player4lives);
-
+								
+								ships[0].paddleFourHit(level.screenHeight-11, level.screenWidth-11 ,playerPingSize, user.userWidth );
+								
 								g.drawString(livesLeftPlayerFour,  807,  580); // this prints out how many lives player four has left								
+								g2.drawImage(player4, y - (playerPingSize/2) , level.screenHeight-11 ,playerPingSize, user.userWidth,this);
+								
 								}
 								
 								// these if statements decide which player wins
