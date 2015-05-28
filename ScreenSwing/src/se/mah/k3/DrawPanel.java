@@ -150,10 +150,10 @@ public class DrawPanel extends JPanel {
 							users.add(user);
 							user.userHeight = 100;
 							user.userWidth = 10;
-							Color red = Color.decode("#d35959");
-							user.setColor(red);
+							Color green = Color.decode("#8cba66");
+							user.setColor(green);
 							System.out.println("player 2 in");
-							myFirebaseRef.child(arg0.getKey()).child("playercolor").setValue("#d35959");
+							myFirebaseRef.child(arg0.getKey()).child("playercolor").setValue("#8cba66");
 
 						}
 					}	
@@ -164,8 +164,10 @@ public class DrawPanel extends JPanel {
 //							users.add(user);
 //							user.userHeight = 100;
 //							user.userWidth = 10;
-//							user.setColor(Color.BLUE);
+//							Color red = Color.decode("#d35959");						
+//							user.setColor(red);
 //							System.out.println("player 3 in");
+//							myFirebaseRef.child(arg0.getKey()).child("playercolor").setValue("#d35959");
 //						}
 //					}
 //					if (listCount == 3){
@@ -174,8 +176,10 @@ public class DrawPanel extends JPanel {
 //							users.add(user);
 //							user.userHeight = 100;
 //							user.userWidth = 10;
-//							user.setColor(Color.GREEN);
+//							Color yellow = Color.decode("#e5d672");
+//							user.setColor(yellow);
 //							System.out.println("player 4 in");
+//							myFirebaseRef.child(arg0.getKey()).child("playercolor").setValue("#e5d672");
 //						}
 //					}
 				}
@@ -488,8 +492,8 @@ public class DrawPanel extends JPanel {
 								g.drawString(livesLeftPlayerOne + " Lives left ", 20, 100); // this prints out how many lives player one has left
 
 								// draw out player 2 info
-								Color red = users.get(1).getColor();
-								g.setColor(red);
+								Color green = users.get(1).getColor();
+								g.setColor(green);
 								String player2Delay = String.valueOf(users.get(1).getDelay());
 								g.drawString("PING = " + player2Delay, 807, 610);
 								String player2name = users.get(1).getId();
@@ -501,8 +505,8 @@ public class DrawPanel extends JPanel {
 
 
 //								// draw out player 3 info
-//								Color green = users.get(2).getColor();
-//								g.setColor(green);
+//								Color red = users.get(2).getColor();
+//								g.setColor(red);
 //								String player3Delay = String.valueOf(users.get(2).getDelay());
 //								g.drawString("PING = " + player3Delay, 807, 130);
 //								String player3name = users.get(2).getId();
