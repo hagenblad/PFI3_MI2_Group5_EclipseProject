@@ -91,6 +91,9 @@ public class DrawPanel extends JPanel {
 			@Override
 			public void onChildMoved(DataSnapshot arg0, String arg1) {}
 
+			
+			
+		
 			//A user changed some value so update
 			@Override
 			public void onChildChanged(DataSnapshot arg0, String arg1) {
@@ -111,6 +114,7 @@ public class DrawPanel extends JPanel {
 					if (dataSnapshot.getKey().equals("RoundTripTo")){
 						myFirebaseRef.child(arg0.getKey()).child("RoundTripBack").setValue((long)dataSnapshot.getValue()+1);
 					}
+					
 					// reach the ping variable in firebase
 					if (dataSnapshot.getKey().equals("ping")){
 						users.get(place).setDelay((long)dataSnapshot.getValue());
@@ -130,7 +134,7 @@ public class DrawPanel extends JPanel {
 					int x = r.nextInt(getSize().width);
 					int y = r.nextInt(getSize().height); 
 					listCount = users.size();
-					System.out.println("number of players: " + listCount); //räknar antal spelar och skriver ut i konsollen. (börjar på 0)
+					System.out.println("number of players: " + users.size()); //räknar antal spelar och skriver ut i konsollen. (börjar på 0)
 
 					if (listCount ==0){
 						User user = new User(arg0.getKey(), level.relX+11, level.relX+11, ships[0].player1lives); // create player 1
@@ -167,6 +171,7 @@ public class DrawPanel extends JPanel {
 							user.userHeight = 100;
 							user.userWidth = 10;
 							Color green= Color.decode("#8cba66");
+							System.out.println("player 3 in");
 							user.setColor(green);
 							myFirebaseRef.child(arg0.getKey()).child("playercolor").setValue("#8cba66");
 						}
@@ -180,7 +185,7 @@ public class DrawPanel extends JPanel {
 							Color yellow= Color.decode("#e5d672");
 							user.setColor(yellow);
 							myFirebaseRef.child(arg0.getKey()).child("playercolor").setValue("#e5d672");
-				
+							System.out.println("player 4 in");
 						}
 					}
 				}
@@ -204,22 +209,22 @@ public class DrawPanel extends JPanel {
 
 	
 	
-	// Sets the boundaries for the paddles
-	public void setPlayerBoundsY(User user){
-
-		if(paddlePosY < 100){
-			paddlePosY = 100;
-		} else {
-			paddlePosY = y - playerPingSize;
-		}
-
-		if(y > level.screenHeight){
-			y = level.screenHeight;
-		} else{
-			y = (int)(user.getyRel()*getSize().height);
-		}
-	}
-	
+//	// Sets the boundaries for the paddles
+//	public void setPlayerBoundsY(User user){
+//
+//		if(paddlePosY < 100){
+//			paddlePosY = 100;
+//		} else {
+//			paddlePosY = y - playerPingSize;
+//		}
+//
+//		if(y > level.screenHeight){
+//			y = level.screenHeight;
+//		} else{
+//			y = (int)(user.getyRel()*getSize().height);
+//		}
+//	}
+//	
 
 
 
@@ -449,7 +454,7 @@ public class DrawPanel extends JPanel {
 
 						// sets appropriate height to players based on ping
 						setPlayerHeight(user);
-						setPlayerBoundsY(user);
+//						setPlayerBoundsY(user);
 						
 						
 						
@@ -485,6 +490,8 @@ public class DrawPanel extends JPanel {
 								ships[0].paddleOneHit(level.relX+1, y - (playerPingSize/2), user.userWidth, playerPingSize);
 								g2.drawImage(player1, level.relX+1, y - (playerPingSize/2), user.userWidth, playerPingSize, this);
 
+								
+								System.out.println("index of player one position = " + users.indexOf(user));
 								// draw out player 1 info
 								Color blue = users.get(0).getColor();
 								g.setColor(blue);
@@ -503,6 +510,8 @@ public class DrawPanel extends JPanel {
 								ships[0].paddleTwoHit(level.screenWidth-11, y - (playerPingSize/2), user.userWidth, playerPingSize);
 								g2.drawImage(player2, level.screenWidth-11, y - (playerPingSize/2), user.userWidth, playerPingSize, this);
 								// draw out player 2 info
+								
+								System.out.println("index of player TWO position = " + users.indexOf(user));
 								Color red = users.get(1).getColor();
 								g.setColor(red);
 								String player2Delay = String.valueOf(users.get(1).getDelay());
@@ -521,9 +530,11 @@ public class DrawPanel extends JPanel {
 
 							else if (users.indexOf(user) == 2){
 								//g2.fillRect(1000, user.getyPos(), user.userHeight, user.userWidth);
-								ships[0].paddleThreeHit (x-(playerPingSize/2), level.relY+1 , playerPingSize ,user.userWidth);
-								g2.drawImage(player3, x-(playerPingSize/2), level.relY+1 ,playerPingSize, user.userWidth ,this);
+								ships[0].paddleThreeHit (y-(playerPingSize/2), level.relY+1 , playerPingSize ,user.userWidth);
+								g2.drawImage(player3, y-(playerPingSize/2), level.relY+1 ,playerPingSize, user.userWidth ,this);
 								
+								
+								System.out.println("index of player THRREE position = " + users.indexOf(user));
 								// draw out player 3 info
 								Color green = users.get(2).getColor();
 								g.setColor(green);
@@ -539,10 +550,10 @@ public class DrawPanel extends JPanel {
 								}
 							else if (users.indexOf(user) == 3){
 								//g2.fillRect(1000, user.getyPos(), user.userHeight, user.userWidth);
-								ships[0].paddleFourHit (x-(playerPingSize/2),level.screenHeight-15 , playerPingSize ,user.userWidth);
-								g2.drawImage(player4,x-(playerPingSize/2), level.screenHeight-15 , playerPingSize, user.userWidth ,this);
+								ships[0].paddleFourHit (y-(playerPingSize/2),level.screenHeight-15 , playerPingSize ,user.userWidth);
+								g2.drawImage(player4,y-(playerPingSize/2), level.screenHeight-15 , playerPingSize, user.userWidth ,this);
 								
-								
+								System.out.println("index of player FOUR position = " + users.indexOf(user));
 								// draw out player 4 info
 								Color yellow = users.get(3).getColor();
 								g.setColor(yellow);
