@@ -3,20 +3,6 @@ package se.mah.k3;
 import java.awt.Color;
 import java.awt.Graphics;
 
-/*
-CLASS: Polygon
-DESCRIPTION: A polygon is a sequence of points in space defined by a set of
-             such points, an offset, and a rotation. The offset is the
-             distance between the origin and the center of the shape.
-             The rotation is measured in degrees, 0-360.
-USAGE: You are intended to instantiate this class with a set of points that
-       forever defines its shape, and then modify it by repositioning and
-       rotating that shape. In defining the shape, the relative positions
-       of the points you provide are used, in other words: {(0,1),(1,1),(1,0)}
-       is the same shape as {(9,10),(10,10),(10,9)}.
-NOTE: You don't need to worry about the "magic math" details.
-Original code by Dan Leyzberg and Art Simon
-*/
 
 class Polygon {
   private Point[] shape;   // An array of points.
