@@ -17,6 +17,9 @@ import java.awt.geom.Area;
 
 import javax.swing.JPanel;
 
+import java.io.File;
+import java.io.FileInputStream;
+
 import se.mah.k3.Level.GameState;
 import se.mah.k3.TimerClass.RemindTask;
 
@@ -56,6 +59,8 @@ public class DrawPanel extends JPanel {
 	int playerPing;
 	int playerDelayint;
 	int playerPingSize;
+	
+	public Font ExoExtraLightSize;
 
 	public Polygon polyTRC;
 	public Polygon polyTLC;
@@ -74,10 +79,16 @@ public class DrawPanel extends JPanel {
 	//A vector is like an ArrayList a little bit slower but Thread-safe. This means that it can handle concurrent changes. 
 	private Vector<User> users= new Vector<User>();
 	//	private Vector<User> horizontalUsers = new Vector<User>();
-	Font font = new Font("Verdana", Font.PLAIN, 20); //Har du Exo installerat, byt "Verdana" till "Exo"..
+	//Font font = new Font("Verdana", Font.PLAIN, 20); 
 
 	public DrawPanel() {
 
+		try {
+			loadFont();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		myFirebaseRef = new Firebase("https://pingispong.firebaseio.com/");
 		myFirebaseRef.removeValue(); //Cleans out everything
@@ -193,19 +204,24 @@ public class DrawPanel extends JPanel {
 
 			@Override
 			public void onCancelled(FirebaseError arg0) {
-
 			}
 		});
-
 	}
-
-	// här är vår metod för att starta timern
-	public void initiateTimer(){
-		//		System.out.println("About to start game countdown.");
-		new TimerClass();
-		//	    System.out.println("Countdown started, game will start in 5 seconds.");
-		//		}
-	}
+	
+	public void loadFont() throws Exception{
+			File f = new File("lib/ExoExtraLight.ttf");
+			FileInputStream in = new FileInputStream(f);
+			Font ExoExtraLight = Font.createFont(Font.TRUETYPE_FONT, in);
+			ExoExtraLightSize = ExoExtraLight.deriveFont(25f);
+		}
+	
+		// här är vår metod för att starta timern
+		public void initiateTimer(){
+			//		System.out.println("About to start game countdown.");
+			new TimerClass();
+			//	    System.out.println("Countdown started, game will start in 5 seconds.");
+			//		}
+		}
 
 	public void setPlayerBounds(User user){
 
@@ -271,13 +287,17 @@ public class DrawPanel extends JPanel {
 		int ballPolysizeY[] = {0 + ballYPos, 10 + ballYPos,10 + ballYPos,0 + ballYPos};
 
 		polyBally = new Polygon(ballPolysizeX,ballPolysizeY,ballNpoints);
-
+		
 		//super.paint(g);
 		Graphics2D g2= (Graphics2D) g;
-		g2.setFont(font);
+		g2.setFont(ExoExtraLightSize);
 		g2.setColor(Color.LIGHT_GRAY);
 		g2.fillRect(0, 0, getSize().width, getSize().height);
 		g2.setColor(Color.black);
+		
+
+		g2.setFont(ExoExtraLightSize);
+		g.setFont(ExoExtraLightSize);
 
 //		ships[0].speed = 0;
 
@@ -296,7 +316,7 @@ public class DrawPanel extends JPanel {
 			g2.drawImage(imgStart, 0, 0, this);
 			Color gray = Color.decode("#2b2b2b");
 			g.setColor(gray);
-			g.drawString("The game will start when four players connects", level.screenWidth/2-120, level.screenHeight/2 + 200);
+			g.drawString("The game will start when four players connects", level.screenWidth/2-160, level.screenHeight/2 + 200);
 		}else{
 			//	    	ballXPos = ball.getXPos();
 			//			ballYPos = ball.getYPos();
@@ -385,23 +405,23 @@ public class DrawPanel extends JPanel {
 		
 		if(users.size() == 1){
 			String player1name = users.get(0).getId();
-			g.drawString(player1name + " connected", 425, 100);
+			g.drawString(player1name + " connected", 400, 100);
 		}
 
 		if(users.size() == 2){
 			String player2name = users.get(1).getId();
-			g.drawString(player2name + " connected", 425, 150);
+			g.drawString(player2name + " connected", 400, 150);
 			initiateTimer(); // här försöker vi starta timern när 2 spelare har anslutit till spelet
 		}
 
 		if(users.size() == 3){
 			String player3name =users.get(2).getId();
-			g.drawString(player3name + " connected", 425, 200);
+			g.drawString(player3name + " connected", 400, 200);
 		}
 
 		if(users.size() == 4){
 			String player4name = users.get(3).getId();
-			g.drawString(player4name + " connected", 425, 250);
+			g.drawString(player4name + " connected", 400, 250);
 		}
 
 
