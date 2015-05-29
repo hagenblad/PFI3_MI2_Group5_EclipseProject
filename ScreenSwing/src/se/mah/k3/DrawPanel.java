@@ -45,7 +45,6 @@ public class DrawPanel extends JPanel {
 
 	int ballXPos = level.screenWidth;
 	int ballYPos = level.screenHeight;
-
 	int listCount;
 
 	int paddlePosY;
@@ -162,10 +161,10 @@ public class DrawPanel extends JPanel {
 							users.add(user);
 							user.userHeight = 100;
 							user.userWidth = 10;
-							Color red = Color.decode("#d35959");
-							user.setColor(red);
+							Color green = Color.decode("#8cba66");
+							user.setColor(green);
 							System.out.println("player 2 in");
-							myFirebaseRef.child(arg0.getKey()).child("playercolor").setValue("#d35959");
+							myFirebaseRef.child(arg0.getKey()).child("playercolor").setValue("#8cba66");
 
 						}
 					}	
@@ -176,9 +175,9 @@ public class DrawPanel extends JPanel {
 							users.add(user);
 							user.userHeight = 100;
 							user.userWidth = 10;
-							Color green= Color.decode("#8cba66");
-							user.setColor(green);
-							myFirebaseRef.child(arg0.getKey()).child("playercolor").setValue("#8cba66");
+							Color red = Color.decode("#d35959");
+							user.setColor(red);
+							myFirebaseRef.child(arg0.getKey()).child("playercolor").setValue("#d35959");
 						}
 					}
 					if (listCount == 3){
@@ -503,12 +502,12 @@ public class DrawPanel extends JPanel {
 								g.setColor(blue);
 								//This prints out the ping to drawpanel
 								String player1Delay = String.valueOf(users.get(0).getDelay());
-								g.drawString("PING = " + player1Delay, 20, 610);
+								g.drawString("PING = " + player1Delay, 20, 130);
 								String player1name = users.get(0).getId();
 								//System.out.println(player1name);
-								g.drawString(player1name, 20, 550);
+								g.drawString(player1name, 20, 70);
 								String livesLeftPlayerOne = String.valueOf(ships[0].player1lives);
-								g.drawString(livesLeftPlayerOne + " Lives left ", 20, 580); // this prints out how many lives player one has left
+								g.drawString(livesLeftPlayerOne + " Lives left ", 20, 100); // this prints out how many lives player one has left
 							
 								ships[0].paddleOneHit(level.relX+1, y - (playerPingSize/2), user.userWidth, playerPingSize);
 								
@@ -517,15 +516,15 @@ public class DrawPanel extends JPanel {
 							}   if (users.indexOf(user)==1 ){
 								
 								// draw out player 2 info
-								Color red = users.get(1).getColor();
-								g.setColor(red);
+								Color green = users.get(1).getColor();
+								g.setColor(green);
 								String player2Delay = String.valueOf(users.get(1).getDelay());
-								g.drawString("PING = " + player2Delay, 807, 130);
+								g.drawString("PING = " + player2Delay, 807, 610);
 								String player2name = users.get(1).getId();
 								//System.out.println(player2name);
-								g.drawString(player2name, 807, 70);
+								g.drawString(player2name, 807, 550);
 								String livesLeftPlayerTwo = String.valueOf(ships[0].player2lives);
-								g.drawString(livesLeftPlayerTwo + " Lives left ", 807, 100); // this prints out how many lives player two has left
+								g.drawString(livesLeftPlayerTwo + " Lives left ", 807, 580); // this prints out how many lives player two has left
 							
 								
 								//		g2.fillRect(level.screenHeight-11, y - (playerPingSize/2), user.userWidth, playerPingSize);
@@ -539,15 +538,15 @@ public class DrawPanel extends JPanel {
 								ships[0].paddleThreeHit(level.relY-11, level.screenWidth-11 ,playerPingSize, user.userWidth );
 								
 								// draw out player 3 info
-								Color green = users.get(2).getColor();
-								g.setColor(green);
+								Color red = users.get(2).getColor();
+								g.setColor(red);
 								String player3Delay = String.valueOf(users.get(2).getDelay());
-								g.drawString("PING = " + player3Delay, 20, 130);
+								g.drawString("PING = " + player3Delay, 807, 130);
 								String player3name = users.get(2).getId();
 								//System.out.println(player3name);
-								g.drawString(player3name, 20, 70);
+								g.drawString(player3name, 807, 70);
 								String livesLeftPlayerThree = String.valueOf(ships[0].player3lives);
-								g.drawString(livesLeftPlayerThree + " Lives left ", 20, 100); // this prints out how many lives player three has left
+								g.drawString(livesLeftPlayerThree + " Lives left ", 807, 100); // this prints out how many lives player three has left
 
 								
 								g2.drawImage(player3, y - (playerPingSize/2) , level.relY+11 ,playerPingSize, user.userWidth,this);
@@ -555,18 +554,19 @@ public class DrawPanel extends JPanel {
 							
 								if (users.indexOf(user) == 3){
 	
+								// draw out player 4 info
 								Color yellow = users.get(3).getColor();
 								g.setColor(yellow);
 								String player4Delay = String.valueOf(users.get(3).getDelay());
-								g.drawString("PING = "+ player4Delay, 807,610);
+								g.drawString("PING = "+ player4Delay, 20,610);
 								String player4name = users.get(3).getId();
 								//System.out.println(player4name);
-								g.drawString(player4name, 807, 550);
+								g.drawString(player4name, 20, 550);
 								String livesLeftPlayerFour = String.valueOf(ships[0].player4lives);
 								
 								ships[0].paddleFourHit(level.screenHeight-11, level.screenWidth-11 ,playerPingSize, user.userWidth );
 								
-								g.drawString(livesLeftPlayerFour,  807,  580); // this prints out how many lives player four has left								
+								g.drawString(livesLeftPlayerFour,  20,  580); // this prints out how many lives player four has left								
 								g2.drawImage(player4, y - (playerPingSize/2) , level.screenHeight-11 ,playerPingSize, user.userWidth,this);
 								
 								}
@@ -678,11 +678,4 @@ public class DrawPanel extends JPanel {
 					}
 				}
 			}			
-
-
 		}
-	
-	
-
-
-
