@@ -96,7 +96,7 @@ public class BallLogicV2 extends Polygon {
 	//	System.out.println(" befo= " + rotation);
 		rotation = normalizeAngle( (int)rotation);
 	//	System.out.println(" afteh= " + rotation);
-		speed = 2;
+		speed = 3;
 		
 
 
@@ -244,18 +244,21 @@ public class BallLogicV2 extends Polygon {
 			}
 		}
 		
-		// (x-(playerPingSize/2), level.relY+10 ,playerPingSize, user.userWidth );
+		// (y-(playerPingSize/2), level.relY+10 ,playerPingSize, user.userWidth );
 		public void paddleThreeHit(int x, int y, int width, int height){
 			
+			//PLAYER ON TOP
 			
 				if(position.y <= y+height+5){
 				
 				//	System.out.println("Nice X pos");	
-				
+				//Check in bounds
 				if( position.x >= x -5 && position.x <= x+width+5){
 					
 					System.out.println("player three bounce");
+					
 					position.y = position.y +10;
+					
 					rotateY();
 
 					
@@ -273,29 +276,21 @@ public class BallLogicV2 extends Polygon {
 			}
 		}
 		
-	//	ships[0].paddleFourHit (y-(playerPingSize/2),level.screenHeight-15 , playerPingSize ,user.userWidth);
+	//	(y-(playerPingSize/2),level.screenHeight-15 , playerPingSize ,user.userWidth);
+		
 		public void paddleFourHit(int x, int y, int width, int height){
 			
 			
-			if(position.y >= y-height-5){
+			if(position.y >= y-5){
 				
 				//	System.out.println("Nice X pos");	
-				
-				if( position.x >= x +5 && position.x <= x - width-5){
-					
+
+				if( position.x >= x -5 && position.x <= x+width+5){
 					System.out.println("player four bounce");
-					position.y = position.y +10;
+					position.y = position.y -10;
 					rotateY();
 
-		//			System.out.println("Nice YYY Pos");
-			
-					/*int xSpeed = bally.getBallXSpeed(); 
-						
-					bally.setBallXSpeed(bounceX(xSpeed));
-					xSpeed = bally.getBallXSpeed();
-					int tempx = bally.getXPos();
-					bally.setXPos(tempx += xSpeed);
-				*/
+
 				}
 			}
 		}
@@ -326,10 +321,12 @@ public class BallLogicV2 extends Polygon {
 	}
 	
 	public void ballRespawn (){
+		Random rand2 = new Random();
 		speed = 0;
 		position.x = 450;
 		position.y = 300;
-		rotate();
+		//rotate();
+		rotation = rand2.nextInt((359 - 0) + 1) -359;
 		System.out.println("respawntimer about to start");
 		new LivesTimer(2);
 		System.out.println("respawntimer started");
