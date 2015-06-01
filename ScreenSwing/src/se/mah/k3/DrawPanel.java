@@ -76,7 +76,7 @@ public class DrawPanel extends JPanel {
 	boolean timerStarted = false;
 	//background image
 	
-	Image img1 = Toolkit.getDefaultToolkit().getImage("src/images/bakgrundis2.jpg");
+	Image img1 = Toolkit.getDefaultToolkit().getImage("src/images/bakgrundur.jpg");
 	
 	//private int player1lives = 5;
 	//private int player2lives = 5;
@@ -364,7 +364,7 @@ public class DrawPanel extends JPanel {
 			Color c = new Color(19,156,234);
 			g2.setColor(c);
 			//g2.fillRect(0,0,1000,700);
-			Image imgStart = Toolkit.getDefaultToolkit().getImage("src/images/Startscreen.jpg");
+			Image imgStart = Toolkit.getDefaultToolkit().getImage("src/images/Startscreen2.jpg");
 
 			g2.drawImage(imgStart, 0, 0, this);
 			Color gray = Color.decode("#2b2b2b");
