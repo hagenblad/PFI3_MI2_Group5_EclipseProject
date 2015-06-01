@@ -96,7 +96,7 @@ public class BallLogicV2 extends Polygon {
 	//	System.out.println(" befo= " + rotation);
 		rotation = normalizeAngle( (int)rotation);
 	//	System.out.println(" afteh= " + rotation);
-		speed = 2;
+		speed = 3;
 		
 
 
@@ -137,10 +137,10 @@ public class BallLogicV2 extends Polygon {
 				position = new Point(position.x, position.y-10);
 	//			System.out.println("before = " + rotation);
 				rotateY();
-		//		System.out.println("after = " + rotation);
-		//		player4lives--;
-		//		ballRespawn();
-
+				player4lives--;
+				ballRespawn();
+				//		System.out.println("after = " + rotation);
+		
 
 			} 
 			
@@ -148,9 +148,10 @@ public class BallLogicV2 extends Polygon {
 			else if (position.y < level.relY){
 				position = new Point(position.x, position.y+10);
 				rotateY();
+				player3lives--;
+				ballRespawn();
 	//			System.out.println("after = " + rotation);
-		//		player3lives--;
-		//		ballRespawn();
+	
 
 
 			}
@@ -204,7 +205,15 @@ public class BallLogicV2 extends Polygon {
 
 					position.x = position.x +10;
 					rotate();
+					
 
+					/*int xSpeed = bally.getBallXSpeed(); 
+						
+					bally.setBallXSpeed(bounceX(xSpeed));
+					xSpeed = bally.getBallXSpeed();
+					int tempx = bally.getXPos();
+					bally.setXPos(tempx += xSpeed);
+				*/
 				}
 			}
 		}
@@ -223,50 +232,69 @@ public class BallLogicV2 extends Polygon {
 
 					position.x = position.x -10;
 					rotate();
+
+					/*int xSpeed = bally.getBallXSpeed(); 
+						
+					bally.setBallXSpeed(bounceX(xSpeed));
+					xSpeed = bally.getBallXSpeed();
+					int tempx = bally.getXPos();
+					bally.setXPos(tempx += xSpeed);
+				*/
 				}
 			}
 		}
 		
-		//(level.relY-11, level.screenWidth-11 ,playerPingSize, user.userWidth );
+		// (y-(playerPingSize/2), level.relY+10 ,playerPingSize, user.userWidth );
 		public void paddleThreeHit(int x, int y, int width, int height){
 				
 			//THE PLAYER ON TOP
 			
-				//SHOULD MEASURE IF THE BALL IS ABOVE
-				if(position.y <= x+5){
+			//PLAYER ON TOP
+			
+				if(position.y <= y+height+5){
 				
-				//AND IN FRONT
-				if( position.x >= y -5 && position.x <= y + width+5){
-					
+				//	System.out.println("Nice X pos");	
+				//Check in bounds
+				if( position.x >= x -5 && position.x <= x+width+5){
 					
 					System.out.println("player three bounce");
 					
-					//THEN GO DOWN 10 PIXELS
 					position.y = position.y +10;
-					//THEN ROTATE
+					
 					rotateY();
 
+					
+			//		System.out.println("Nice YYY Pos");
+			
+					/*int xSpeed = bally.getBallXSpeed(); 
+						
+					bally.setBallXSpeed(bounceX(xSpeed));
+					xSpeed = bally.getBallXSpeed();
+					int tempx = bally.getXPos();
+					bally.setXPos(tempx += xSpeed);
+				*/
 
 
 				}
 			}
 		}
 		
+	//	(y-(playerPingSize/2),level.screenHeight-15 , playerPingSize ,user.userWidth);
+		
+		public void paddleFourHit(int x, int y, int width, int height){
 
-		public void paddleFourHit(int x, int y, int width, int heigth){
 			
 			//THE PLAYER AT THE BOTTOM
 			//SHOULD MEASURE IF THE BALL IS BENEATH
 			if(position.y >= y-5){
-
 				
-				if( position.x >= x -5 && position.x <= x + width+5){
-					
+				//	System.out.println("Nice X pos");	
+
+				if( position.x >= x -5 && position.x <= x+width+5){
+
 					System.out.println("player four bounce");
-					position.y = position.y +10;
+					position.y = position.y -10;
 					rotateY();
-
-
 				}
 			}
 		}
@@ -297,17 +325,19 @@ public class BallLogicV2 extends Polygon {
 	}
 	
 	public void ballRespawn (){
+		Random rand2 = new Random();
 		speed = 0;
 		position.x = 450;
 		position.y = 300;
-		rotate();
+		//rotate();
+		rotation = rand2.nextInt((359 - 0) + 1) -359;
 		System.out.println("respawntimer about to start");
 		new LivesTimer(2);
 		System.out.println("respawntimer started");
 	}
 	
 	public boolean player1Win (){
-		if (player1lives > 0 && player2lives == 0 /*&& player3lives == 0 && player4lives == 0*/){
+		if (player1lives > 0 && player2lives <= 0 && player3lives <= 0 && player4lives <= 0){
 			return true;
 		} else {
 			return false;
@@ -315,7 +345,7 @@ public class BallLogicV2 extends Polygon {
 	}
 	
 	public boolean player2Win (){
-		if (player2lives > 0 && player1lives == 0 /*&& player3lives == 0 && player4lives == 0*/){
+		if (player2lives > 0 && player1lives <= 0 && player3lives <= 0 && player4lives <= 0){
 			return true;
 		} else {
 			return false;
@@ -323,7 +353,7 @@ public class BallLogicV2 extends Polygon {
 	}
 	
 	public boolean player3Win (){
-		if (player3lives > 0 && player1lives == 0 && player2lives == 0 && player4lives == 0){
+		if (player3lives > 0 && player1lives <= 0 && player2lives <= 0 && player4lives <= 0){
 			return true;
 		} else {
 			return false;
@@ -331,7 +361,7 @@ public class BallLogicV2 extends Polygon {
 	}
 	
 	public boolean player4Win (){
-		if (player4lives > 0 && player1lives == 0 && player2lives == 0 && player3lives == 0){
+		if (player4lives > 0 && player1lives <= 0 && player2lives <= 0 && player3lives <= 0){
 			return true;
 		} else {
 			return false;
