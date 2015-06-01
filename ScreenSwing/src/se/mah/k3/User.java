@@ -15,17 +15,18 @@ public class User implements Comparable<User>{
 	private long delay; // int here makes more sense than a double/long?
 	public int userHeight = 0;
 	public int userWidth = 0;
-
+	private Integer position;
 	
 
 	private Color c = new Color(100,100,100);
 	
 
-	public User(String id, int xPos, int yPos, int lives) {
+	public User(String id, int xPos, int yPos, int lives, int position) {
 		this.id = id;
 		this.xPos = xPos;
 		this.yPos = yPos;
 		this.lives = lives;
+		this.position = position;
 	}
 	
 	public User(){
@@ -79,11 +80,18 @@ public class User implements Comparable<User>{
 		this.delay = d;
 	}
 	
+	public int getPosition(){
+		return position;
+	}
+	
+	public void setPosition(int position){
+		this.position = position;
+	}
 	
 	
 	@Override
 	public int compareTo(User o) {
-		return id.compareTo(o.getId());
+		return position.compareTo(o.getPosition()); // Ändrade här att jämföra position istället för Id
 	}
 	public Color getColor() {
 		return c;
