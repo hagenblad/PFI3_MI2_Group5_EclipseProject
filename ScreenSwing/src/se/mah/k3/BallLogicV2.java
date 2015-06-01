@@ -395,4 +395,35 @@ public class BallLogicV2 extends Polygon {
 		}
 	}
 	
+	public boolean playerOneOut (){
+		if (player1lives == 0){
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	public boolean playerTwoOut (){
+		if (player2lives == 0){
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	public boolean playerThreeOut (){
+		if (player3lives == 0){
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	public boolean playerFourOut (){
+		if (player4lives == 0){
+			return true;
+		}else {
+			return false;
+		}
+	}
 }
