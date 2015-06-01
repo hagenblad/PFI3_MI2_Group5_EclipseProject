@@ -371,6 +371,7 @@ public class DrawPanel extends JPanel {
 			g.setColor(gray);
 
 			g.drawString("The game will start when four players connects", level.screenWidth/2-160, level.screenHeight/2 + 200);
+
 		}else{
 			//	    	ballXPos = ball.getXPos();
 			//			ballYPos = ball.getYPos();
