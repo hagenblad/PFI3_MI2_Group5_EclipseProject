@@ -64,6 +64,7 @@ public class DrawPanel extends JPanel {
 	int playerPingSize;
 	
 	public Font ExoExtraLightSize;
+	public Font ExoBoldSize;
 
 	public Polygon polyTRC;
 	public Polygon polyTLC;
@@ -267,6 +268,11 @@ public class DrawPanel extends JPanel {
 			FileInputStream in = new FileInputStream(f);
 			Font ExoExtraLight = Font.createFont(Font.TRUETYPE_FONT, in);
 			ExoExtraLightSize = ExoExtraLight.deriveFont(25f);
+			
+			File f2 = new File("lib/ExoBold.ttf");
+			FileInputStream in2 = new FileInputStream(f2);
+			Font ExoBold = Font.createFont(Font.TRUETYPE_FONT, in2);
+			ExoBoldSize = ExoBold.deriveFont(25f);
 		}
 
 	
@@ -343,14 +349,13 @@ public class DrawPanel extends JPanel {
 		
 		//super.paint(g);
 		Graphics2D g2= (Graphics2D) g;
-		g2.setFont(ExoExtraLightSize);
 		g2.setColor(Color.LIGHT_GRAY);
 		g2.fillRect(0, 0, getSize().width, getSize().height);
 		g2.setColor(Color.black);
 		
 
-		g2.setFont(ExoExtraLightSize);
-		g.setFont(ExoExtraLightSize);
+		g2.setFont(ExoBoldSize);
+		g.setFont(ExoBoldSize);
 
 //		ships[0].speed = 0;
 
@@ -370,7 +375,7 @@ public class DrawPanel extends JPanel {
 			Color gray = Color.decode("#2b2b2b");
 			g.setColor(gray);
 
-			g.drawString("The game will start when four players connects", level.screenWidth/2-160, level.screenHeight/2 + 200);
+			g.drawString("The game will start when four players connects", level.screenWidth/2-170, level.screenHeight/2);
 
 		}else{
 			//	    	ballXPos = ball.getXPos();
@@ -460,25 +465,25 @@ public class DrawPanel extends JPanel {
 		if(users.size() >= 1){
 			g.setColor(blue);
 			String player1name = users.get(0).getId();
-			g.drawString(player1name + " connected", 425, 100);
+			g.drawString(player1name + " connected", 425, 500);
 		}
 
 		if(users.size() >= 2){
 			g.setColor(green);
 			String player2name = users.get(1).getId();
-			g.drawString(player2name + " connected", 425, 150);
+			g.drawString(player2name + " connected", 425, 550);
 		}
 
 		if(users.size() >= 3){
 			g.setColor(red);
 			String player3name = users.get(2).getId();
-			g.drawString(player3name + " connected", 425, 200);
+			g.drawString(player3name + " connected", 425, 600);
 		}
 
 		if(users.size() >= 4){
 			g.setColor(yellow);
 			String player4name = users.get(3).getId();
-			g.drawString(player4name + " connected", 425, 250);
+			g.drawString(player4name + " connected", 425, 650);
 		}
 
 
