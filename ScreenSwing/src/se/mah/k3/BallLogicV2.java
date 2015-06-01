@@ -246,6 +246,8 @@ public class BallLogicV2 extends Polygon {
 		
 		// (y-(playerPingSize/2), level.relY+10 ,playerPingSize, user.userWidth );
 		public void paddleThreeHit(int x, int y, int width, int height){
+				
+			//THE PLAYER ON TOP
 			
 			//PLAYER ON TOP
 			
@@ -272,6 +274,7 @@ public class BallLogicV2 extends Polygon {
 					bally.setXPos(tempx += xSpeed);
 				*/
 
+
 				}
 			}
 		}
@@ -279,18 +282,19 @@ public class BallLogicV2 extends Polygon {
 	//	(y-(playerPingSize/2),level.screenHeight-15 , playerPingSize ,user.userWidth);
 		
 		public void paddleFourHit(int x, int y, int width, int height){
+
 			
-			
+			//THE PLAYER AT THE BOTTOM
+			//SHOULD MEASURE IF THE BALL IS BENEATH
 			if(position.y >= y-5){
 				
 				//	System.out.println("Nice X pos");	
 
 				if( position.x >= x -5 && position.x <= x+width+5){
+
 					System.out.println("player four bounce");
 					position.y = position.y -10;
 					rotateY();
-
-
 				}
 			}
 		}
