@@ -622,7 +622,7 @@ public class DrawPanel extends JPanel {
 								}
 								if(ships[0].player1lives == 0){
 									Image skull = Toolkit.getDefaultToolkit().getImage("src/images/skull.png");
-									g2.drawImage(skull, 166, 450, 12,16, this);
+									g2.drawImage(skull, 166, 450, 18,24, this);
 								}
 								
 							
@@ -675,7 +675,7 @@ public class DrawPanel extends JPanel {
 								}
 								if(ships[0].player2lives == 0){
 									Image skull = Toolkit.getDefaultToolkit().getImage("src/images/skull.png");
-									g2.drawImage(skull, 815, 450, 15,20, this);
+									g2.drawImage(skull, 815, 450, 18,24, this);
 								}
 							
 							}
@@ -731,7 +731,7 @@ public class DrawPanel extends JPanel {
 								}
 								if(ships[0].player3lives == 0){
 									Image skull = Toolkit.getDefaultToolkit().getImage("src/images/skull.png");
-									g2.drawImage(skull, 500, 119, 15,20, this);
+									g2.drawImage(skull, 500, 119, 18,24, this);
 								}
 						
 								}
@@ -785,7 +785,7 @@ public class DrawPanel extends JPanel {
 								}
 								if(ships[0].player4lives == 0){
 									Image skull = Toolkit.getDefaultToolkit().getImage("src/images/skull.png");
-									g2.drawImage(skull, 500, 764, 15,20, this);
+									g2.drawImage(skull, 500, 764, 18,24, this);
 								}
 							}
 
