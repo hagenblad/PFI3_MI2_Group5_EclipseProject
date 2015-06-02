@@ -64,6 +64,7 @@ public class DrawPanel extends JPanel {
 	int playerPingSize;
 	
 	public Font ExoExtraLightSize;
+	public Font ExoBoldSize;
 
 	public Polygon polyTRC;
 	public Polygon polyTLC;
@@ -140,7 +141,7 @@ public class DrawPanel extends JPanel {
 						try {
 							users.get(place).setxRel((double)dataSnapshot.getValue());
 						} catch (Exception e) {
-							//System.out.println("Error reading: " + place);
+							System.out.println("Error reading: " + place);
 							e.printStackTrace();
 							}
 						
@@ -149,7 +150,7 @@ public class DrawPanel extends JPanel {
 						try {
 							users.get(place).setyRel((double)dataSnapshot.getValue());
 						} catch (Exception e) {
-							//System.out.println("Error reading: " + place);
+							System.out.println("Error reading: " + place);
 							e.printStackTrace();
 						}
 						
@@ -163,7 +164,7 @@ public class DrawPanel extends JPanel {
 						try {
 							users.get(place).setDelay((long)dataSnapshot.getValue());
 						} catch (Exception e) {
-							//System.out.println("Error reading: " + place);
+							System.out.println("Error reading: " + place);
 							e.printStackTrace();	}
 					
 					}
@@ -183,7 +184,7 @@ public class DrawPanel extends JPanel {
 					int x = r.nextInt(getSize().width);
 					int y = r.nextInt(getSize().height); 
 					listCount = users.size();
-					//System.out.println("number of players: " + users.size()); //räknar antal spelar och skriver ut i konsollen. (börjar på 0)
+					System.out.println("number of players: " + users.size()); //räknar antal spelar och skriver ut i konsollen. (börjar på 0)
 
 					if (listCount ==0){
 						User user = new User(arg0.getKey(), level.relX+11, level.relX+11, ships[0].player1lives); // create player 1
@@ -207,7 +208,7 @@ public class DrawPanel extends JPanel {
 
 							Color green = Color.decode("#8cba66");
 							user.setColor(green);
-							//System.out.println("player 2 in");
+							System.out.println("player 2 in");
 							myFirebaseRef.child(arg0.getKey()).child("playercolor").setValue("#8cba66");
 
 
@@ -234,11 +235,11 @@ public class DrawPanel extends JPanel {
 							user.userWidth = 10;
 							//user.setColor(yellow);
 							//myFirebaseRef.child(arg0.getKey()).child("playercolor").setValue("#e5d672");
-							//System.out.println("player 4 in");
+							System.out.println("player 4 in");
 						}
 					}
 
-					//System.out.println("Users in the game : " + users.size());
+					System.out.println("Users in the game : " + users.size());
 
 //					//Check if too many players
 //					if(listCount >3){
@@ -267,6 +268,11 @@ public class DrawPanel extends JPanel {
 			FileInputStream in = new FileInputStream(f);
 			Font ExoExtraLight = Font.createFont(Font.TRUETYPE_FONT, in);
 			ExoExtraLightSize = ExoExtraLight.deriveFont(25f);
+			
+			File f2 = new File("lib/ExoBold.ttf");
+			FileInputStream in2 = new FileInputStream(f2);
+			Font ExoBold = Font.createFont(Font.TRUETYPE_FONT, in2);
+			ExoBoldSize = ExoBold.deriveFont(25f);
 		}
 
 	
@@ -275,22 +281,22 @@ public class DrawPanel extends JPanel {
 //	public void setPlayerBoundsY(User user){
 //
 //		if(y - playerPingSize/2 < 100){
-//			//paddlePosY = 100;
+//			paddlePosY = 100;
 //			System.out.println("playerboundstop");
 //		} else {
-//			//paddlePosY = y - playerPingSize;
+//			paddlePosY = y - playerPingSize;
 //			System.out.println("ok to move");
 //		}
 //
 //		if(y - playerPingSize/2 > level.screenHeight){
-//			//y = level.screenHeight;
+//			y = level.screenHeight;
 //			System.out.println("playerboundsbottom");
 //		} else{
-//			//y = (int)(user.getyRel()*getSize().height);
+//			y = (int)(user.getyRel()*getSize().height);
 //			System.out.println("ok to move");
 //		}
 //	}
-	
+//	
 
 
 
@@ -347,14 +353,13 @@ public class DrawPanel extends JPanel {
 		
 		//super.paint(g);
 		Graphics2D g2= (Graphics2D) g;
-		g2.setFont(ExoExtraLightSize);
 		g2.setColor(Color.LIGHT_GRAY);
 		g2.fillRect(0, 0, getSize().width, getSize().height);
 		g2.setColor(Color.black);
 		
 
-		g2.setFont(ExoExtraLightSize);
-		g.setFont(ExoExtraLightSize);
+		g2.setFont(ExoBoldSize);
+		g.setFont(ExoBoldSize);
 
 //		ships[0].speed = 0;
 
@@ -374,7 +379,7 @@ public class DrawPanel extends JPanel {
 			Color gray = Color.decode("#2b2b2b");
 			g.setColor(gray);
 
-			g.drawString("The game will start when four players connects", level.screenWidth/2-160, level.screenHeight/2 + 200);
+			g.drawString("The game will start when four players connects", level.screenWidth/2-170, level.screenHeight/2);
 
 		}else{
 			//	    	ballXPos = ball.getXPos();
@@ -425,20 +430,20 @@ public class DrawPanel extends JPanel {
 
 		//corner collision
 		if(areaTLC.intersects(ballXPos, ballYPos, ball.getSize(), ball.getSize())){
-			//System.out.println("CORNER");
+			System.out.println("CORNER");
 			//ballLogic.cornerBounce();
 			ships[0].topLeftCornerBounce();
 
 		}else if(areaBLC.intersects(ballXPos, ballYPos, ball.getSize(), ball.getSize())){
-			//System.out.println("CORNER");
+			System.out.println("CORNER");
 			//ballLogic.cornerBounce();
 			ships[0].bottomLeftCornerBounce();
 		}else if(areaTRC.intersects(ballXPos, ballYPos, ball.getSize(), ball.getSize())){
-			//System.out.println("CORNER");
+			System.out.println("CORNER");
 			//ballLogic.cornerBounce();
 			ships[0].topRightCornerBounce();
 		}else if(areaBRC.intersects(ballXPos, ballYPos, ball.getSize(), ball.getSize())){
-			//System.out.println("CORNER");
+			System.out.println("CORNER");
 			//ballLogic.cornerBounce();
 			ships[0].bottomRightCornerBounce();
 		}
@@ -453,7 +458,7 @@ public class DrawPanel extends JPanel {
 
 			}
 		} catch (Exception e) {
-			//System.out.println(e);
+			System.out.println(e);
 		}
 
 
@@ -464,25 +469,25 @@ public class DrawPanel extends JPanel {
 		if(users.size() >= 1){
 			g.setColor(blue);
 			String player1name = users.get(0).getId();
-			g.drawString(player1name + " connected", 425, 100);
+			g.drawString(player1name + " connected", 425, 500);
 		}
 
 		if(users.size() >= 2){
 			g.setColor(green);
 			String player2name = users.get(1).getId();
-			g.drawString(player2name + " connected", 425, 150);
+			g.drawString(player2name + " connected", 425, 550);
 		}
 
 		if(users.size() >= 3){
 			g.setColor(red);
 			String player3name = users.get(2).getId();
-			g.drawString(player3name + " connected", 425, 200);
+			g.drawString(player3name + " connected", 425, 600);
 		}
 
 		if(users.size() >= 4){
 			g.setColor(yellow);
 			String player4name = users.get(3).getId();
-			g.drawString(player4name + " connected", 425, 250);
+			g.drawString(player4name + " connected", 425, 650);
 		}
 
 
@@ -571,8 +576,8 @@ public class DrawPanel extends JPanel {
 								g.setColor(blue);
 								//	g2.fillRect(level.relX+1, y - (playerPingSize/2), user.userWidth, playerPingSize);
 
-								ships[0].paddleOneHit(level.relX+1, 240 + y - (playerPingSize/2), user.userWidth, playerPingSize);
-								g2.drawImage(player1, level.relX+1, 240 +y - (playerPingSize/2), user.userWidth, playerPingSize, this);
+								ships[0].paddleOneHit(level.relX+1, 240+ y - (playerPingSize/2), user.userWidth, playerPingSize);
+								g2.drawImage(player1, level.relX+1, 240+ y - (playerPingSize/2), user.userWidth, playerPingSize, this);
 
 								
 //								System.out.println("index of player one position = " + users.indexOf(user));
@@ -588,15 +593,12 @@ public class DrawPanel extends JPanel {
 								String livesLeftPlayerOne = String.valueOf(ships[0].player1lives);
 								g.drawString(livesLeftPlayerOne + " Lives left ", 20, 100); // this prints out how many lives player one has left
 							
-								ships[0].paddleOneHit(level.relX+1, 250 +y - (playerPingSize/2), user.userWidth, playerPingSize);
-							}   
-							
-							else if (users.indexOf(user)==1 ){
+								ships[0].paddleOneHit(level.relX+1, 250 + y - (playerPingSize/2), user.userWidth, playerPingSize);
+							}   else if (users.indexOf(user)==1 ){
 								Color green = users.get(1).getColor();
 								g.setColor(green);
-								
-								ships[0].paddleTwoHit(level.screenWidth-11,250 + y - (playerPingSize/2), user.userWidth, playerPingSize);
-								g2.drawImage(player2, level.screenWidth-11, 250 +y - (playerPingSize/2), user.userWidth, playerPingSize, this);
+								ships[0].paddleTwoHit(level.screenWidth-11, 250 + y - (playerPingSize/2), user.userWidth, playerPingSize);
+								g2.drawImage(player2, level.screenWidth-11, 250 + y - (playerPingSize/2), user.userWidth, playerPingSize, this);
 								// draw out player 2 info
 								
 								//System.out.println("index of player TWO position = " + users.indexOf(user));
@@ -615,8 +617,7 @@ public class DrawPanel extends JPanel {
 								Color red = users.get(2).getColor();
 								g.setColor(red);
 								//g2.fillRect(1000, user.getyPos(), user.userHeight, user.userWidth);
-								
-								ships[0].paddleThreeHit (250 +y-(playerPingSize/2), level.relY+1 , playerPingSize ,user.userWidth);
+								ships[0].paddleThreeHit (250 + y-(playerPingSize/2), level.relY+1 , playerPingSize ,user.userWidth);
 								g2.drawImage(player3, 250 + y-(playerPingSize/2), level.relY+1 ,playerPingSize, user.userWidth ,this);
 								
 								
@@ -638,7 +639,7 @@ public class DrawPanel extends JPanel {
 								g.setColor(yellow);
 								//g2.fillRect(1000, user.getyPos(), user.userHeight, user.userWidth);
 								ships[0].paddleFourHit (250 + y-(playerPingSize/2),level.screenHeight-15 , playerPingSize ,user.userWidth);
-								g2.drawImage(player4,250 + y-(playerPingSize/2), level.screenHeight-15 , playerPingSize, user.userWidth ,this);
+								g2.drawImage(player4, 250 + y-(playerPingSize/2), level.screenHeight-15 , playerPingSize, user.userWidth ,this);
 								
 							//	System.out.println("index of player FOUR position = " + users.indexOf(user));
 								// draw out player 4 info
@@ -654,8 +655,8 @@ public class DrawPanel extends JPanel {
 								
 							}
 							
-							Image imgOutside = Toolkit.getDefaultToolkit().getImage("src/images/outside.png");
-							g2.drawImage(imgOutside, 0, 0, this);
+//							Image imgOutside = Toolkit.getDefaultToolkit().getImage("src/images/outside.png");
+//							g2.drawImage(imgOutside, 0, 0, this);
 
 								
 //								// draw out player 3 info
