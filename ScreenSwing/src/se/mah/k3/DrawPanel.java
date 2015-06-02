@@ -81,10 +81,6 @@ public class DrawPanel extends JPanel {
 	//background image
 	
 	Image img1 = Toolkit.getDefaultToolkit().getImage("src/images/bakgrundur.jpg");
-	
-	//private int player1lives = 5;
-	//private int player2lives = 5;
-
 
 	//A vector is like an ArrayList a little bit slower but Thread-safe. This means that it can handle concurrent changes. 
 	private Vector<User> users= new Vector<User>();
@@ -191,6 +187,8 @@ public class DrawPanel extends JPanel {
 							users.add(user);
 							user.userHeight = 100;
 							user.userWidth = 10;
+							ships[0].player1lives = 5;
+							
 							//user.setColor(blue);
 							//System.out.println("player 1 in");
 							//System.out.println("Player " + user.getId() + " has position " + user.getPosition());
@@ -206,6 +204,8 @@ public class DrawPanel extends JPanel {
 							user.userHeight = 100;
 							user.userWidth = 10;
 
+							ships[0].player2lives = 5;
+							
 //							Color green = Color.decode("#8cba66");
 //							user.setColor(green);
 							//System.out.println("player 2 in");
@@ -220,7 +220,9 @@ public class DrawPanel extends JPanel {
 							users.add(user);
 							user.userHeight = 100;
 							user.userWidth = 10;
-
+							
+							ships[0].player3lives = 5;
+							
 //							Color red = Color.decode("#d35959");
 //							user.setColor(red);
 							//System.out.println("player 3 in");
@@ -234,6 +236,9 @@ public class DrawPanel extends JPanel {
 							users.add(user);
 							user.userHeight = 100;
 							user.userWidth = 10;
+							
+							ships[0].player4lives = 5;
+							
 							//user.setColor(yellow);
 							//myFirebaseRef.child(arg0.getKey()).child("playercolor").setValue("#e5d672");
 							//System.out.println("player 4 in");
@@ -383,7 +388,7 @@ public class DrawPanel extends JPanel {
 			Color gray = Color.decode("#2b2b2b");
 			g.setColor(gray);
 
-			g.drawString("The game will start when four players connects", level.screenWidth/2-170, level.screenHeight/2);
+			g.drawString("The game will start when two or more players connect", level.screenWidth/2-170, level.screenHeight/2);
 
 		}else{
 			//	    	ballXPos = ball.getXPos();
@@ -841,8 +846,8 @@ public class DrawPanel extends JPanel {
 							
 							//System.out.println("size on list = " + users.size());
 							
-//							Image imgOutside = Toolkit.getDefaultToolkit().getImage("src/images/outside.png");
-//							g2.drawImage(imgOutside, 0, 0, this);
+							Image imgOutside = Toolkit.getDefaultToolkit().getImage("src/images/outside.png");
+							g2.drawImage(imgOutside, 0, 0, this);
 
 
 								
@@ -968,6 +973,22 @@ public class DrawPanel extends JPanel {
 						}
 					}
 				}
-			}			
-		}
+			}	
+			
+			public class BallSpeedTimer{
+				Toolkit toolkit;
+				Timer timer = new Timer();
+				public BallSpeedTimer(){
+					toolkit = Toolkit.getDefaultToolkit();
+					timer = new Timer();
+					timer.schedule(new BallTimer(), 0, 1*1000);
+				}
+				class BallTimer extends TimerTask{
+					public void run(){
+						timer.cancel();
+						}
+					}
+				}
+			}
+		
 		
