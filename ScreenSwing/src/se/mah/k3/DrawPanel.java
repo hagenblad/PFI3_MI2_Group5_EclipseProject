@@ -599,11 +599,10 @@ public class DrawPanel extends JPanel {
 					
 								//This prints out the ping to drawpanel
 								String player1Delay = String.valueOf(users.get(0).getDelay());
-								g.drawString("PING = " + player1Delay, 20, 490);
+								g.drawString("Ping: " + player1Delay, 20, 475);
 								String player1name = users.get(0).getId();
-								//System.out.println(player1name);
-								g.drawString(player1name, 20, 410);
-								String livesLeftPlayerOne = String.valueOf(ships[0].player1lives);
+								g.drawString(player1name, 20, 445);
+								//String livesLeftPlayerOne = String.valueOf(ships[0].player1lives);
 
 								if(ships[0].player1lives == 5){
 									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
@@ -640,7 +639,7 @@ public class DrawPanel extends JPanel {
 									g2.drawImage(skull, 166, 450, 18,24, this);
 								}
 								
-								g.drawString(livesLeftPlayerOne + " Lives left ", 20, 450); // this prints out how many lives player one has left
+								//g.drawString(livesLeftPlayerOne + " Lives left ", 20, 450); // this prints out how many lives player one has left
 								ships[0].paddleOneHit(level.relX+1, 250 + y - (playerPingSize/2), user.userWidth, playerPingSize);
 							}   else if (user.getPosition() == 2 ){
 								
@@ -662,11 +661,11 @@ public class DrawPanel extends JPanel {
 								//System.out.println("index of player TWO position = " + users.indexOf(user));
 
 								String player2Delay = String.valueOf(users.get(1).getDelay());
-								g.drawString("PING = " + player2Delay, 820, 490);
+								g.drawString("Ping: " + player2Delay, 845, 475);
 								String player2name = users.get(1).getId();
 								//System.out.println(player2name);
-								g.drawString(player2name, 820, 410);
-								String livesLeftPlayerTwo = String.valueOf(ships[0].player2lives);
+								g.drawString(player2name, 845, 445);
+								//String livesLeftPlayerTwo = String.valueOf(ships[0].player2lives);
 								
 								if(ships[0].player2lives == 5){
 									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
@@ -702,7 +701,7 @@ public class DrawPanel extends JPanel {
 									Image skull = Toolkit.getDefaultToolkit().getImage("src/images/skull.png");
 									g2.drawImage(skull, 815, 450, 18,24, this);
 								}
-								g.drawString(livesLeftPlayerTwo + " Lives left ", 820, 450); // this prints out how many lives player two has left
+								//g.drawString(livesLeftPlayerTwo + " Lives left ", 820, 450); // this prints out how many lives player two has left
 							
 							}
 							
@@ -729,11 +728,11 @@ public class DrawPanel extends JPanel {
 								// draw out player 3 info
 								
 								String player3Delay = String.valueOf(users.get(2).getDelay());
-								g.drawString("PING = " + player3Delay, 450, 120);
+								g.drawString("Ping: " + player3Delay, 450, 105);
 								String player3name = users.get(2).getId();
 								//System.out.println(player3name);
-								g.drawString(player3name, 450, 40);
-								String livesLeftPlayerThree = String.valueOf(ships[0].player3lives);
+								g.drawString(player3name, 450, 75);
+								//String livesLeftPlayerThree = String.valueOf(ships[0].player3lives);
 								
 								if(ships[0].player3lives == 5){
 									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
@@ -769,7 +768,7 @@ public class DrawPanel extends JPanel {
 									Image skull = Toolkit.getDefaultToolkit().getImage("src/images/skull.png");
 									g2.drawImage(skull, 500, 119, 18,24, this);
 								}
-								g.drawString(livesLeftPlayerThree + " Lives left ", 450, 80); // this prints out how many lives player three has left
+								//g.drawString(livesLeftPlayerThree + " Lives left ", 450, 80); // this prints out how many lives player three has left
 						
 								}
 							
@@ -796,11 +795,11 @@ public class DrawPanel extends JPanel {
 								// draw out player 4 info
 			
 								String player4Delay = String.valueOf(users.get(3).getDelay());
-								g.drawString("PING = "+ player4Delay, 450,880);
+								g.drawString("PING = "+ player4Delay, 450,845);
 								String player4name = users.get(3).getId();
 								//System.out.println(player4name);
-								g.drawString(player4name, 450, 800);
-								String livesLeftPlayerFour = String.valueOf(ships[0].player4lives);
+								g.drawString(player4name, 450, 815);
+								//String livesLeftPlayerFour = String.valueOf(ships[0].player4lives);
 								
 								if(ships[0].player4lives == 5){
 									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
@@ -837,7 +836,7 @@ public class DrawPanel extends JPanel {
 									g2.drawImage(skull, 500, 764, 18,24, this);
 								}
 							
-								g.drawString(livesLeftPlayerFour + " Lives left ",  450,  840); // this prints out how many lives player four has left								
+								//g.drawString(livesLeftPlayerFour + " Lives left ",  450,  840); // this prints out how many lives player four has left								
 							}
 							
 							//System.out.println("size on list = " + users.size());
