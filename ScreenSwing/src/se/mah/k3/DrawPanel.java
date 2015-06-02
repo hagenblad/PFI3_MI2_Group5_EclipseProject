@@ -139,8 +139,7 @@ public class DrawPanel extends JPanel {
 						} catch (Exception e) {
 							System.out.println("Error reading: " + place);
 							e.printStackTrace();
-							}
-						
+						}		
 					}
 					if (dataSnapshot.getKey().equals("yRel")){
 						try {
@@ -149,7 +148,6 @@ public class DrawPanel extends JPanel {
 							System.out.println("Error reading: " + place);
 							e.printStackTrace();
 						}
-						
 					}
 					if (dataSnapshot.getKey().equals("RoundTripTo")){
 						myFirebaseRef.child(arg0.getKey()).child("RoundTripBack").setValue((long)dataSnapshot.getValue()+1);
@@ -159,7 +157,8 @@ public class DrawPanel extends JPanel {
 							users.get(place).setDelay((long)dataSnapshot.getValue());
 						} catch (Exception e) {
 							System.out.println("Error reading: " + place);
-							e.printStackTrace();	}
+							e.printStackTrace();	
+						}
 					}					
 				}
 				}
@@ -187,7 +186,7 @@ public class DrawPanel extends JPanel {
 							user.userWidth = 10;
 							System.out.println("player 1 in");
 							System.out.println("Player " + user.getId() + " has position " + user.getPosition());
-							myFirebaseRef.child(arg0.getKey()).child("position").setValue(user.getPosition());
+							myFirebaseRef.child(arg0.getKey()).child("position").setValue((int)user.getPosition());
 						}
 					}
 
@@ -199,7 +198,7 @@ public class DrawPanel extends JPanel {
 							user.userWidth = 10;
 							System.out.println("player 2 in");
 							System.out.println("Player " + user.getId() + " has position " + user.getPosition());
-							myFirebaseRef.child(arg0.getKey()).child("position").setValue(user.getPosition());
+							myFirebaseRef.child(arg0.getKey()).child("position").setValue((int)user.getPosition());
 
 						}
 					}	
@@ -212,7 +211,7 @@ public class DrawPanel extends JPanel {
 							user.userWidth = 10;
 							System.out.println("player 3 in");
 							System.out.println("Player " + user.getId() + " has position " + user.getPosition());
-							myFirebaseRef.child(arg0.getKey()).child("position").setValue(user.getPosition());
+							myFirebaseRef.child(arg0.getKey()).child("position").setValue((int)user.getPosition());
 						}
 					}
 					if (listCount == 3){
@@ -223,7 +222,7 @@ public class DrawPanel extends JPanel {
 							user.userWidth = 10;
 							System.out.println("player 4 in");
 							System.out.println("Player " + user.getId() + " has position " + user.getPosition());
-							myFirebaseRef.child(arg0.getKey()).child("position").setValue(user.getPosition());
+							myFirebaseRef.child(arg0.getKey()).child("position").setValue((int)user.getPosition());
 						}
 					}
 

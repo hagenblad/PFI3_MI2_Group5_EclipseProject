@@ -91,7 +91,7 @@ public class User implements Comparable<User>{
 	
 	@Override
 	public int compareTo(User o) {
-		return position.compareTo(o.getPosition()); // Ändrade här att jämföra position istället för Id
+		return id.compareTo(o.getId());
 	}
 	public Color getColor() {
 		return c;
