@@ -201,7 +201,7 @@ public class BallLogicV2 extends Polygon {
 					
 	//				System.out.println("Nice YYY Pos");
 
-					System.out.println("player 1 bounce");
+					//System.out.println("player 1 bounce");
 
 					position.x = position.x +10;
 					rotate();
@@ -228,7 +228,7 @@ public class BallLogicV2 extends Polygon {
 				
 				if( position.y >= y -5 && position.y <= y + height+5){
 		//			System.out.println("Nice YYY Pos");
-					System.out.println("player 2 bounce");
+					//System.out.println("player 2 bounce");
 
 					position.x = position.x -10;
 					rotate();
@@ -257,7 +257,7 @@ public class BallLogicV2 extends Polygon {
 				//Check in bounds
 				if( position.x >= x -5 && position.x <= x+width+5){
 					
-					System.out.println("player three bounce");
+					//System.out.println("player three bounce");
 					
 					position.y = position.y +10;
 					
@@ -292,7 +292,7 @@ public class BallLogicV2 extends Polygon {
 
 				if( position.x >= x -5 && position.x <= x+width+5){
 
-					System.out.println("player four bounce");
+					//System.out.println("player four bounce");
 					position.y = position.y -10;
 					rotateY();
 				}
@@ -331,9 +331,9 @@ public class BallLogicV2 extends Polygon {
 		position.y = 300;
 		//rotate();
 		rotation = rand2.nextInt((359 - 0) + 1) -359;
-		System.out.println("respawntimer about to start");
+		//System.out.println("respawntimer about to start");
 		new LivesTimer(2);
-		System.out.println("respawntimer started");
+		//System.out.println("respawntimer started");
 	}
 	
 	public boolean player1Win (){
@@ -388,7 +388,7 @@ public class BallLogicV2 extends Polygon {
 				} else {
 				//	toolkit.beep();
 					speed = 2;
-					System.out.println("respawntimer over");
+					//System.out.println("respawntimer over");
 					timer.cancel();
 				}
 			}
