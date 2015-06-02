@@ -64,6 +64,7 @@ public class DrawPanel extends JPanel {
 	int playerPingSize;
 	
 	public Font ExoExtraLightSize;
+	public Font ExoBoldSize;
 
 	public Polygon polyTRC;
 	public Polygon polyTLC;
@@ -76,7 +77,8 @@ public class DrawPanel extends JPanel {
 	boolean timerStarted = false;
 		
 	//background image
-	Image img1 = Toolkit.getDefaultToolkit().getImage("src/images/bakgrundis2.jpg");
+	
+	Image img1 = Toolkit.getDefaultToolkit().getImage("src/images/bakgrundur.jpg");
 	
 	//private int player1lives = 5;
 	//private int player2lives = 5;
@@ -98,9 +100,12 @@ public class DrawPanel extends JPanel {
 	Image player3 = Toolkit.getDefaultToolkit().getImage("src/images/paddle_top.png");
 	Image player4 = Toolkit.getDefaultToolkit().getImage("src/images/paddle_bottom.png");
 
-
-
-
+	Image LeftDead = Toolkit.getDefaultToolkit().getImage("src/image/deadver.jpg");
+	Image RightDead = Toolkit.getDefaultToolkit().getImage("src/image/deadver.jpg");		
+	Image TopDead = Toolkit.getDefaultToolkit().getImage("src/image/deadhor.jpg");
+	Image BottomDead = Toolkit.getDefaultToolkit().getImage("src/image/deadhor.jpg");
+	
+	
 	public DrawPanel() {
 
 		try {
@@ -179,11 +184,12 @@ public class DrawPanel extends JPanel {
 					System.out.println("number of players: " + users.size()); //räknar antal spelar och skriver ut i konsollen. (börjar på 0)
 
 					if (listCount ==0){
-						User user = new User(arg0.getKey(), level.relX+11, level.relX+11, ships[0].player1lives,1); // create player 1
+						User user = new User(arg0.getKey(), level.relX+11, level.relX+11, ships[0].player1lives, 1); // create player 1
 						if (!users.contains(user)){
 							users.add(user);
 							user.userHeight = 100;
 							user.userWidth = 10;
+							//user.setColor(blue);
 							System.out.println("player 1 in");
 							System.out.println("Player " + user.getId() + " has position " + user.getPosition());
 							myFirebaseRef.child(arg0.getKey()).child("position").setValue((int)user.getPosition());
@@ -191,35 +197,43 @@ public class DrawPanel extends JPanel {
 					}
 
 					if (listCount ==1){
-						User user = new User(arg0.getKey(), level.screenWidth-11, level.screenWidth-10, ships[0].player2lives,2); // create player 2
+						User user = new User(arg0.getKey(), level.screenWidth-11, level.screenWidth-10, ships[0].player2lives, 2); // create player 2
+
 						if (!users.contains(user)){
 							users.add(user);
 							user.userHeight = 100;
 							user.userWidth = 10;
+
+//							Color green = Color.decode("#8cba66");
+//							user.setColor(green);
 							System.out.println("player 2 in");
 							System.out.println("Player " + user.getId() + " has position " + user.getPosition());
 							myFirebaseRef.child(arg0.getKey()).child("position").setValue((int)user.getPosition());
-
 						}
 					}	
 
 					if (listCount == 2){
-						User user = new User(arg0.getKey(), level.relX+11, level.relY+11 , ships[0].player3lives,3); // create player 3
+						User user = new User(arg0.getKey(), level.relX+11, level.relY+11 , ships[0].player3lives, 3); // create player 3
 						if(!users.contains(user)){
 							users.add(user);
 							user.userHeight = 100;
 							user.userWidth = 10;
+
+//							Color red = Color.decode("#d35959");
+//							user.setColor(red);
 							System.out.println("player 3 in");
 							System.out.println("Player " + user.getId() + " has position " + user.getPosition());
 							myFirebaseRef.child(arg0.getKey()).child("position").setValue((int)user.getPosition());
 						}
 					}
 					if (listCount == 3){
-						User user = new User(arg0.getKey(),level.relX-11,level.screenHeight-11, ships[0].player4lives,4); // create player 4
+						User user = new User(arg0.getKey(),level.relX-11,level.screenHeight-11, ships[0].player4lives, 4); // create player 4
 						if (!users.contains(user)){
 							users.add(user);
 							user.userHeight = 100;
 							user.userWidth = 10;
+							//user.setColor(yellow);
+							//myFirebaseRef.child(arg0.getKey()).child("playercolor").setValue("#e5d672");
 							System.out.println("player 4 in");
 							System.out.println("Player " + user.getId() + " has position " + user.getPosition());
 							myFirebaseRef.child(arg0.getKey()).child("position").setValue((int)user.getPosition());
@@ -255,6 +269,11 @@ public class DrawPanel extends JPanel {
 			FileInputStream in = new FileInputStream(f);
 			Font ExoExtraLight = Font.createFont(Font.TRUETYPE_FONT, in);
 			ExoExtraLightSize = ExoExtraLight.deriveFont(25f);
+			
+			File f2 = new File("lib/ExoBold.ttf");
+			FileInputStream in2 = new FileInputStream(f2);
+			Font ExoBold = Font.createFont(Font.TRUETYPE_FONT, in2);
+			ExoBoldSize = ExoBold.deriveFont(25f);
 		}
 
 	
@@ -262,16 +281,20 @@ public class DrawPanel extends JPanel {
 //	// Sets the boundaries for the paddles
 //	public void setPlayerBoundsY(User user){
 //
-//		if(paddlePosY < 100){
+//		if(y - playerPingSize/2 < 100){
 //			paddlePosY = 100;
+//			System.out.println("playerboundstop");
 //		} else {
 //			paddlePosY = y - playerPingSize;
+//			System.out.println("ok to move");
 //		}
 //
-//		if(y > level.screenHeight){
+//		if(y - playerPingSize/2 > level.screenHeight){
 //			y = level.screenHeight;
+//			System.out.println("playerboundsbottom");
 //		} else{
 //			y = (int)(user.getyRel()*getSize().height);
+//			System.out.println("ok to move");
 //		}
 //	}
 //	
@@ -331,14 +354,13 @@ public class DrawPanel extends JPanel {
 		
 		//super.paint(g);
 		Graphics2D g2= (Graphics2D) g;
-		g2.setFont(ExoExtraLightSize);
 		g2.setColor(Color.LIGHT_GRAY);
 		g2.fillRect(0, 0, getSize().width, getSize().height);
 		g2.setColor(Color.black);
 		
 
-		g2.setFont(ExoExtraLightSize);
-		g.setFont(ExoExtraLightSize);
+		g2.setFont(ExoBoldSize);
+		g.setFont(ExoBoldSize);
 
 //		ships[0].speed = 0;
 
@@ -352,13 +374,13 @@ public class DrawPanel extends JPanel {
 			Color c = new Color(19,156,234);
 			g2.setColor(c);
 			//g2.fillRect(0,0,1000,700);
-			Image imgStart = Toolkit.getDefaultToolkit().getImage("src/images/Startscreen.jpg");
+			Image imgStart = Toolkit.getDefaultToolkit().getImage("src/images/Startscreen2.jpg");
 
 			g2.drawImage(imgStart, 0, 0, this);
 			Color gray = Color.decode("#2b2b2b");
 			g.setColor(gray);
 
-			g.drawString("The game will start when four players connects", level.screenWidth/2-160, level.screenHeight/2 + 200);
+			g.drawString("The game will start when four players connects", level.screenWidth/2-170, level.screenHeight/2);
 
 		}else{
 			//	    	ballXPos = ball.getXPos();
@@ -448,31 +470,31 @@ public class DrawPanel extends JPanel {
 		if(users.size() >= 1){
 			g.setColor(blue);
 			String player1name = users.get(0).getId();
-			g.drawString(player1name + " connected", 425, 100);
+			g.drawString(player1name + " connected", 425, 500);
 		}
 
 		if(users.size() >= 2){
 			g.setColor(green);
 			String player2name = users.get(1).getId();
-			g.drawString(player2name + " connected", 425, 150);
+			g.drawString(player2name + " connected", 425, 550);
 		}
 
 		if(users.size() >= 3){
 			g.setColor(red);
 			String player3name = users.get(2).getId();
-			g.drawString(player3name + " connected", 425, 200);
+			g.drawString(player3name + " connected", 425, 600);
 		}
 
 		if(users.size() >= 4){
 			g.setColor(yellow);
 			String player4name = users.get(3).getId();
-			g.drawString(player4name + " connected", 425, 250);
+			g.drawString(player4name + " connected", 425, 650);
 		}
 
 
 		super.repaint();
 
-		if(users.size()>=4){
+		if(users.size()>=2){
 			//Background
 			g2.drawImage(img1, 0, 0, this); 
 
@@ -488,6 +510,7 @@ public class DrawPanel extends JPanel {
 				//ships[0].paint(g2);
 				Image boll = Toolkit.getDefaultToolkit().getImage("src/images/boll.png");
 				g2.drawImage(boll, ballXPos, ballYPos, ball.getSize(),ball.getSize(), this);
+				
 				
 //				ships[0].speed = 2;
 				
@@ -505,8 +528,9 @@ public class DrawPanel extends JPanel {
 				//Test
 				for (User user : users) {
 					
-					if(users.size()>=4){  // defines how many players that needs to be in the game for it to start			
+					if(users.size()>=2){  // defines how many players that needs to be in the game for it to start			
 
+						System.out.println(y - (playerPingSize/2));
 						paddleTop = y - playerPingSize;
 						paddleBottom = y;
 						
@@ -527,9 +551,9 @@ public class DrawPanel extends JPanel {
 
 
 						// defines how many players that needs to be in the game for it to start
-						if(users.size()>=4){ 
+						if(users.size()>=2){ 
 							//start = true;
-							
+							System.out.println(y);
 							//Check if too many players
 							if(users.size()>4){
 								for(int i = users.size(); i>4; i--){
@@ -548,123 +572,276 @@ public class DrawPanel extends JPanel {
 						//	g2.drawImage(player3, level.screenWidth/2, level.relY+11,          playerPingSize, user.userWidth,this);
 						//	g2.drawImage(player4, level.screenWidth/2,  level.screenHeight-11, playerPingSize, user.userWidth, this);
 							
-							
+							//PLAYER 1 STUFF
 							if(user.getPosition() == 1){
+								//Set player 1 color
 								Color blue = users.get(0).getColor();
 								g.setColor(blue);
 								//	g2.fillRect(level.relX+1, y - (playerPingSize/2), user.userWidth, playerPingSize);
 
-								ships[0].paddleOneHit(level.relX+1, y - (playerPingSize/2), user.userWidth, playerPingSize);
-								g2.drawImage(player1, level.relX+1, y - (playerPingSize/2), user.userWidth, playerPingSize, this);
+								//Draw out paddle
+								if (ships[0].playerOneOut() == false){
+									ships[0].paddleOneHit(level.relX+1, 240+ y - (playerPingSize/2), user.userWidth, playerPingSize);
+									g2.drawImage(player1, level.relX+1, 240+ y - (playerPingSize/2), user.userWidth, playerPingSize, this);
+								} else {
+									ships[0].paddleOneHit(level.relX+1, level.relY+70, 10, level.relY+530);
+									g2.drawImage(LeftDead, level.relX+1, level.relY+70, 10, level.relY+530, this);
+								}
 
 								
 //								System.out.println("index of player one position = " + users.indexOf(user));
-
 								// draw out player 1 info
 					
 								//This prints out the ping to drawpanel
 								String player1Delay = String.valueOf(users.get(0).getDelay());
-								g.drawString("PING = " + player1Delay, 20, 130);
+								g.drawString("PING = " + player1Delay, 20, 490);
 								String player1name = users.get(0).getId();
 								//System.out.println(player1name);
-								g.drawString(player1name, 20, 70);
+								g.drawString(player1name, 20, 410);
 								String livesLeftPlayerOne = String.valueOf(ships[0].player1lives);
-								g.drawString(livesLeftPlayerOne + " Lives left ", 20, 100); // this prints out how many lives player one has left
-							
-								ships[0].paddleOneHit(level.relX+1, y - (playerPingSize/2), user.userWidth, playerPingSize);
-							}   else if (user.getPosition()==2 ){
+
+								if(ships[0].player1lives == 5){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 166, 400, 20,18, this);
+									g2.drawImage(heart, 166, 425, 20,18, this);
+									g2.drawImage(heart, 166, 450, 20,18, this);
+									g2.drawImage(heart, 166, 475, 20,18, this);
+									g2.drawImage(heart, 166, 500, 20,18, this);
+								}
+								if(ships[0].player1lives == 4){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 166, 400, 20,18, this);
+									g2.drawImage(heart, 166, 425, 20,18, this);
+									g2.drawImage(heart, 166, 450, 20,18, this);
+									g2.drawImage(heart, 166, 475, 20,18, this);
+								}
+								if(ships[0].player1lives == 3){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 166, 400, 20,18, this);
+									g2.drawImage(heart, 166, 425, 20,18, this);
+									g2.drawImage(heart, 166, 450, 20,18, this);
+								}
+								if(ships[0].player1lives == 2){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 166, 400, 20,18, this);
+									g2.drawImage(heart, 166, 425, 20,18, this);
+								}
+								if(ships[0].player1lives == 1){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 166, 400, 20,18, this);
+								}
+								if(ships[0].player1lives == 0){
+									Image skull = Toolkit.getDefaultToolkit().getImage("src/images/skull.png");
+									g2.drawImage(skull, 166, 450, 18,24, this);
+								}
+								
+								g.drawString(livesLeftPlayerOne + " Lives left ", 20, 450); // this prints out how many lives player one has left
+								ships[0].paddleOneHit(level.relX+1, 250 + y - (playerPingSize/2), user.userWidth, playerPingSize);
+							}   else if (user.getPosition() == 2 ){
+								
+								//PLAYER 2 STUFF
+								
 								Color green = users.get(1).getColor();
 								g.setColor(green);
-								ships[0].paddleTwoHit(level.screenWidth-11, y - (playerPingSize/2), user.userWidth, playerPingSize);
-								g2.drawImage(player2, level.screenWidth-11, y - (playerPingSize/2), user.userWidth, playerPingSize, this);
+								
+								if (ships[0].playerTwoOut() == false){
+									ships[0].paddleTwoHit(level.screenWidth-11, 250 + y - (playerPingSize/2), user.userWidth, playerPingSize);
+									g2.drawImage(player2, level.screenWidth-11, 250 + y - (playerPingSize/2), user.userWidth, playerPingSize, this);
+								} else {
+									ships[0].paddleTwoHit(level.screenWidth-11,level.relY+70, 10, level.relY+530);
+									g2.drawImage(RightDead,level.screenWidth-11,level.relY+70, 10, level.relY+530, this);
+								}
+
 								// draw out player 2 info
 								
 								//System.out.println("index of player TWO position = " + users.indexOf(user));
 
 								String player2Delay = String.valueOf(users.get(1).getDelay());
-								g.drawString("PING = " + player2Delay, 807, 610);
+								g.drawString("PING = " + player2Delay, 820, 490);
 								String player2name = users.get(1).getId();
 								//System.out.println(player2name);
-								g.drawString(player2name, 807, 550);
+								g.drawString(player2name, 820, 410);
 								String livesLeftPlayerTwo = String.valueOf(ships[0].player2lives);
-								g.drawString(livesLeftPlayerTwo + " Lives left ", 807, 580); // this prints out how many lives player two has left
+								
+								if(ships[0].player2lives == 5){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 815, 400, 20,18, this);
+									g2.drawImage(heart, 815, 425, 20,18, this);
+									g2.drawImage(heart, 815, 450, 20,18, this);
+									g2.drawImage(heart, 815, 475, 20,18, this);
+									g2.drawImage(heart, 815, 500, 20,18, this);
+								}
+								if(ships[0].player2lives == 4){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 815, 400, 20,18, this);
+									g2.drawImage(heart, 815, 425, 20,18, this);
+									g2.drawImage(heart, 815, 450, 20,18, this);
+									g2.drawImage(heart, 815, 475, 20,18, this);
+								}
+								if(ships[0].player2lives == 3){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 815, 400, 20,18, this);
+									g2.drawImage(heart, 815, 425, 20,18, this);
+									g2.drawImage(heart, 815, 450, 20,18, this);
+								}
+								if(ships[0].player2lives == 2){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 815, 400, 20,18, this);
+									g2.drawImage(heart, 815, 425, 20,18, this);
+								}
+								if(ships[0].player2lives == 1){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 815, 400, 20,18, this);
+								}
+								if(ships[0].player2lives == 0){
+									Image skull = Toolkit.getDefaultToolkit().getImage("src/images/skull.png");
+									g2.drawImage(skull, 815, 450, 18,24, this);
+								}
+								g.drawString(livesLeftPlayerTwo + " Lives left ", 820, 450); // this prints out how many lives player two has left
 							
 							}
-
-							else if (user.getPosition() == 3){
+							
+							//PLAYER 3 STUFF
+							if (users.size() < 3 ){
+								ships[0].paddleThreeHit (level.relX+70, level.relY+1 , level.relX+530, 10);
+								System.out.println("3 in");
+							}
+							if (user.getPosition() == 3){								
 								Color red = users.get(2).getColor();
 								g.setColor(red);
 								//g2.fillRect(1000, user.getyPos(), user.userHeight, user.userWidth);
-								ships[0].paddleThreeHit (y-(playerPingSize/2), level.relY+1 , playerPingSize ,user.userWidth);
-								g2.drawImage(player3, y-(playerPingSize/2), level.relY+1 ,playerPingSize, user.userWidth ,this);
+								
+								if(ships[0].playerThreeOut() == false){
+									ships[0].paddleThreeHit (250 + y-(playerPingSize/2), level.relY+1 , playerPingSize ,user.userWidth);
+									g2.drawImage(player3, 250 + y-(playerPingSize/2), level.relY+1 ,playerPingSize, user.userWidth ,this);
+								} else {
+									ships[0].paddleThreeHit (level.relX+70, level.relY+1 , level.relX+530, 10);
+									g2.drawImage(TopDead, level.relX+70, level.relY+1 , level.relX+530 , 10,this);
+								}
 								
 								
 								//System.out.println("index of player THRREE position = " + users.indexOf(user));
 								// draw out player 3 info
 								
 								String player3Delay = String.valueOf(users.get(2).getDelay());
-								g.drawString("PING = " + player3Delay, 807, 130);
+								g.drawString("PING = " + player3Delay, 450, 120);
 								String player3name = users.get(2).getId();
 								//System.out.println(player3name);
-								g.drawString(player3name, 807, 70);
+								g.drawString(player3name, 450, 40);
 								String livesLeftPlayerThree = String.valueOf(ships[0].player3lives);
-								g.drawString(livesLeftPlayerThree + " Lives left ", 807, 100); // this prints out how many lives player three has left
-
+								
+								if(ships[0].player3lives == 5){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 450, 119, 20,18, this);
+									g2.drawImage(heart, 475, 119, 20,18, this);
+									g2.drawImage(heart, 500, 119, 20,18, this);
+									g2.drawImage(heart, 525, 119, 20,18, this);
+									g2.drawImage(heart, 550, 119, 20,18, this);
+								}
+								if(ships[0].player3lives == 4){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 450, 119, 20,18, this);
+									g2.drawImage(heart, 475, 119, 20,18, this);
+									g2.drawImage(heart, 500, 119, 20,18, this);
+									g2.drawImage(heart, 525, 119, 20,18, this);
+								}
+								if(ships[0].player3lives == 3){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 450, 119, 20,18, this);
+									g2.drawImage(heart, 475, 119, 20,18, this);
+									g2.drawImage(heart, 500, 119, 20,18, this);
+								}
+								if(ships[0].player3lives == 2){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 450, 119, 20,18, this);
+									g2.drawImage(heart, 475, 119, 20,18, this);
+								}
+								if(ships[0].player3lives == 1){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 450, 119, 20,18, this);
+								}
+								if(ships[0].player3lives == 0){
+									Image skull = Toolkit.getDefaultToolkit().getImage("src/images/skull.png");
+									g2.drawImage(skull, 500, 119, 18,24, this);
+								}
+								g.drawString(livesLeftPlayerThree + " Lives left ", 450, 80); // this prints out how many lives player three has left
 						
 								}
-							else if (user.getPosition() == 4){
+							
+							//PLAYER 4 STUFF
+							if (users.size() < 4){
+								ships[0].paddleFourHit(level.relX+70,level.screenHeight-11 , level.relX+530, 10);
+								System.out.println("4 in");
+							}
+							
+							if (user.getPosition() == 4){
 								Color yellow = users.get(3).getColor();
 								g.setColor(yellow);
 								//g2.fillRect(1000, user.getyPos(), user.userHeight, user.userWidth);
-								ships[0].paddleFourHit (y-(playerPingSize/2),level.screenHeight-15 , playerPingSize ,user.userWidth);
-								g2.drawImage(player4,y-(playerPingSize/2), level.screenHeight-15 , playerPingSize, user.userWidth ,this);
+								
+								if(ships[0].playerFourOut() == false){
+									ships[0].paddleFourHit (250 + y-(playerPingSize/2),level.screenHeight-15 , playerPingSize ,user.userWidth);
+									g2.drawImage(player4, 250 + y-(playerPingSize/2), level.screenHeight-15 , playerPingSize, user.userWidth ,this);
+								} else {
+									ships[0].paddleFourHit(level.relX+70,level.screenHeight-11 , level.relX+530, 10);
+									g2.drawImage(BottomDead,level.relX+70,level.screenHeight-11 , level.relX+530, 10,this);
+								}
 								
 							//	System.out.println("index of player FOUR position = " + users.indexOf(user));
 								// draw out player 4 info
 			
 								String player4Delay = String.valueOf(users.get(3).getDelay());
-								g.drawString("PING = "+ player4Delay, 20,610);
+								g.drawString("PING = "+ player4Delay, 450,880);
 								String player4name = users.get(3).getId();
 								//System.out.println(player4name);
-								g.drawString(player4name, 20, 550);
+								g.drawString(player4name, 450, 800);
 								String livesLeftPlayerFour = String.valueOf(ships[0].player4lives);
-
-								g.drawString(livesLeftPlayerFour + " Lives left ",  20,  580); // this prints out how many lives player four has left								
 								
+								if(ships[0].player4lives == 5){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 450, 764, 20,18, this);
+									g2.drawImage(heart, 475, 764, 20,18, this);
+									g2.drawImage(heart, 500, 764, 20,18, this);
+									g2.drawImage(heart, 525, 764, 20,18, this);
+									g2.drawImage(heart, 550, 764, 20,18, this);
+								}
+								if(ships[0].player4lives == 4){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 450, 764, 20,18, this);
+									g2.drawImage(heart, 475, 764, 20,18, this);
+									g2.drawImage(heart, 500, 764, 20,18, this);
+									g2.drawImage(heart, 525, 764, 20,18, this);
+								}
+								if(ships[0].player4lives == 3){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 450, 764, 20,18, this);
+									g2.drawImage(heart, 475, 764, 20,18, this);
+									g2.drawImage(heart, 500, 764, 20,18, this);
+								}
+								if(ships[0].player4lives == 2){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 450, 764, 20,18, this);
+									g2.drawImage(heart, 475, 764, 20,18, this);
+								}
+								if(ships[0].player4lives == 1){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 450, 764, 20,18, this);
+								}
+								if(ships[0].player4lives == 0){
+									Image skull = Toolkit.getDefaultToolkit().getImage("src/images/skull.png");
+									g2.drawImage(skull, 500, 764, 18,24, this);
+								}
+							
+								g.drawString(livesLeftPlayerFour + " Lives left ",  450,  840); // this prints out how many lives player four has left								
 							}
+							
+							System.out.println("size on list = " + users.size());
+							
+//							Image imgOutside = Toolkit.getDefaultToolkit().getImage("src/images/outside.png");
+//							g2.drawImage(imgOutside, 0, 0, this);
+
 
 								
-//								// draw out player 3 info
-//								Color red = users.get(2).getColor();
-//								g.setColor(red);
-//								String player3Delay = String.valueOf(users.get(2).getDelay());
-//								g.drawString("PING = " + player3Delay, 807, 130);
-//								String player3name = users.get(2).getId();
-//								//System.out.println(player3name);
-//								g.drawString(player3name, 807, 70);
-//								String livesLeftPlayerThree = String.valueOf(ships[0].player3lives);
-//								g.drawString(livesLeftPlayerThree + " Lives left ", 807, 100); // this prints out how many lives player three has left
-//
-//								
-//								g2.drawImage(player3, y - (playerPingSize/2) , level.relY+11 ,playerPingSize, user.userWidth,this);
-//								}
-//							
-//								if (users.indexOf(user) == 3){
-//	
-//								// draw out player 4 info
-//								Color yellow = users.get(3).getColor();
-//								g.setColor(yellow);
-//								String player4Delay = String.valueOf(users.get(3).getDelay());
-//								g.drawString("PING = "+ player4Delay, 20,610);
-//								String player4name = users.get(3).getId();
-//								//System.out.println(player4name);
-//								g.drawString(player4name, 20, 550);
-//								String livesLeftPlayerFour = String.valueOf(ships[0].player4lives);
-//								
-//								ships[0].paddleFourHit(level.screenHeight-11, level.screenWidth-11 ,playerPingSize, user.userWidth );
-//								
-//								g.drawString(livesLeftPlayerFour,  20,  580); // this prints out how many lives player four has left								
-//								g2.drawImage(player4, y - (playerPingSize/2) , level.screenHeight-11 ,playerPingSize, user.userWidth,this);
 //								
 								}
 								
@@ -685,7 +862,8 @@ public class DrawPanel extends JPanel {
 								ships[0].speed = 0;
 								ships[0].position.x = 450;
 								ships[0].position.y = 300;
-									new RestartTimer();
+								
+								new RestartTimer();
 
 								}
 							if (ships[0].player3Win() == true){
@@ -695,7 +873,7 @@ public class DrawPanel extends JPanel {
 						    	ships[0].position.x = 450;
 						    	ships[0].position.y = 300;	
 	
-									new RestartTimer();
+								new RestartTimer();
 
 						    }
 							if (ships[0].player4Win() == true){
@@ -703,8 +881,9 @@ public class DrawPanel extends JPanel {
 								g.drawString(player4Wins, 450, 200);
 								ships[0].speed = 0;
 						    	ships[0].position.x = 450;
-						    	ships[0].position.y = 300;	
-									new RestartTimer();
+						    	ships[0].position.y = 300;
+						    	
+								new RestartTimer();
 
 						    	}						
 
@@ -729,7 +908,7 @@ public class DrawPanel extends JPanel {
 				class StartGameTimer extends TimerTask {
 					
 					int wait = 2;
-					int count = 5;
+					int count = 10;
 					
 					public void run() {
 						timerStarted = true;
@@ -742,7 +921,9 @@ public class DrawPanel extends JPanel {
 							timer.cancel();
 							startFinished = true;
 							start = true; // här bestämmer vi att vår start boolean ska bli true när timern körts klart
-							 //Stops the AWT thread (and everything else)							
+							 //Stops the AWT thread (and everything else)
+							
+							
 						}
 					}
 					}
@@ -775,8 +956,7 @@ public class DrawPanel extends JPanel {
 							ships[0].player3lives = 5;
 							ships[0].player4lives = 5;
 							ships[0].speed = 3;
-							//start = false;
-							timer.cancel();							
+							timer.cancel();
 						}
 					}
 				}

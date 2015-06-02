@@ -21,7 +21,7 @@ public class FullScreen extends JFrame implements KeyEventDispatcher{
 	private JPanel contentPane;
 	private boolean inFullScreenMode = false;
 	
-	private int PrevX = 100 ,PrevY = 100 ,PrevWidth = 1000,PrevHeight = 700; //Dummysize
+	private int PrevX = 100 ,PrevY = 100 ,PrevWidth = 1000,PrevHeight = 940; //Dummysize
 
 	/**
 	 * Launch the application.
