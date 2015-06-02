@@ -82,8 +82,7 @@ public class DrawPanel extends JPanel {
 	
 	Image img1 = Toolkit.getDefaultToolkit().getImage("src/images/bakgrundur.jpg");
 	
-	//private int player1lives = 5;
-	//private int player2lives = 5;
+
 
 
 	//A vector is like an ArrayList a little bit slower but Thread-safe. This means that it can handle concurrent changes. 
@@ -191,6 +190,8 @@ public class DrawPanel extends JPanel {
 							users.add(user);
 							user.userHeight = 100;
 							user.userWidth = 10;
+							ships[0].player1lives = 5;
+							
 							//user.setColor(blue);
 							//System.out.println("player 1 in");
 							//System.out.println("Player " + user.getId() + " has position " + user.getPosition());
@@ -206,6 +207,8 @@ public class DrawPanel extends JPanel {
 							user.userHeight = 100;
 							user.userWidth = 10;
 
+							ships[0].player2lives = 5;
+							
 //							Color green = Color.decode("#8cba66");
 //							user.setColor(green);
 							//System.out.println("player 2 in");
@@ -220,7 +223,9 @@ public class DrawPanel extends JPanel {
 							users.add(user);
 							user.userHeight = 100;
 							user.userWidth = 10;
-
+							
+							ships[0].player3lives = 5;
+							
 //							Color red = Color.decode("#d35959");
 //							user.setColor(red);
 							//System.out.println("player 3 in");
@@ -234,6 +239,9 @@ public class DrawPanel extends JPanel {
 							users.add(user);
 							user.userHeight = 100;
 							user.userWidth = 10;
+							
+							ships[0].player4lives = 5;
+							
 							//user.setColor(yellow);
 							//myFirebaseRef.child(arg0.getKey()).child("playercolor").setValue("#e5d672");
 							//System.out.println("player 4 in");
@@ -383,7 +391,7 @@ public class DrawPanel extends JPanel {
 			Color gray = Color.decode("#2b2b2b");
 			g.setColor(gray);
 
-			g.drawString("The game will start when four players connects", level.screenWidth/2-170, level.screenHeight/2);
+			g.drawString("The game will start when two or more players connect", level.screenWidth/2-170, level.screenHeight/2);
 
 		}else{
 			//	    	ballXPos = ball.getXPos();
@@ -591,6 +599,7 @@ public class DrawPanel extends JPanel {
 								} else {
 									ships[0].paddleOneHit(level.relX+1, level.relY+70, 10, level.relY+530);
 									g2.drawImage(LeftDead, level.relX+1, level.relY+70, 10, level.relY+530, this);
+									
 								}
 
 								
@@ -638,6 +647,7 @@ public class DrawPanel extends JPanel {
 								if(ships[0].player1lives == 0){
 									Image skull = Toolkit.getDefaultToolkit().getImage("src/images/skull.png");
 									g2.drawImage(skull, 166, 450, 18,24, this);
+									
 								}
 								
 								g.drawString(livesLeftPlayerOne + " Lives left ", 20, 450); // this prints out how many lives player one has left
@@ -655,6 +665,7 @@ public class DrawPanel extends JPanel {
 								} else {
 									ships[0].paddleTwoHit(level.screenWidth-11,level.relY+70, 10, level.relY+530);
 									g2.drawImage(RightDead,level.screenWidth-11,level.relY+70, 10, level.relY+530, this);
+									
 								}
 
 								// draw out player 2 info
@@ -722,6 +733,7 @@ public class DrawPanel extends JPanel {
 								} else {
 									ships[0].paddleThreeHit (level.relX+70, level.relY+1 , level.relX+530, 10);
 									g2.drawImage(TopDead, level.relX+70, level.relY+1 , level.relX+530 , 10,this);
+									
 								}
 								
 								
@@ -790,6 +802,7 @@ public class DrawPanel extends JPanel {
 								} else {
 									ships[0].paddleFourHit(level.relX+70,level.screenHeight-11 , level.relX+530, 10);
 									g2.drawImage(BottomDead,level.relX+70,level.screenHeight-11 , level.relX+530, 10,this);
+									
 								}
 								
 							//	System.out.println("index of player FOUR position = " + users.indexOf(user));
@@ -842,8 +855,8 @@ public class DrawPanel extends JPanel {
 							
 							//System.out.println("size on list = " + users.size());
 							
-//							Image imgOutside = Toolkit.getDefaultToolkit().getImage("src/images/outside.png");
-//							g2.drawImage(imgOutside, 0, 0, this);
+							Image imgOutside = Toolkit.getDefaultToolkit().getImage("src/images/outside.png");
+							g2.drawImage(imgOutside, 0, 0, this);
 
 
 								
@@ -969,6 +982,22 @@ public class DrawPanel extends JPanel {
 						}
 					}
 				}
-			}			
-		}
+			}	
+			
+			public class BallSpeedTimer{
+				Toolkit toolkit;
+				Timer timer = new Timer();
+				public BallSpeedTimer(){
+					toolkit = Toolkit.getDefaultToolkit();
+					timer = new Timer();
+					timer.schedule(new BallTimer(), 0, 1*1000);
+				}
+				class BallTimer extends TimerTask{
+					public void run(){
+						timer.cancel();
+						}
+					}
+				}
+			}
+		
 		
