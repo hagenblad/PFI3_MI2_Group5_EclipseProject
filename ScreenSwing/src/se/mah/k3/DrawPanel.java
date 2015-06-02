@@ -487,7 +487,7 @@ public class DrawPanel extends JPanel {
 
 		super.repaint();
 
-		if(users.size()>=4){
+		if(users.size()>=2){
 			//Background
 			g2.drawImage(img1, 0, 0, this); 
 
@@ -520,7 +520,7 @@ public class DrawPanel extends JPanel {
 				//Test
 				for (User user : users) {
 					
-					if(users.size()>=4){  // defines how many players that needs to be in the game for it to start			
+					if(users.size()>=2){  // defines how many players that needs to be in the game for it to start			
 
 						paddleTop = y - playerPingSize;
 						paddleBottom = y;
@@ -542,7 +542,7 @@ public class DrawPanel extends JPanel {
 
 
 						// defines how many players that needs to be in the game for it to start
-						if(users.size()>=4){ 
+						if(users.size()>=2){ 
 							//start = true;
 							
 							//Check if too many players
@@ -564,6 +564,7 @@ public class DrawPanel extends JPanel {
 						//	g2.drawImage(player4, level.screenWidth/2,  level.screenHeight-11, playerPingSize, user.userWidth, this);
 							
 							
+							//PLAYER 1 STUFF
 							if(users.indexOf(user) == 0){
 								// Set player 1 color
 								Color blue = users.get(0).getColor();
@@ -578,6 +579,7 @@ public class DrawPanel extends JPanel {
 									g2.drawImage(LeftDead, level.relX+1, level.relY+70 , 10, level.relY+530,this);
 								}
 								
+							
 								// draw out player 1 info
 								// player name
 								String player1name = users.get(0).getId();
@@ -589,7 +591,8 @@ public class DrawPanel extends JPanel {
 								String livesLeftPlayerOne = String.valueOf(ships[0].player1lives);
 								g.drawString(livesLeftPlayerOne + " Lives left ", 20, 100); 
 								}
-							
+								
+							//PLAYER 2 STUFF
 							    if (users.indexOf(user)==1 ){
 							    // set player 2 color
 								Color green = users.get(1).getColor();
@@ -603,6 +606,7 @@ public class DrawPanel extends JPanel {
 									ships[0].paddleTwoHit(level.screenWidth-11,level.relY+70, 10, level.relY+530);
 									g2.drawImage(RightDead,level.screenWidth-11,level.relY+70, 10, level.relY+530, this);
 								}
+							
 								
 								// draw out player 2 info
 								// player name
@@ -615,7 +619,14 @@ public class DrawPanel extends JPanel {
 								String livesLeftPlayerTwo = String.valueOf(ships[0].player2lives);
 								g.drawString(livesLeftPlayerTwo + " Lives left ", 807, 580); 
 								}
-
+							    
+							    //PLAYER 3 STUFF
+							    if (users.size() < 3 ){
+									
+									ships[0].paddleThreeHit (level.relX+70, level.relY+1 , level.relX+530, 10);
+									System.out.println("3 in");
+							    }
+							    
 							    if (users.indexOf(user) == 2){
 							    // set player 3 color
 								Color red = users.get(2).getColor();
@@ -641,7 +652,16 @@ public class DrawPanel extends JPanel {
 								String livesLeftPlayerThree = String.valueOf(ships[0].player3lives);
 								g.drawString(livesLeftPlayerThree + " Lives left ", 807, 100); 
 								}
-
+							    
+							    
+							    
+							  // PLAYER 4 STUFF
+							    
+								if (users.size() < 4){
+									ships[0].paddleFourHit(level.relX+70,level.screenHeight-11 , level.relX+530, 10);
+									System.out.println("4 in");
+								}
+								
 							    if (users.indexOf(user) == 3){
 							    // set player 4 color
 								Color yellow = users.get(3).getColor();
@@ -655,7 +675,8 @@ public class DrawPanel extends JPanel {
 									ships[0].paddleFourHit(level.relX+70,level.screenHeight-11 , level.relX+530, 10);
 									g2.drawImage(BottomDead,level.relX+70,level.screenHeight-11 , level.relX+530, 10,this);
 								}
-
+								
+							
 								// draw out player 4 info
 								// player name
 								String player4name = users.get(3).getId();
@@ -667,6 +688,7 @@ public class DrawPanel extends JPanel {
 								String livesLeftPlayerFour = String.valueOf(ships[0].player4lives);
 								g.drawString(livesLeftPlayerFour + " Lives left ",  20,  580); 			
 							}
+							    System.out.println("size on list = " + users.size());
 								
 								// these if statements decide which player wins
 							if (ships[0].player1Win() == true){
@@ -725,7 +747,7 @@ public class DrawPanel extends JPanel {
 				class StartGameTimer extends TimerTask {
 					
 					int wait = 2;
-					int count = 5;
+					int count = 10;
 					
 					public void run() {
 						timerStarted = true;
