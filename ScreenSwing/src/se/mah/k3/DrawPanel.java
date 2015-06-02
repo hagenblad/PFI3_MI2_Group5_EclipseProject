@@ -44,6 +44,8 @@ public class DrawPanel extends JPanel {
 	Level level = new Level();
 
 	private boolean start = false;
+	private boolean startTimer = false;
+	private boolean restartTimer = false;
 
 	int ballXPos = level.screenWidth;
 	int ballYPos = level.screenHeight;
@@ -181,7 +183,7 @@ public class DrawPanel extends JPanel {
 					int x = r.nextInt(getSize().width);
 					int y = r.nextInt(getSize().height); 
 					listCount = users.size();
-					System.out.println("number of players: " + users.size()); //räknar antal spelar och skriver ut i konsollen. (börjar på 0)
+					//System.out.println("number of players: " + users.size()); //räknar antal spelar och skriver ut i konsollen. (börjar på 0)
 
 					if (listCount ==0){
 						User user = new User(arg0.getKey(), level.relX+11, level.relX+11, ships[0].player1lives, 1); // create player 1
@@ -190,8 +192,8 @@ public class DrawPanel extends JPanel {
 							user.userHeight = 100;
 							user.userWidth = 10;
 							//user.setColor(blue);
-							System.out.println("player 1 in");
-							System.out.println("Player " + user.getId() + " has position " + user.getPosition());
+							//System.out.println("player 1 in");
+							//System.out.println("Player " + user.getId() + " has position " + user.getPosition());
 							myFirebaseRef.child(arg0.getKey()).child("position").setValue((int)user.getPosition());
 						}
 					}
@@ -206,8 +208,8 @@ public class DrawPanel extends JPanel {
 
 //							Color green = Color.decode("#8cba66");
 //							user.setColor(green);
-							System.out.println("player 2 in");
-							System.out.println("Player " + user.getId() + " has position " + user.getPosition());
+							//System.out.println("player 2 in");
+							//System.out.println("Player " + user.getId() + " has position " + user.getPosition());
 							myFirebaseRef.child(arg0.getKey()).child("position").setValue((int)user.getPosition());
 						}
 					}	
@@ -221,8 +223,8 @@ public class DrawPanel extends JPanel {
 
 //							Color red = Color.decode("#d35959");
 //							user.setColor(red);
-							System.out.println("player 3 in");
-							System.out.println("Player " + user.getId() + " has position " + user.getPosition());
+							//System.out.println("player 3 in");
+							//System.out.println("Player " + user.getId() + " has position " + user.getPosition());
 							myFirebaseRef.child(arg0.getKey()).child("position").setValue((int)user.getPosition());
 						}
 					}
@@ -234,8 +236,8 @@ public class DrawPanel extends JPanel {
 							user.userWidth = 10;
 							//user.setColor(yellow);
 							//myFirebaseRef.child(arg0.getKey()).child("playercolor").setValue("#e5d672");
-							System.out.println("player 4 in");
-							System.out.println("Player " + user.getId() + " has position " + user.getPosition());
+							//System.out.println("player 4 in");
+							//System.out.println("Player " + user.getId() + " has position " + user.getPosition());
 							myFirebaseRef.child(arg0.getKey()).child("position").setValue((int)user.getPosition());
 						}
 					}
@@ -262,6 +264,7 @@ public class DrawPanel extends JPanel {
 	// här är vår metod för att starta timern
 	public void initiateTimer(){
 		new TimerClass();
+		startTimer = true;
 	}
 	
 	public void loadFont() throws Exception{
@@ -498,14 +501,14 @@ public class DrawPanel extends JPanel {
 			//Background
 			g2.drawImage(img1, 0, 0, this); 
 
-	
+	if(startTimer == false && start == false){
 			initiateTimer(); // här försöker vi starta timern när 2 spelare har anslutit till spelet
 			//g2.drawString("Ready?", level.screenWidth/2,level.screenHeight/2);
-				
+	}		
 			
 			
 			if(start == true){ // när timern kört klart och gjort om start till true, ska skärmen ändras till spelplanen och spelet ska laddas
-
+				restartTimer = false;
 				ships[0].move();
 				//ships[0].paint(g2);
 				Image boll = Toolkit.getDefaultToolkit().getImage("src/images/boll.png");
@@ -516,6 +519,8 @@ public class DrawPanel extends JPanel {
 				
 				ballXPos = ships[0].xPos;
 				ballYPos = ships[0].yPos;
+			} else {
+				g2.drawString(""+ startValue , level.screenWidth/2 + 100,level.screenHeight/2);
 			}
 			
 				//ball
@@ -530,7 +535,7 @@ public class DrawPanel extends JPanel {
 					
 					if(users.size()>=2){  // defines how many players that needs to be in the game for it to start			
 
-						System.out.println(y - (playerPingSize/2));
+						//System.out.println(y - (playerPingSize/2));
 						paddleTop = y - playerPingSize;
 						paddleBottom = y;
 						
@@ -553,7 +558,7 @@ public class DrawPanel extends JPanel {
 						// defines how many players that needs to be in the game for it to start
 						if(users.size()>=2){ 
 							//start = true;
-							System.out.println(y);
+							//System.out.println(y);
 							//Check if too many players
 							if(users.size()>4){
 								for(int i = users.size(); i>4; i--){
@@ -704,7 +709,7 @@ public class DrawPanel extends JPanel {
 							//PLAYER 3 STUFF
 							if (users.size() < 3 ){
 								ships[0].paddleThreeHit (level.relX+70, level.relY+1 , level.relX+530, 10);
-								System.out.println("3 in");
+								//System.out.println("3 in");
 							}
 							if (user.getPosition() == 3){								
 								Color red = users.get(2).getColor();
@@ -771,7 +776,7 @@ public class DrawPanel extends JPanel {
 							//PLAYER 4 STUFF
 							if (users.size() < 4){
 								ships[0].paddleFourHit(level.relX+70,level.screenHeight-11 , level.relX+530, 10);
-								System.out.println("4 in");
+								//System.out.println("4 in");
 							}
 							
 							if (user.getPosition() == 4){
@@ -835,7 +840,7 @@ public class DrawPanel extends JPanel {
 								g.drawString(livesLeftPlayerFour + " Lives left ",  450,  840); // this prints out how many lives player four has left								
 							}
 							
-							System.out.println("size on list = " + users.size());
+							//System.out.println("size on list = " + users.size());
 							
 //							Image imgOutside = Toolkit.getDefaultToolkit().getImage("src/images/outside.png");
 //							g2.drawImage(imgOutside, 0, 0, this);
@@ -852,9 +857,10 @@ public class DrawPanel extends JPanel {
 								ships[0].speed = 0;
 								ships[0].position.x = 450;
 								ships[0].position.y = 300;
-
+								if(restartTimer == false){
 								new RestartTimer();
-
+								restartTimer = true;
+								}
 							}
 						    if (ships[0].player2Win() == true){
 								String player2Wins = users.get(1).getId() + " wins!";
@@ -862,9 +868,10 @@ public class DrawPanel extends JPanel {
 								ships[0].speed = 0;
 								ships[0].position.x = 450;
 								ships[0].position.y = 300;
-								
+								if(restartTimer == false){
 								new RestartTimer();
-
+								restartTimer = true;
+								}
 								}
 							if (ships[0].player3Win() == true){
 								String player3Wins = users.get(2).getId() + " wins!";
@@ -872,9 +879,10 @@ public class DrawPanel extends JPanel {
 			 					ships[0].speed = 0;
 						    	ships[0].position.x = 450;
 						    	ships[0].position.y = 300;	
-	
-								new RestartTimer();
-
+						    	if(restartTimer == false){
+									new RestartTimer();
+									restartTimer = true;
+									}
 						    }
 							if (ships[0].player4Win() == true){
 								String player4Wins = users.get(3).getId() + " wins!";
@@ -882,9 +890,10 @@ public class DrawPanel extends JPanel {
 								ships[0].speed = 0;
 						    	ships[0].position.x = 450;
 						    	ships[0].position.y = 300;
-						    	
-								new RestartTimer();
-
+						    	if(restartTimer == false){
+									new RestartTimer();
+									restartTimer = true;
+									}
 						    	}						
 
 						}		
