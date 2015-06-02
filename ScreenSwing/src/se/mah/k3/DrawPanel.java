@@ -75,6 +75,7 @@ public class DrawPanel extends JPanel {
 	int startValue;
 	boolean startFinished = false;
 	boolean timerStarted = false;
+		
 	//background image
 	
 	Image img1 = Toolkit.getDefaultToolkit().getImage("src/images/bakgrundur.jpg");
@@ -85,7 +86,6 @@ public class DrawPanel extends JPanel {
 
 	//A vector is like an ArrayList a little bit slower but Thread-safe. This means that it can handle concurrent changes. 
 	private Vector<User> users= new Vector<User>();
-	//	private Vector<User> horizontalUsers = new Vector<User>();
 	//Font font = new Font("Verdana", Font.PLAIN, 20); 
 
 	Color blue = Color.decode("#599bb9");
@@ -133,9 +133,7 @@ public class DrawPanel extends JPanel {
 			public void onChildChanged(DataSnapshot arg0, String arg1) {
 				Iterable<DataSnapshot> dsList= arg0.getChildren();
 				Collections.sort(users);
-				//				Collections.sort(horizontalUsers);
-				int place = Collections.binarySearch(users, new User(arg0.getKey(),0,0, 5)); //Find the user username has to be unique uses the method compareTo in User
-				//				int position = Collections.binarySearch(horizontalUsers, new User(arg0.getKey(),0,0,5));
+				int place = Collections.binarySearch(users, new User(arg0.getKey(),0,0,0,0)); // Den sista nollan här är den jag vill att listan ska sorteras efter. Den bestäms senare när users skapas i onChildAdded
 				
 				if((place <= users.size()) && (users.size()>-1)){
 					
@@ -146,8 +144,7 @@ public class DrawPanel extends JPanel {
 						} catch (Exception e) {
 							System.out.println("Error reading: " + place);
 							e.printStackTrace();
-							}
-						
+						}		
 					}
 					if (dataSnapshot.getKey().equals("yRel")){
 						try {
@@ -156,21 +153,18 @@ public class DrawPanel extends JPanel {
 							System.out.println("Error reading: " + place);
 							e.printStackTrace();
 						}
-						
 					}
 					if (dataSnapshot.getKey().equals("RoundTripTo")){
 						myFirebaseRef.child(arg0.getKey()).child("RoundTripBack").setValue((long)dataSnapshot.getValue()+1);
 					}
-					
 					if (dataSnapshot.getKey().equals("ping")){
-						
 						try {
 							users.get(place).setDelay((long)dataSnapshot.getValue());
 						} catch (Exception e) {
 							System.out.println("Error reading: " + place);
-							e.printStackTrace();	}
-					
-					}
+							e.printStackTrace();	
+						}
+					}					
 				}
 				}
 
@@ -190,48 +184,50 @@ public class DrawPanel extends JPanel {
 					System.out.println("number of players: " + users.size()); //räknar antal spelar och skriver ut i konsollen. (börjar på 0)
 
 					if (listCount ==0){
-						User user = new User(arg0.getKey(), level.relX+11, level.relX+11, ships[0].player1lives); // create player 1
+						User user = new User(arg0.getKey(), level.relX+11, level.relX+11, ships[0].player1lives, 1); // create player 1
 						if (!users.contains(user)){
 							users.add(user);
 							user.userHeight = 100;
 							user.userWidth = 10;
 							//user.setColor(blue);
 							System.out.println("player 1 in");
-							//myFirebaseRef.child(arg0.getKey()).child("playercolor").setValue("#599bb9");
+							System.out.println("Player " + user.getId() + " has position " + user.getPosition());
+							myFirebaseRef.child(arg0.getKey()).child("position").setValue((int)user.getPosition());
 						}
 					}
 
 					if (listCount ==1){
-						User user = new User(arg0.getKey(), level.screenWidth-11, level.screenWidth-10, ships[0].player2lives); // create player 2
+						User user = new User(arg0.getKey(), level.screenWidth-11, level.screenWidth-10, ships[0].player2lives, 2); // create player 2
 
 						if (!users.contains(user)){
 							users.add(user);
 							user.userHeight = 100;
 							user.userWidth = 10;
 
-							Color green = Color.decode("#8cba66");
-							user.setColor(green);
+//							Color green = Color.decode("#8cba66");
+//							user.setColor(green);
 							System.out.println("player 2 in");
-							myFirebaseRef.child(arg0.getKey()).child("playercolor").setValue("#8cba66");
-
-
+							System.out.println("Player " + user.getId() + " has position " + user.getPosition());
+							myFirebaseRef.child(arg0.getKey()).child("position").setValue((int)user.getPosition());
 						}
 					}	
 
 					if (listCount == 2){
-						User user = new User(arg0.getKey(), level.relX+11, level.relY+11 , ships[0].player3lives); // create player 3
+						User user = new User(arg0.getKey(), level.relX+11, level.relY+11 , ships[0].player3lives, 3); // create player 3
 						if(!users.contains(user)){
 							users.add(user);
 							user.userHeight = 100;
 							user.userWidth = 10;
 
-							Color red = Color.decode("#d35959");
-							user.setColor(red);
-							myFirebaseRef.child(arg0.getKey()).child("playercolor").setValue("#d35959");
+//							Color red = Color.decode("#d35959");
+//							user.setColor(red);
+							System.out.println("player 3 in");
+							System.out.println("Player " + user.getId() + " has position " + user.getPosition());
+							myFirebaseRef.child(arg0.getKey()).child("position").setValue((int)user.getPosition());
 						}
 					}
 					if (listCount == 3){
-						User user = new User(arg0.getKey(),level.relX-11,level.screenHeight-11, ships[0].player4lives); // create player 4
+						User user = new User(arg0.getKey(),level.relX-11,level.screenHeight-11, ships[0].player4lives, 4); // create player 4
 						if (!users.contains(user)){
 							users.add(user);
 							user.userHeight = 100;
@@ -239,6 +235,8 @@ public class DrawPanel extends JPanel {
 							//user.setColor(yellow);
 							//myFirebaseRef.child(arg0.getKey()).child("playercolor").setValue("#e5d672");
 							System.out.println("player 4 in");
+							System.out.println("Player " + user.getId() + " has position " + user.getPosition());
+							myFirebaseRef.child(arg0.getKey()).child("position").setValue((int)user.getPosition());
 						}
 					}
 
@@ -575,7 +573,7 @@ public class DrawPanel extends JPanel {
 						//	g2.drawImage(player4, level.screenWidth/2,  level.screenHeight-11, playerPingSize, user.userWidth, this);
 							
 							//PLAYER 1 STUFF
-							if(users.indexOf(user) == 0){
+							if(user.getPosition() == 1){
 								//Set player 1 color
 								Color blue = users.get(0).getColor();
 								g.setColor(blue);
@@ -592,7 +590,6 @@ public class DrawPanel extends JPanel {
 
 								
 //								System.out.println("index of player one position = " + users.indexOf(user));
-
 								// draw out player 1 info
 					
 								//This prints out the ping to drawpanel
@@ -640,7 +637,7 @@ public class DrawPanel extends JPanel {
 								
 								g.drawString(livesLeftPlayerOne + " Lives left ", 20, 450); // this prints out how many lives player one has left
 								ships[0].paddleOneHit(level.relX+1, 250 + y - (playerPingSize/2), user.userWidth, playerPingSize);
-							}   else if (users.indexOf(user)==1 ){
+							}   else if (user.getPosition() == 2 ){
 								
 								//PLAYER 2 STUFF
 								
@@ -709,7 +706,7 @@ public class DrawPanel extends JPanel {
 								ships[0].paddleThreeHit (level.relX+70, level.relY+1 , level.relX+530, 10);
 								System.out.println("3 in");
 							}
-							if (users.indexOf(user) == 2){								
+							if (user.getPosition() == 3){								
 								Color red = users.get(2).getColor();
 								g.setColor(red);
 								//g2.fillRect(1000, user.getyPos(), user.userHeight, user.userWidth);
@@ -777,7 +774,7 @@ public class DrawPanel extends JPanel {
 								System.out.println("4 in");
 							}
 							
-							if (users.indexOf(user) == 3){
+							if (user.getPosition() == 4){
 								Color yellow = users.get(3).getColor();
 								g.setColor(yellow);
 								//g2.fillRect(1000, user.getyPos(), user.userHeight, user.userWidth);
