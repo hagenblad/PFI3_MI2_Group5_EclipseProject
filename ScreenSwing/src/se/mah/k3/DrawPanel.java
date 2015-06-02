@@ -513,6 +513,7 @@ public class DrawPanel extends JPanel {
 				Image boll = Toolkit.getDefaultToolkit().getImage("src/images/boll.png");
 				g2.drawImage(boll, ballXPos, ballYPos, ball.getSize(),ball.getSize(), this);
 				
+				
 //				ships[0].speed = 2;
 				
 				ballXPos = ships[0].xPos;
@@ -601,8 +602,43 @@ public class DrawPanel extends JPanel {
 								//System.out.println(player1name);
 								g.drawString(player1name, 20, 410);
 								String livesLeftPlayerOne = String.valueOf(ships[0].player1lives);
+
+								if(ships[0].player1lives == 5){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 166, 400, 20,18, this);
+									g2.drawImage(heart, 166, 425, 20,18, this);
+									g2.drawImage(heart, 166, 450, 20,18, this);
+									g2.drawImage(heart, 166, 475, 20,18, this);
+									g2.drawImage(heart, 166, 500, 20,18, this);
+								}
+								if(ships[0].player1lives == 4){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 166, 400, 20,18, this);
+									g2.drawImage(heart, 166, 425, 20,18, this);
+									g2.drawImage(heart, 166, 450, 20,18, this);
+									g2.drawImage(heart, 166, 475, 20,18, this);
+								}
+								if(ships[0].player1lives == 3){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 166, 400, 20,18, this);
+									g2.drawImage(heart, 166, 425, 20,18, this);
+									g2.drawImage(heart, 166, 450, 20,18, this);
+								}
+								if(ships[0].player1lives == 2){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 166, 400, 20,18, this);
+									g2.drawImage(heart, 166, 425, 20,18, this);
+								}
+								if(ships[0].player1lives == 1){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 166, 400, 20,18, this);
+								}
+								if(ships[0].player1lives == 0){
+									Image skull = Toolkit.getDefaultToolkit().getImage("src/images/skull.png");
+									g2.drawImage(skull, 166, 450, 18,24, this);
+								}
+								
 								g.drawString(livesLeftPlayerOne + " Lives left ", 20, 450); // this prints out how many lives player one has left
-							
 								ships[0].paddleOneHit(level.relX+1, 250 + y - (playerPingSize/2), user.userWidth, playerPingSize);
 							}   else if (users.indexOf(user)==1 ){
 								
@@ -629,6 +665,41 @@ public class DrawPanel extends JPanel {
 								//System.out.println(player2name);
 								g.drawString(player2name, 820, 410);
 								String livesLeftPlayerTwo = String.valueOf(ships[0].player2lives);
+								
+								if(ships[0].player2lives == 5){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 815, 400, 20,18, this);
+									g2.drawImage(heart, 815, 425, 20,18, this);
+									g2.drawImage(heart, 815, 450, 20,18, this);
+									g2.drawImage(heart, 815, 475, 20,18, this);
+									g2.drawImage(heart, 815, 500, 20,18, this);
+								}
+								if(ships[0].player2lives == 4){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 815, 400, 20,18, this);
+									g2.drawImage(heart, 815, 425, 20,18, this);
+									g2.drawImage(heart, 815, 450, 20,18, this);
+									g2.drawImage(heart, 815, 475, 20,18, this);
+								}
+								if(ships[0].player2lives == 3){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 815, 400, 20,18, this);
+									g2.drawImage(heart, 815, 425, 20,18, this);
+									g2.drawImage(heart, 815, 450, 20,18, this);
+								}
+								if(ships[0].player2lives == 2){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 815, 400, 20,18, this);
+									g2.drawImage(heart, 815, 425, 20,18, this);
+								}
+								if(ships[0].player2lives == 1){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 815, 400, 20,18, this);
+								}
+								if(ships[0].player2lives == 0){
+									Image skull = Toolkit.getDefaultToolkit().getImage("src/images/skull.png");
+									g2.drawImage(skull, 815, 450, 18,24, this);
+								}
 								g.drawString(livesLeftPlayerTwo + " Lives left ", 820, 450); // this prints out how many lives player two has left
 							
 							}
@@ -661,8 +732,42 @@ public class DrawPanel extends JPanel {
 								//System.out.println(player3name);
 								g.drawString(player3name, 450, 40);
 								String livesLeftPlayerThree = String.valueOf(ships[0].player3lives);
+								
+								if(ships[0].player3lives == 5){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 450, 119, 20,18, this);
+									g2.drawImage(heart, 475, 119, 20,18, this);
+									g2.drawImage(heart, 500, 119, 20,18, this);
+									g2.drawImage(heart, 525, 119, 20,18, this);
+									g2.drawImage(heart, 550, 119, 20,18, this);
+								}
+								if(ships[0].player3lives == 4){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 450, 119, 20,18, this);
+									g2.drawImage(heart, 475, 119, 20,18, this);
+									g2.drawImage(heart, 500, 119, 20,18, this);
+									g2.drawImage(heart, 525, 119, 20,18, this);
+								}
+								if(ships[0].player3lives == 3){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 450, 119, 20,18, this);
+									g2.drawImage(heart, 475, 119, 20,18, this);
+									g2.drawImage(heart, 500, 119, 20,18, this);
+								}
+								if(ships[0].player3lives == 2){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 450, 119, 20,18, this);
+									g2.drawImage(heart, 475, 119, 20,18, this);
+								}
+								if(ships[0].player3lives == 1){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 450, 119, 20,18, this);
+								}
+								if(ships[0].player3lives == 0){
+									Image skull = Toolkit.getDefaultToolkit().getImage("src/images/skull.png");
+									g2.drawImage(skull, 500, 119, 18,24, this);
+								}
 								g.drawString(livesLeftPlayerThree + " Lives left ", 450, 80); // this prints out how many lives player three has left
-
 						
 								}
 							
@@ -694,9 +799,43 @@ public class DrawPanel extends JPanel {
 								//System.out.println(player4name);
 								g.drawString(player4name, 450, 800);
 								String livesLeftPlayerFour = String.valueOf(ships[0].player4lives);
-
-								g.drawString(livesLeftPlayerFour + " Lives left ",  450,  840); // this prints out how many lives player four has left								
 								
+								if(ships[0].player4lives == 5){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 450, 764, 20,18, this);
+									g2.drawImage(heart, 475, 764, 20,18, this);
+									g2.drawImage(heart, 500, 764, 20,18, this);
+									g2.drawImage(heart, 525, 764, 20,18, this);
+									g2.drawImage(heart, 550, 764, 20,18, this);
+								}
+								if(ships[0].player4lives == 4){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 450, 764, 20,18, this);
+									g2.drawImage(heart, 475, 764, 20,18, this);
+									g2.drawImage(heart, 500, 764, 20,18, this);
+									g2.drawImage(heart, 525, 764, 20,18, this);
+								}
+								if(ships[0].player4lives == 3){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 450, 764, 20,18, this);
+									g2.drawImage(heart, 475, 764, 20,18, this);
+									g2.drawImage(heart, 500, 764, 20,18, this);
+								}
+								if(ships[0].player4lives == 2){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 450, 764, 20,18, this);
+									g2.drawImage(heart, 475, 764, 20,18, this);
+								}
+								if(ships[0].player4lives == 1){
+									Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
+									g2.drawImage(heart, 450, 764, 20,18, this);
+								}
+								if(ships[0].player4lives == 0){
+									Image skull = Toolkit.getDefaultToolkit().getImage("src/images/skull.png");
+									g2.drawImage(skull, 500, 764, 18,24, this);
+								}
+							
+								g.drawString(livesLeftPlayerFour + " Lives left ",  450,  840); // this prints out how many lives player four has left								
 							}
 							
 							System.out.println("size on list = " + users.size());
