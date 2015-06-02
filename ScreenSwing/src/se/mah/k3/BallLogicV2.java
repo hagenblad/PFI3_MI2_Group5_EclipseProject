@@ -13,7 +13,7 @@ public class BallLogicV2 extends Polygon {
 	Ball ball = new Ball();
 	Level level = new Level();
 
-	
+	float sugMinFetaKuk;
 	
 	static Point[] ship = { new Point(0, 0), new Point(10, 10),
 			new Point(0, 20), new Point(20, 10) };
@@ -43,10 +43,10 @@ public class BallLogicV2 extends Polygon {
 	boolean brcHit =false;
 	
 	//PLAYAH LIVES
-	public int player1lives = 5;
-	public int player2lives = 5;
-	public int player3lives = 5;
-	public int player4lives = 5;
+	public int player1lives;
+	public int player2lives;
+	public int player3lives;
+	public int player4lives;
 	
 	int normalizeAngle(int angle)
 	{
@@ -107,10 +107,7 @@ public class BallLogicV2 extends Polygon {
 							
 			
 			//WALLS
-			//nedanför följer metoder som vi inte riktigt behöver, då ASS-roids gör att
-			//skeppet spawnar på motsattsida när den träffar en kant?
-			//ändrade andra variablen > screen.width/height & relX/relY
-			//
+			
 			
 			//Right Wall
 			if (position.x > level.screenWidth-5) {
@@ -205,7 +202,7 @@ public class BallLogicV2 extends Polygon {
 
 					position.x = position.x +10;
 					rotate();
-					
+					sugMinFetaKuk++;
 
 					/*int xSpeed = bally.getBallXSpeed(); 
 						
@@ -232,7 +229,7 @@ public class BallLogicV2 extends Polygon {
 
 					position.x = position.x -10;
 					rotate();
-
+					sugMinFetaKuk++;
 					/*int xSpeed = bally.getBallXSpeed(); 
 						
 					bally.setBallXSpeed(bounceX(xSpeed));
@@ -262,7 +259,7 @@ public class BallLogicV2 extends Polygon {
 					position.y = position.y +10;
 					
 					rotateY();
-
+					sugMinFetaKuk++;
 					
 			//		System.out.println("Nice YYY Pos");
 			
@@ -295,6 +292,7 @@ public class BallLogicV2 extends Polygon {
 					//System.out.println("player four bounce");
 					position.y = position.y -10;
 					rotateY();
+					sugMinFetaKuk++;
 				}
 			}
 		}
