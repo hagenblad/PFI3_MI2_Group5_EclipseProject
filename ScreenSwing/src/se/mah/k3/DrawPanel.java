@@ -341,17 +341,13 @@ public class DrawPanel extends JPanel {
 
 		//corner collision
 		if(areaTLC.intersects(ballXPos, ballYPos, ball.getSize(), ball.getSize())){
-			System.out.println("CORNER");
 			ships[0].topLeftCornerBounce();
 
 		}else if(areaBLC.intersects(ballXPos, ballYPos, ball.getSize(), ball.getSize())){
-			System.out.println("CORNER");
 			ships[0].bottomLeftCornerBounce();
 		}else if(areaTRC.intersects(ballXPos, ballYPos, ball.getSize(), ball.getSize())){
-			System.out.println("CORNER");
 			ships[0].topRightCornerBounce();
 		}else if(areaBRC.intersects(ballXPos, ballYPos, ball.getSize(), ball.getSize())){
-			System.out.println("CORNER");
 			ships[0].bottomRightCornerBounce();
 		}
 
@@ -400,11 +396,10 @@ public class DrawPanel extends JPanel {
 
 		super.repaint();
 
-		if(users.size()>=2){
+		if(users.size()>=4){
 			//Background
 			g2.drawImage(img1, 0, 0, this); 
-			Image imgOutside = Toolkit.getDefaultToolkit().getImage("src/images/outside.png");
-			g2.drawImage(imgOutside, 0, 0, this);
+
 
 			if(startTimer == false && start == false){
 				initiateTimer(); 
@@ -416,7 +411,7 @@ public class DrawPanel extends JPanel {
 				ships[0].move();
 				Image boll = Toolkit.getDefaultToolkit().getImage("src/images/boll.png");
 				g2.drawImage(boll, ballXPos, ballYPos, ball.getSize(),ball.getSize(), this);
-
+				
 				ballXPos = ships[0].xPos;
 				ballYPos = ships[0].yPos;
 			} else {
@@ -725,10 +720,13 @@ public class DrawPanel extends JPanel {
 									restartTimer = true;
 								}	
 							}
+
 						}						
 					}						
 				}		
-			}				
+			}	
+			Image imgOutside = Toolkit.getDefaultToolkit().getImage("src/images/outside.png");
+			g2.drawImage(imgOutside, 0, 0, this);			
 		}
 	}
 

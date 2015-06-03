@@ -67,6 +67,16 @@ class Polygon {
 		  
   }
   
+  public void rotateLeft(){
+	  
+	  rotation= ((360-rotation) -200) %360;
+  }
+  
+  public void rotateRight(){
+	  
+	  rotation= ((360-rotation) -160) %360; 
+  }
+  
 //rotate on y walls
   public void rotateY() {
 	  
@@ -74,6 +84,17 @@ class Polygon {
 
 		  rotation= (360-rotation)%360;
 
+  }
+  
+  public void rotateYLeft(){
+	  
+	  rotation= (360-rotation+20)%360;
+  }
+  
+  public void rotateYRight(){
+	  
+	  rotation= (360-rotation-20)%360;
+	  
   }
   
 //rotate on two corners
