@@ -9,7 +9,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class BallLogicV2 extends Polygon {
-	public static int speed = 2;
+	public static int speed = 3;
 	Ball ball = new Ball();
 	Level level = new Level();
 
@@ -106,7 +106,7 @@ public class BallLogicV2 extends Polygon {
 	//	System.out.println(" afteh= " + rotation);
 
 		if(freeze == false){
-		speed = 3;
+		speed = 4;
 		} else if(freeze == true){
 		speed = 0;	
 		}
@@ -460,8 +460,8 @@ public class BallLogicV2 extends Polygon {
 		//freezes ballspeed
 		freeze = true;
 
-		speed = 2;
-		position.x = level.relX+ 301;
+//		speed = 2;
+		position.x = level.relX+ 302;
 		position.y = level.relY+ 305;
 
 		//rotate();

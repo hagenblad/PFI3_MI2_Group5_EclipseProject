@@ -98,6 +98,10 @@ public class DrawPanel extends JPanel {
 	Image TopDead = Toolkit.getDefaultToolkit().getImage("src/image/deadhor.jpg");
 	Image BottomDead = Toolkit.getDefaultToolkit().getImage("src/image/deadhor.jpg");
 
+	String player1name;
+	String player2name;
+	String player3name;
+	String player4name;
 
 	public DrawPanel() {
 
@@ -176,7 +180,8 @@ public class DrawPanel extends JPanel {
 							users.add(user);
 							user.userHeight = 100;
 							user.userWidth = 10;
-							ships[0].player1lives = 5;
+							ships[0].player1lives = 3;
+							player1name = user.getId();
 							myFirebaseRef.child(arg0.getKey()).child("position").setValue((int)user.getPosition());
 						}
 					}
@@ -188,7 +193,8 @@ public class DrawPanel extends JPanel {
 							users.add(user);
 							user.userHeight = 100;
 							user.userWidth = 10;
-							ships[0].player2lives = 5;
+							ships[0].player2lives = 3;
+							player2name = user.getId();
 							myFirebaseRef.child(arg0.getKey()).child("position").setValue((int)user.getPosition());
 						}
 					}	
@@ -199,7 +205,8 @@ public class DrawPanel extends JPanel {
 							users.add(user);
 							user.userHeight = 100;
 							user.userWidth = 10;							
-							ships[0].player3lives = 5;
+							ships[0].player3lives = 3;
+							player3name = user.getId();
 							myFirebaseRef.child(arg0.getKey()).child("position").setValue((int)user.getPosition());
 						}
 					}
@@ -209,7 +216,8 @@ public class DrawPanel extends JPanel {
 							users.add(user);
 							user.userHeight = 100;
 							user.userWidth = 10;							
-							ships[0].player4lives = 5;
+							ships[0].player4lives = 3;
+							player4name = user.getId();
 							myFirebaseRef.child(arg0.getKey()).child("position").setValue((int)user.getPosition());
 						}
 					}
@@ -320,7 +328,7 @@ public class DrawPanel extends JPanel {
 			Color gray = Color.decode("#2b2b2b");
 			g.setColor(gray);
 
-			g.drawString("The game will start when two or more players connect", level.screenWidth/2-205, level.screenHeight/2);
+			g.drawString("The game will start when four players connect", level.screenWidth/2-170, level.screenHeight/2);
 
 		}else{
 
@@ -372,25 +380,25 @@ public class DrawPanel extends JPanel {
 
 		if(users.size() >= 1){
 			g.setColor(blue);
-			String player1name = users.get(0).getId();
+			//String player1name = users.get(0).getId();
 			g.drawString(player1name + " connected", 425, 500);
 		}
 
 		if(users.size() >= 2){
 			g.setColor(green);
-			String player2name = users.get(1).getId();
+			//String player2name = users.get(1).getId();
 			g.drawString(player2name + " connected", 425, 550);
 		}
 
 		if(users.size() >= 3){
 			g.setColor(red);
-			String player3name = users.get(2).getId();
+			//String player3name = users.get(2).getId();
 			g.drawString(player3name + " connected", 425, 600);
 		}
 
 		if(users.size() >= 4){
 			g.setColor(yellow);
-			String player4name = users.get(3).getId();
+			//String player4name = users.get(3).getId();
 			g.drawString(player4name + " connected", 425, 650);
 		}
 
@@ -416,6 +424,7 @@ public class DrawPanel extends JPanel {
 				ballXPos = ships[0].xPos;
 				ballYPos = ships[0].yPos;
 			} else {
+				g2.setColor(gray);
 				g2.drawString(""+ startValue , level.screenWidth/2 + 100,level.screenHeight/2);
 			}
 
@@ -674,7 +683,7 @@ public class DrawPanel extends JPanel {
 							String player4name = user.getId();
 							g.drawString(player4name, 450, 815);
 							String player4Delay = String.valueOf(user.getDelay());
-							g.drawString("PING = "+ player4Delay, 450,845);
+							g.drawString("Ping: "+ player4Delay, 450,845);
 
 							if(ships[0].player4lives == 5){
 								Image heart = Toolkit.getDefaultToolkit().getImage("src/images/heart.png");
