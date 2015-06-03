@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
 import java.util.Timer;
@@ -97,6 +98,11 @@ public class DrawPanel extends JPanel {
 	Image RightDead = Toolkit.getDefaultToolkit().getImage("src/image/deadver.jpg");		
 	Image TopDead = Toolkit.getDefaultToolkit().getImage("src/image/deadhor.jpg");
 	Image BottomDead = Toolkit.getDefaultToolkit().getImage("src/image/deadhor.jpg");
+	
+	Boolean player1in = false;
+	Boolean player2in = false;
+	Boolean player3in = false;
+	Boolean player4in = false;
 
 
 	public DrawPanel() {
@@ -113,7 +119,18 @@ public class DrawPanel extends JPanel {
 		myFirebaseRef.child("ScreenNbr").setValue(Constants.screenNbr);  //Has to be same as on the app. So place specific can't you see the screen you don't know the number
 		myFirebaseRef.addChildEventListener(new ChildEventListener() {
 			@Override
-			public void onChildRemoved(DataSnapshot arg0) {}
+			public void onChildRemoved(DataSnapshot arg0) {
+				System.out.println(arg0);
+				
+				long i = (long) arg0.child("position").getValue()-1;
+				System.out.println(": postion datasnap   "+i);
+				
+				users.remove(users.get((int) i));
+				for(User user : users){
+					System.out.println(user.getId());
+					System.out.println(user.getPosition());
+				}
+			}
 
 			@Override
 			public void onChildMoved(DataSnapshot arg0, String arg1) {}
@@ -122,7 +139,7 @@ public class DrawPanel extends JPanel {
 			@Override
 			public void onChildChanged(DataSnapshot arg0, String arg1) {
 				Iterable<DataSnapshot> dsList= arg0.getChildren();
-				Collections.sort(users);
+				
 				int place = Collections.binarySearch(users, new User(arg0.getKey(),0,0,0,0)); 
 				if((place <= users.size()) && (users.size()>-1)){
 
@@ -164,14 +181,40 @@ public class DrawPanel extends JPanel {
 			@Override
 			public void onChildAdded(DataSnapshot arg0, String arg1) {
 				listCount = users.size();
+				int tempPosition = 1;
 				if (arg0.hasChildren()){
 					Random r = new Random();
 					int x = r.nextInt(getSize().width);
 					int y = r.nextInt(getSize().height); 
 					listCount = users.size();
+					
+					System.out.println(users.size()+ "users.size");
+
+					
 
 					if (listCount ==0){
-						User user = new User(arg0.getKey(), level.relX+11, level.relX+11, ships[0].player1lives, 1); // create player 1
+						int slot = 0;
+						if(player4in == false){
+							slot = 4;
+							player4in = true;
+							System.out.println("4");
+						}
+						if(player3in == false){
+							slot = 3;
+							player3in = true;
+							System.out.println("3");
+						}
+						if(player2in == false){
+							slot = 2;
+							player2in = true;
+							System.out.println("2");
+						}
+						if(player1in == false){
+							slot = 1;
+							player1in = true;
+							System.out.println("1");
+						}
+						User user = new User(arg0.getKey(), level.relX+11, level.relX+11, ships[0].player1lives, slot); // create player 1
 						if (!users.contains(user)){
 							users.add(user);
 							user.userHeight = 100;
@@ -182,7 +225,28 @@ public class DrawPanel extends JPanel {
 					}
 
 					if (listCount ==1){
-						User user = new User(arg0.getKey(), level.screenWidth-11, level.screenWidth-10, ships[0].player2lives, 2); // create player 2
+						int slot = 0;
+						if(player4in == false){
+							slot = 4;
+							player4in = true;
+							System.out.println("4");
+						}
+						if(player3in == false){
+							slot = 3;
+							player3in = true;
+							System.out.println("3");
+						}
+						if(player2in == false){
+							slot = 2;
+							player2in = true;
+							System.out.println("2");
+						}
+						if(player1in == false){
+							slot = 1;
+							player1in = true;
+							System.out.println("1");
+						}
+						User user = new User(arg0.getKey(), level.screenWidth-11, level.screenWidth-10, ships[0].player2lives, slot); // create player 2
 
 						if (!users.contains(user)){
 							users.add(user);
@@ -194,7 +258,28 @@ public class DrawPanel extends JPanel {
 					}	
 
 					if (listCount == 2){
-						User user = new User(arg0.getKey(), level.relX+11, level.relY+11 , ships[0].player3lives, 3); // create player 3
+						int slot = 0;
+						if(player4in == false){
+							slot = 4;
+							player4in = true;
+							System.out.println("4");
+						}
+						if(player3in == false){
+							slot = 3;
+							player3in = true;
+							System.out.println("3");
+						}
+						if(player2in == false){
+							slot = 2;
+							player2in = true;
+							System.out.println("2");
+						}
+						if(player1in == false){
+							slot = 1;
+							player1in = true;
+							System.out.println("1");
+						}
+						User user = new User(arg0.getKey(), level.relX+11, level.relY+11 , ships[0].player3lives, slot); // create player 3
 						if(!users.contains(user)){
 							users.add(user);
 							user.userHeight = 100;
@@ -204,7 +289,28 @@ public class DrawPanel extends JPanel {
 						}
 					}
 					if (listCount == 3){
-						User user = new User(arg0.getKey(),level.relX-11,level.screenHeight-11, ships[0].player4lives, 4); // create player 4
+						int slot = 0;
+						if(player4in == false){
+							slot = 4;
+							player4in = true;
+							System.out.println("4");
+						}
+						if(player3in == false){
+							slot = 3;
+							player3in = true;
+							System.out.println("3");
+						}
+						if(player2in == false){
+							slot = 2;
+							player2in = true;
+							System.out.println("2");
+						}
+						if(player1in == false){
+							slot = 1;
+							player1in = true;
+							System.out.println("1");
+						}
+						User user = new User(arg0.getKey(),level.relX-11,level.screenHeight-11, ships[0].player4lives, slot); // create player 4
 						if (!users.contains(user)){
 							users.add(user);
 							user.userHeight = 100;
@@ -213,10 +319,13 @@ public class DrawPanel extends JPanel {
 							myFirebaseRef.child(arg0.getKey()).child("position").setValue((int)user.getPosition());
 						}
 					}
+					
+					
 
 					System.out.println("Users in the game : " + users.size());
 
 				}
+				Collections.sort(users);
 			}
 
 			@Override
@@ -225,6 +334,7 @@ public class DrawPanel extends JPanel {
 		});
 
 	}
+	
 
 	// här är vår metod för att starta timern
 	public void initiateTimer(){
