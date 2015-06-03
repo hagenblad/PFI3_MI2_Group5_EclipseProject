@@ -337,6 +337,7 @@ public class DrawPanel extends JPanel {
 	@Override
 	public void paint(Graphics g) {
 
+		
 		//TOP LEFT CORNER
 		polyTLC = new Polygon(level.TLCxpoints, level.TLCypoints, level.npoints);
 
