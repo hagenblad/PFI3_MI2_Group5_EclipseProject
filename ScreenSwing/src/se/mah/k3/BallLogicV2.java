@@ -42,6 +42,12 @@ public class BallLogicV2 extends Polygon {
 	boolean blcHit =false;
 	boolean brcHit =false;
 	
+	//used to freeze ballspeed
+	public boolean freeze = false;
+	
+	//used to activate ball respawn timer
+	public boolean ballTimer = false;
+	
 	//PLAYAH LIVES
 	public int player1lives;
 	public int player2lives;
@@ -93,11 +99,24 @@ public class BallLogicV2 extends Polygon {
 		double prevPosX = position.x;
 		double prevPosY = position.y;
 
+		
+		//System.out.println(respawnBall);
 	//	System.out.println(" befo= " + rotation);
 		rotation = normalizeAngle( (int)rotation);
 	//	System.out.println(" afteh= " + rotation);
+
+		if(freeze == false){
+		speed = 3;
+		} else if(freeze == true){
+		speed = 0;	
+		}
+
 		
-		
+		//activates respawntimer after goal
+		if(ballTimer == true){
+			new LivesTimer();
+			ballTimer = false;
+		}
 
 
 			position = new Point(position.x
@@ -433,13 +452,22 @@ public class BallLogicV2 extends Polygon {
 	
 	public void ballRespawn (){
 		Random rand2 = new Random();
+
+		
+		//boolean to activate timer
+		ballTimer = true;
+		
+		//freezes ballspeed
+		freeze = true;
+
 		speed = 2;
 		position.x = level.relX+ 301;
 		position.y = level.relY+ 305;
+
 		//rotate();
 		rotation = rand2.nextInt((359 - 0) + 1) -359;
 		//System.out.println("respawntimer about to start");
-		new LivesTimer(2);
+		
 		//System.out.println("respawntimer started");
 	}
 	
@@ -480,23 +508,27 @@ public class BallLogicV2 extends Polygon {
 		Toolkit toolkit;
 		Timer timer = new Timer();
 
-		public LivesTimer(int seconds){
+		public LivesTimer(){
 			toolkit = Toolkit.getDefaultToolkit();
 			timer = new Timer();
-			timer.schedule(new RespawnTimer(), seconds * 1000);
+			timer.schedule(new RespawnTimer(), 0,1 * 1000);
 		}
 
 		class RespawnTimer extends TimerTask {
-			int count = 2;
+			int count = 1;
 			public void run(){
 				if (count > 0){
+					System.out.println("respawntimer started");
+					System.out.println(count);
+					//freeze = true;
 				//	toolkit.beep();
 					count--;
 				} else {
 				//	toolkit.beep();
-					speed = 2;
-					//System.out.println("respawntimer over");
+					//speed = 2;
+					System.out.println("respawntimer over");
 					timer.cancel();
+					freeze = false;
 				}
 			}
 		}
