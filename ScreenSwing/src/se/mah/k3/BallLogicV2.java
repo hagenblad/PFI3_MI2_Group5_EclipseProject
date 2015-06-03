@@ -9,11 +9,11 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class BallLogicV2 extends Polygon {
-	public static int speed = 0;
+	public static int speed = 2;
 	Ball ball = new Ball();
 	Level level = new Level();
 
-	float sugMinFetaKuk;
+	int iterateSpeed = 0;
 	
 	static Point[] ship = { new Point(0, 0), new Point(10, 10),
 			new Point(0, 20), new Point(20, 10) };
@@ -104,11 +104,13 @@ public class BallLogicV2 extends Polygon {
 	//	System.out.println(" befo= " + rotation);
 		rotation = normalizeAngle( (int)rotation);
 	//	System.out.println(" afteh= " + rotation);
+
 		if(freeze == false){
 		speed = 3;
 		} else if(freeze == true){
 		speed = 0;	
 		}
+
 		
 		//activates respawntimer after goal
 		if(ballTimer == true){
@@ -121,9 +123,17 @@ public class BallLogicV2 extends Polygon {
 					+ (speed * Math.cos(Math.toRadians(rotation))), position.y
 					+ (speed * Math.sin(Math.toRadians(rotation))));
 			thrust.position = position;
-							
+				
+			//SPEED ACCELERATOR
 			
-			//WALLS
+			if(iterateSpeed >= 7){
+				System.out.println("Speed "+ speed);
+				if(speed>=6){
+					speed+=1;
+				}
+				iterateSpeed = 0;
+				
+			}
 			
 			
 			//Right Wall
@@ -134,6 +144,7 @@ public class BallLogicV2 extends Polygon {
 				rotate();
 				player2lives--;
 				ballRespawn();
+				
 			
 				//Left Wall	
 			} else if (position.x < level.relX) {
@@ -174,6 +185,7 @@ public class BallLogicV2 extends Polygon {
 				position = new Point(position.x+10, position.y+10);
 				rotateCornerTopLeftBottomRight();
 				tlcHit = false;
+				iterateSpeed++;
 				
 			}
 			
@@ -181,6 +193,7 @@ public class BallLogicV2 extends Polygon {
 				position = new Point(position.x-10, position.y-10);
 				rotateCornerTopLeftBottomRight();
 				brcHit = false;
+				iterateSpeed++;
 				
 			}
 			
@@ -188,6 +201,7 @@ public class BallLogicV2 extends Polygon {
 				position = new Point(position.x+10, position.y-10);
 				rotateCornerBottomLeftTopRight();
 				blcHit = false;
+				iterateSpeed++;
 				
 			}
 			
@@ -195,6 +209,7 @@ public class BallLogicV2 extends Polygon {
 				position = new Point(position.x-10, position.y+10);
 				rotateCornerBottomLeftTopRight();
 				trcHit = false;
+				iterateSpeed++;
 				
 			}
 			
@@ -206,7 +221,8 @@ public class BallLogicV2 extends Polygon {
 		//(level.relX+1, y - (playerPingSize/2), user.userWidth, playerPingSize);
 		public void paddleOneHit(int x, int y, int width, int height){
 			
-		
+			float heightParts = height/10;
+			
 			if(position.x <= x +width+5){
 				
 				//	System.out.println("Nice X pos");	
@@ -215,11 +231,40 @@ public class BallLogicV2 extends Polygon {
 					
 	//				System.out.println("Nice YYY Pos");
 
-					//System.out.println("player 1 bounce");
-
+				if(playerOneOut() == false){
+					// hits the Left side
+					if(position.y < y + heightParts*3){
+						position.x = position.x +10;
+						rotateLeft();
+						System.out.println("Left side");
+					}
+					
+					//Hits the middle part
+				    if(position.y > y + (heightParts * 3) && position.y < y + (heightParts*7)){
+				    	position.x = position.x +10;
+						rotate();
+						System.out.println("middle side");
+						
+					}
+					//HIts the Right side
+					 if(position.y > y + heightParts * 7){
+						 position.x = position.x +10;
+						rotateRight();
+						System.out.println("Right side");
+					}
+					 
+				}else{
 					position.x = position.x +10;
 					rotate();
-					sugMinFetaKuk++;
+				}
+					
+					
+					
+					iterateSpeed++;
+					
+					
+
+				}
 
 					/*int xSpeed = bally.getBallXSpeed(); 
 						
@@ -228,11 +273,13 @@ public class BallLogicV2 extends Polygon {
 					int tempx = bally.getXPos();
 					bally.setXPos(tempx += xSpeed);
 				*/
-				}
+				
 			}
 		}
 		//(level.screenWidth-11, y - (playerPingSize/2), user.userWidth, playerPingSize);
 		public void paddleTwoHit(int x, int y, int width, int height){
+			
+			float heightParts = height/10;
 			
 			
 			if(position.x >= x-10){
@@ -241,26 +288,48 @@ public class BallLogicV2 extends Polygon {
 				//	System.out.println("Nice X pos");	
 				
 				if( position.y >= y -5 && position.y <= y + height+5){
-		//			System.out.println("Nice YYY Pos");
-					//System.out.println("player 2 bounce");
-
+					
+				if(playerTwoOut() == false){
+					// hits the Right side
+					if(position.y < y + heightParts*3){
+						position.x = position.x -10;
+						rotateRight();
+						
+						System.out.println("Right side");
+					}
+					
+					//Hits the middle part
+				    if(position.y > y + (heightParts * 3) && position.y < y + (heightParts*7)){
+				    	position.x = position.x -10;
+						rotate();
+						System.out.println("middle side");
+						
+					}
+					//HIts the left side
+					 if(position.y > y + heightParts * 7){
+						 position.x = position.x -10;
+						rotateLeft();
+						System.out.println("Left side");
+					}
+				}else{
 					position.x = position.x -10;
 					rotate();
-					sugMinFetaKuk++;
-					/*int xSpeed = bally.getBallXSpeed(); 
-						
-					bally.setBallXSpeed(bounceX(xSpeed));
-					xSpeed = bally.getBallXSpeed();
-					int tempx = bally.getXPos();
-					bally.setXPos(tempx += xSpeed);
-				*/
+					
+				}
+					
+					
+					
+					iterateSpeed++;
+					
+					
+
 				}
 			}
 		}
 		
 		// (y-(playerPingSize/2), level.relY+10 ,playerPingSize, user.userWidth );
 		public void paddleThreeHit(int x, int y, int width, int height){
-				
+			float widthParts = width/10;
 			//THE PLAYER ON TOP
 			
 			//PLAYER ON TOP
@@ -271,22 +340,36 @@ public class BallLogicV2 extends Polygon {
 				//Check in bounds
 				if( position.x >= x -5 && position.x <= x+width+5){
 					
-					//System.out.println("player three bounce");
 					
-					position.y = position.y +10;
-					
-					rotateY();
-					sugMinFetaKuk++;
-					
-			//		System.out.println("Nice YYY Pos");
-			
-					/*int xSpeed = bally.getBallXSpeed(); 
+				if(playerThreeOut() == false){
+					// hits the Right side
+					if(position.x < x + widthParts*3){
 						
-					bally.setBallXSpeed(bounceX(xSpeed));
-					xSpeed = bally.getBallXSpeed();
-					int tempx = bally.getXPos();
-					bally.setXPos(tempx += xSpeed);
-				*/
+						position.y = position.y +10;
+						rotateYLeft();
+						
+						System.out.println("Left side");
+					}
+					
+					//Hits the middle part
+				    if(position.x > x + (widthParts * 3) && position.x < x + (widthParts*7)){
+				    	position.y = position.y +10;
+						rotateY();
+						System.out.println("middle side");
+						
+					}
+					//HIts the left side
+					 if(position.x > x + widthParts * 7){
+						 position.y = position.y +10;
+						rotateYRight();
+						System.out.println("Right side");
+					}
+				}else{
+					position.y = position.y +10;
+					rotateY();
+					
+				}
+					iterateSpeed++;
 
 
 				}
@@ -296,7 +379,7 @@ public class BallLogicV2 extends Polygon {
 	//	(y-(playerPingSize/2),level.screenHeight-15 , playerPingSize ,user.userWidth);
 		
 		public void paddleFourHit(int x, int y, int width, int height){
-
+			float widthParts = width/10;
 			
 			//THE PLAYER AT THE BOTTOM
 			//SHOULD MEASURE IF THE BALL IS BENEATH
@@ -307,9 +390,37 @@ public class BallLogicV2 extends Polygon {
 				if( position.x >= x -5 && position.x <= x+width+5){
 
 					//System.out.println("player four bounce");
+					
+				if(playerFourOut() == false){
+					// hits the Right side
+					if(position.x < x + widthParts*3){
+						 position.y = position.y -10;
+						rotateYRight();
+						System.out.println("Right side");
+						
+					}
+					
+					//Hits the middle part
+				    if(position.x > x + (widthParts * 3) && position.x < x + (widthParts*7)){
+				    	position.y = position.y -10;
+						rotateY();
+						System.out.println("middle side");
+						
+					}
+					//HIts the left side
+					 if(position.x > x + widthParts * 7){
+							position.y = position.y -10;
+							rotateYLeft();
+							System.out.println("Left side");
+						
+					}
+				}else{
 					position.y = position.y -10;
 					rotateY();
-					sugMinFetaKuk++;
+					
+				}
+					
+					iterateSpeed++;
 				}
 			}
 		}
@@ -341,14 +452,18 @@ public class BallLogicV2 extends Polygon {
 	
 	public void ballRespawn (){
 		Random rand2 = new Random();
+
 		
 		//boolean to activate timer
 		ballTimer = true;
 		
 		//freezes ballspeed
 		freeze = true;
-		position.x = 450;
-		position.y = 300;
+
+		speed = 2;
+		position.x = level.relX+ 301;
+		position.y = level.relY+ 305;
+
 		//rotate();
 		rotation = rand2.nextInt((359 - 0) + 1) -359;
 		//System.out.println("respawntimer about to start");
@@ -400,7 +515,7 @@ public class BallLogicV2 extends Polygon {
 		}
 
 		class RespawnTimer extends TimerTask {
-			int count = 2;
+			int count = 1;
 			public void run(){
 				if (count > 0){
 					System.out.println("respawntimer started");
