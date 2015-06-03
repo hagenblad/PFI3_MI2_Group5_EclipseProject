@@ -122,10 +122,33 @@ public class DrawPanel extends JPanel {
 			public void onChildRemoved(DataSnapshot arg0) {
 				System.out.println(arg0);
 				
-				long i = (long) arg0.child("position").getValue()-1;
+				long i = (long) arg0.child("position").getValue();
 				System.out.println(": postion datasnap   "+i);
 				
-				users.remove(users.get((int) i));
+				if(i == 1){
+					player1in = false;
+					System.out.println("1 out");
+				}
+				if(i == 2){
+					player2in = false;
+					System.out.println("2 out");
+				}
+				if(i == 3){
+					player3in = false;
+					System.out.println("3 out");
+				}
+				if(i == 4){
+					player4in = false;
+					System.out.println("4 out");
+				}
+				
+				for (User u : users){
+					if(u.getPosition() == i){
+						users.remove(u);
+					}
+				}
+				
+//				users.remove(users.get((int) i));
 				for(User user : users){
 					System.out.println(user.getId());
 					System.out.println(user.getPosition());
@@ -194,22 +217,22 @@ public class DrawPanel extends JPanel {
 
 					if (listCount ==0){
 						int slot = 0;
-						if(player4in == false){
+						if(player1in == true && player2in == true && player3in == true && player4in == false){
 							slot = 4;
 							player4in = true;
 							System.out.println("4");
 						}
-						if(player3in == false){
+						if(player1in == true && player2in == true && player3in == false && player4in == false){
 							slot = 3;
 							player3in = true;
 							System.out.println("3");
 						}
-						if(player2in == false){
+						if(player1in == true && player2in == false && player3in == false && player4in == false){
 							slot = 2;
 							player2in = true;
 							System.out.println("2");
 						}
-						if(player1in == false){
+						if(player1in == false && player2in == false && player3in == false && player4in == false){
 							slot = 1;
 							player1in = true;
 							System.out.println("1");
@@ -226,22 +249,22 @@ public class DrawPanel extends JPanel {
 
 					if (listCount ==1){
 						int slot = 0;
-						if(player4in == false){
+						if(player1in == true && player2in == true && player3in == true && player4in == false){
 							slot = 4;
 							player4in = true;
 							System.out.println("4");
 						}
-						if(player3in == false){
+						if(player1in == true && player2in == true && player3in == false && player4in == false){
 							slot = 3;
 							player3in = true;
 							System.out.println("3");
 						}
-						if(player2in == false){
+						if(player1in == true && player2in == false && player3in == false && player4in == false){
 							slot = 2;
 							player2in = true;
 							System.out.println("2");
 						}
-						if(player1in == false){
+						if(player1in == false && player2in == false && player3in == false && player4in == false){
 							slot = 1;
 							player1in = true;
 							System.out.println("1");
@@ -259,22 +282,22 @@ public class DrawPanel extends JPanel {
 
 					if (listCount == 2){
 						int slot = 0;
-						if(player4in == false){
+						if(player1in == true && player2in == true && player3in == true && player4in == false){
 							slot = 4;
 							player4in = true;
 							System.out.println("4");
 						}
-						if(player3in == false){
+						if(player1in == true && player2in == true && player3in == false && player4in == false){
 							slot = 3;
 							player3in = true;
 							System.out.println("3");
 						}
-						if(player2in == false){
+						if(player1in == true && player2in == false && player3in == false && player4in == false){
 							slot = 2;
 							player2in = true;
 							System.out.println("2");
 						}
-						if(player1in == false){
+						if(player1in == false && player2in == false && player3in == false && player4in == false){
 							slot = 1;
 							player1in = true;
 							System.out.println("1");
@@ -290,17 +313,17 @@ public class DrawPanel extends JPanel {
 					}
 					if (listCount == 3){
 						int slot = 0;
-						if(player4in == false){
+						if(player1in == true && player2in == true && player3in == true && player4in == false){
 							slot = 4;
 							player4in = true;
 							System.out.println("4");
 						}
-						if(player3in == false){
+						if(player1in == true && player2in == true && player3in == false && player4in == false){
 							slot = 3;
 							player3in = true;
 							System.out.println("3");
 						}
-						if(player2in == false){
+						if(player1in == true && player2in == false && player3in == false && player4in == false){
 							slot = 2;
 							player2in = true;
 							System.out.println("2");
